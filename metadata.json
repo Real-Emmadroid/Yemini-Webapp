@@ -1,0 +1,6 @@
+{
+  "name": "Yemini",
+  "description": "Yemini is a modern developer ecosystem from STF Ecosystem (Sphere Tech Foundation), bringing coding, development tools, first-party extensions, and AI-assisted programming across mobile and desktop.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
