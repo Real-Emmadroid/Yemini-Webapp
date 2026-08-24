@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PageRoute } from '../types';
 import { legalDocuments } from '../data/legalData';
-import { ShieldCheck, FileText, Lock, Globe, Scale } from 'lucide-react';
+import { Scale, Smartphone, ExternalLink } from 'lucide-react';
 
 interface LegalPageProps {
   onNavigate: (route: PageRoute) => void;
@@ -40,6 +40,28 @@ export const LegalPage: React.FC<LegalPageProps> = ({
         <p className="text-base text-zinc-400">
           STF Ecosystem (Sphere Tech Foundation) governance terms, privacy standards, and software licensing.
         </p>
+      </div>
+
+      {/* Standalone Android App Privacy Policy Callout Banner */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-zinc-900/90 border border-zinc-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-[#ff8585] shrink-0">
+            <Smartphone className="w-5 h-5" />
+          </div>
+          <div>
+            <h4 className="text-sm font-bold text-white">Yemini Code Editor Android Privacy Policy</h4>
+            <p className="text-xs text-zinc-400">
+              Looking for the dedicated in-app privacy policy embedded in the Android app?
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={() => onNavigate('app-privacy')}
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-xs font-semibold text-white transition-colors shrink-0"
+        >
+          <span>View In-App Policy</span>
+          <ExternalLink className="w-3.5 h-3.5 text-[#ff6767]" />
+        </button>
       </div>
 
       {/* Tabs */}

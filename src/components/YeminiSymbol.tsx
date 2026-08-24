@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import yeminiSymbolAsset from '../assets/yeminilogo.png';
 
 interface YeminiSymbolProps {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'custom';
@@ -11,7 +12,7 @@ export const YeminiSymbol: React.FC<YeminiSymbolProps> = ({
   className = '',
   glow = false
 }) => {
-  const [hasError, setHasError] = useState(false);
+  const [loadStage, setLoadStage] = useState<number>(0);
 
   const sizeClasses = {
     xs: 'w-4 h-4',
@@ -23,31 +24,39 @@ export const YeminiSymbol: React.FC<YeminiSymbolProps> = ({
     custom: ''
   };
 
+  const handleImgError = () => {
+    if (loadStage === 0) {
+      setLoadStage(1);
+    } else {
+      setLoadStage(2);
+    }
+  };
+
   return (
-    <div className={`relative inline-flex items-center justify-center shrink-0 ${sizeClasses[size]} ${className}`}>
-      {!hasError ? (
+    <span className={`relative inline-flex items-center justify-center shrink-0 align-middle ${sizeClasses[size]} ${className}`}>
+      {loadStage <= 1 ? (
         <img
-          src="/yeminilogo.png"
+          src={loadStage === 0 ? yeminiSymbolAsset : '/yeminilogo.png'}
           alt="Yemini Symbol"
           className={`w-full h-full object-contain ${
             glow ? 'filter drop-shadow-[0_0_12px_rgba(255,103,103,0.45)]' : ''
           }`}
           referrerPolicy="no-referrer"
-          onError={() => setHasError(true)}
+          onError={handleImgError}
         />
       ) : (
-        <div className="w-full h-full rounded-lg bg-[#0e0e13] border border-zinc-800 flex items-center justify-center p-1">
+        <span className="w-full h-full rounded-lg bg-gradient-to-br from-[#5b0000] to-[#ff4d4d] inline-flex items-center justify-center p-1 shadow-sm">
           <svg viewBox="0 0 32 32" className="w-full h-full" fill="none">
             <path
               d="M7 8L16 16L25 8M16 16V25"
-              stroke="#ff4d4d"
-              strokeWidth="2.75"
+              stroke="#ffffff"
+              strokeWidth="3"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
           </svg>
-        </div>
+        </span>
       )}
-    </div>
+    </span>
   );
 };

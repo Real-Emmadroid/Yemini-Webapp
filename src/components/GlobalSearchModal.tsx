@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, X, BookOpen, Package, Download, Sparkles, FileText, ArrowRight, CornerDownLeft } from 'lucide-react';
+import { Search, X, BookOpen, Download, Sparkles, FileText, ArrowRight, CornerDownLeft, ShieldCheck } from 'lucide-react';
 import { PageRoute, SearchResultItem } from '../types';
-import { extensionsData } from '../data/extensionsData';
 import { docArticles } from '../data/docsData';
 import { platformsData } from '../data/downloadsData';
 import { resourcesData } from '../data/resourcesData';
@@ -51,15 +50,13 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
       category: 'Product',
       route: 'ai'
     },
-    // Extensions
-    ...extensionsData.map(ext => ({
-      id: `ext-${ext.id}`,
-      title: `${ext.displayName} (${ext.name})`,
-      description: ext.shortDescription,
-      category: 'Extension' as const,
-      route: 'extensions' as PageRoute,
-      targetId: ext.id
-    })),
+    {
+      id: 'legal-app-privacy',
+      title: 'Yemini Android App Privacy Policy',
+      description: 'Dedicated in-app privacy policy for Yemini Code Editor Android app & offline runtime plugins.',
+      category: 'Legal',
+      route: 'app-privacy'
+    },
     // Docs
     ...Object.values(docArticles).map(doc => ({
       id: `doc-${doc.id}`,
@@ -135,12 +132,12 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
     switch (category) {
       case 'Product':
         return <Sparkles className="w-4 h-4 text-[#ff6767]" />;
-      case 'Extension':
-        return <Package className="w-4 h-4 text-amber-400" />;
       case 'Docs':
         return <BookOpen className="w-4 h-4 text-sky-400" />;
       case 'Download':
         return <Download className="w-4 h-4 text-emerald-400" />;
+      case 'Legal':
+        return <ShieldCheck className="w-4 h-4 text-[#ff8585]" />;
       default:
         return <FileText className="w-4 h-4 text-zinc-400" />;
     }
@@ -158,7 +155,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Search documentation, extensions, downloads, guides..."
+            placeholder="Search documentation, downloads, guides..."
             className="w-full bg-transparent text-white placeholder-zinc-500 text-base focus:outline-none"
           />
           {query && (
@@ -182,7 +179,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
           {filteredItems.length === 0 ? (
             <div className="py-12 text-center text-zinc-500">
               <p className="text-sm">No results found for &ldquo;{query}&rdquo;</p>
-              <p className="text-xs text-zinc-600 mt-1">Try searching for &quot;Python&quot;, &quot;Android&quot;, &quot;Terminal&quot;, or &quot;Desktop&quot;</p>
+              <p className="text-xs text-zinc-600 mt-1">Try searching for &quot;Python&quot;, &quot;Android&quot;, &quot;Privacy&quot;, &quot;Terminal&quot;, or &quot;Desktop&quot;</p>
             </div>
           ) : (
             filteredItems.map((item, index) => {

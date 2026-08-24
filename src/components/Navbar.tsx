@@ -3,8 +3,7 @@ import { YeminiLogo } from './YeminiLogo';
 import { PageRoute } from '../types';
 import { 
   Search, ChevronDown, Menu, X, Smartphone, Monitor, Sparkles, 
-  Download, Layers, ShieldCheck, HelpCircle, BookOpen, ExternalLink,
-  ChevronRight
+  Download, ShieldCheck, BookOpen, ChevronRight, FileText
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -62,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Left: Brand Logo (yemini.png with centered subtitle) */}
+          {/* Left: Brand Logo */}
           <button
             onClick={() => handleLinkClick('home')}
             className="text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6767] rounded-lg transition-transform active:scale-95"
@@ -144,18 +143,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </div>
 
-            {/* Extensions */}
-            <button
-              onClick={() => handleLinkClick('extensions')}
-              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                currentRoute === 'extensions'
-                  ? 'text-white bg-zinc-800/50'
-                  : 'text-zinc-400 hover:text-white hover:bg-zinc-800/30'
-              }`}
-            >
-              Extensions
-            </button>
-
             {/* Downloads */}
             <button
               onClick={() => handleLinkClick('download')}
@@ -206,7 +193,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <kbd className="px-1.5 py-0.5 rounded bg-zinc-800 text-[10px] text-zinc-400 border border-zinc-700">⌘K</kbd>
             </button>
 
-            {/* Sign In Mock Trigger */}
+            {/* Sign In Trigger */}
             <button
               onClick={() => handleLinkClick('docs')}
               className="text-sm font-medium text-zinc-400 hover:text-white px-2 py-1.5 transition-colors"
@@ -333,16 +320,6 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               <div className="grid grid-cols-2 gap-2">
                 <button
-                  onClick={() => handleLinkClick('extensions')}
-                  className={`flex items-center gap-2 p-3 rounded-xl text-xs font-semibold text-left transition-colors ${
-                    currentRoute === 'extensions' ? 'bg-zinc-800 text-white' : 'bg-zinc-900/60 text-zinc-300 hover:bg-zinc-800/50'
-                  }`}
-                >
-                  <Layers className="w-4 h-4 text-[#ff6767]" />
-                  <span>Extensions</span>
-                </button>
-
-                <button
                   onClick={() => handleLinkClick('download')}
                   className={`flex items-center gap-2 p-3 rounded-xl text-xs font-semibold text-left transition-colors ${
                     currentRoute === 'download' ? 'bg-zinc-800 text-white' : 'bg-zinc-900/60 text-zinc-300 hover:bg-zinc-800/50'
@@ -360,6 +337,16 @@ export const Navbar: React.FC<NavbarProps> = ({
                 >
                   <BookOpen className="w-4 h-4 text-[#ff6767]" />
                   <span>Documentation</span>
+                </button>
+
+                <button
+                  onClick={() => handleLinkClick('resources')}
+                  className={`flex items-center gap-2 p-3 rounded-xl text-xs font-semibold text-left transition-colors ${
+                    currentRoute === 'resources' ? 'bg-zinc-800 text-white' : 'bg-zinc-900/60 text-zinc-300 hover:bg-zinc-800/50'
+                  }`}
+                >
+                  <FileText className="w-4 h-4 text-[#ff6767]" />
+                  <span>Resources</span>
                 </button>
 
                 <button

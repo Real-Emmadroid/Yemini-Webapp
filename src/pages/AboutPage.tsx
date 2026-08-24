@@ -1,9 +1,8 @@
 import React from 'react';
 import { PageRoute } from '../types';
-import { YeminiLogo } from '../components/YeminiLogo';
 import { 
-  ShieldCheck, Globe, Cpu, Sparkles, Terminal, 
-  ArrowRight, Heart, Users, CheckCircle2 
+  ShieldCheck, Cpu, Terminal, 
+  ArrowRight, Users, CheckCircle2 
 } from 'lucide-react';
 
 interface AboutPageProps {
@@ -15,8 +14,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
     <div className="pt-24 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-24">
       {/* About Hero */}
       <div className="text-center max-w-4xl mx-auto space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
-          <Globe className="w-3.5 h-3.5 text-[#ff6767]" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
+          <ShieldCheck className="w-4 h-4 text-[#ff6767]" />
           <span>STF Ecosystem • Sphere Tech Foundation</span>
         </div>
 
@@ -48,16 +47,18 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
         </div>
 
         <div className="lg:col-span-5 flex justify-center">
-          <div className="p-8 rounded-3xl bg-zinc-900/60 border border-zinc-800 text-center space-y-4 max-w-sm">
-            <YeminiLogo size="lg" className="mx-auto" />
+          <div className="p-8 rounded-3xl bg-zinc-900/60 border border-zinc-800 text-center space-y-5 max-w-sm w-full">
+            <div className="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 text-[#ff6767] mx-auto w-fit">
+              <ShieldCheck className="w-8 h-8" />
+            </div>
             <div className="space-y-1">
               <h4 className="text-lg font-bold text-white">STF Ecosystem Standard</h4>
               <p className="text-xs text-zinc-400">
                 Sphere Tech Foundation stewards core protocols, security audits, and first-party toolchains for Yemini.
               </p>
             </div>
-            <div className="pt-2 text-xs font-mono text-emerald-400 flex items-center justify-center gap-1">
-              <ShieldCheck className="w-4 h-4" />
+            <div className="pt-2 text-xs font-mono text-emerald-400 flex items-center justify-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4" />
               <span>Independent &amp; Sovereign Tooling</span>
             </div>
           </div>
@@ -92,7 +93,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
             </div>
             <h3 className="text-lg font-bold text-white">First-Party Trust &amp; Security</h3>
             <p className="text-xs text-zinc-400 leading-relaxed">
-              Our marketplace is strictly first-party. STF Ecosystem cryptographically audits and signs every toolchain to protect your machine from supply-chain risks.
+              Our architecture is verified first-party. STF Ecosystem cryptographically audits and signs every toolchain to protect your machine from supply-chain risks.
             </p>
           </div>
 
@@ -114,7 +115,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
           Join our global engineering community
         </h3>
         <p className="text-sm text-zinc-400 max-w-xl mx-auto">
-          Participate in technical RFCs, suggest runtime extensions, and shape the future of mobile and desktop coding.
+          Participate in technical RFCs, suggest runtime integrations, and shape the future of mobile and desktop coding.
         </p>
         <div className="flex justify-center gap-4">
           <button

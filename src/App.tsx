@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PageRoute, ExtensionItem } from './types';
+import { PageRoute } from './types';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { GlobalSearchModal } from './components/GlobalSearchModal';
@@ -9,7 +9,6 @@ import { HomePage } from './pages/HomePage';
 import { MobilePage } from './pages/MobilePage';
 import { DesktopPage } from './pages/DesktopPage';
 import { AiPage } from './pages/AiPage';
-import { ExtensionsPage } from './pages/ExtensionsPage';
 import { DownloadPage } from './pages/DownloadPage';
 import { DocsPage } from './pages/DocsPage';
 import { ResourcesPage } from './pages/ResourcesPage';
@@ -17,29 +16,40 @@ import { AboutPage } from './pages/AboutPage';
 import { SecurityPage } from './pages/SecurityPage';
 import { ContactPage } from './pages/ContactPage';
 import { LegalPage } from './pages/LegalPage';
+import { AppPrivacyPage } from './pages/AppPrivacyPage';
 
 export function App() {
   const [currentRoute, setCurrentRoute] = useState<PageRoute>('home');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [selectedExtension, setSelectedExtension] = useState<ExtensionItem | null>(null);
 
-  // Sync hash routing if present
+  // Sync hash and pathname routing
   useEffect(() => {
-    const handleHashChange = () => {
+    const handleLocationChange = () => {
       const hash = window.location.hash.replace('#/', '').replace('#', '') as PageRoute;
-      if (hash && [
-        'home', 'mobile', 'desktop', 'ai', 'extensions', 
+      const pathname = window.location.pathname.replace(/^\//, '') as PageRoute;
+      
+      const validRoutes: PageRoute[] = [
+        'home', 'mobile', 'desktop', 'ai', 
         'download', 'docs', 'resources', 'about', 'security', 
-        'contact', 'privacy', 'terms', 'cookies', 'acceptable-use', 'licenses'
-      ].includes(hash)) {
+        'contact', 'privacy', 'terms', 'cookies', 'acceptable-use', 'licenses',
+        'app-privacy', 'mobile-privacy'
+      ];
+
+      if (hash && validRoutes.includes(hash)) {
         setCurrentRoute(hash);
+      } else if (pathname && validRoutes.includes(pathname)) {
+        setCurrentRoute(pathname);
       }
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    handleHashChange();
+    window.addEventListener('hashchange', handleLocationChange);
+    window.addEventListener('popstate', handleLocationChange);
+    handleLocationChange();
 
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    return () => {
+      window.removeEventListener('hashchange', handleLocationChange);
+      window.removeEventListener('popstate', handleLocationChange);
+    };
   }, []);
 
   const navigateTo = (route: PageRoute) => {
@@ -48,13 +58,16 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleOpenExtensionModal = (ext: ExtensionItem) => {
-    setSelectedExtension(ext);
-  };
+  // Standalone in-app privacy policy route (no navbar, no footer) for Android WebView embed
+  const isStandaloneAppPrivacy = currentRoute === 'app-privacy' || currentRoute === 'mobile-privacy';
 
-  const handleCloseExtensionModal = () => {
-    setSelectedExtension(null);
-  };
+  if (isStandaloneAppPrivacy) {
+    return (
+      <div className="min-h-screen bg-[#070709] text-zinc-100 font-sans selection:bg-[#5b0000] selection:text-[#ff8585]">
+        <AppPrivacyPage />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#070709] text-zinc-100 flex flex-col font-sans selection:bg-[#5b0000] selection:text-[#ff8585]">
@@ -68,10 +81,7 @@ export function App() {
       {/* Main Page Route View */}
       <main className="flex-1">
         {currentRoute === 'home' && (
-          <HomePage
-            onNavigate={navigateTo}
-            onOpenExtensionModal={handleOpenExtensionModal}
-          />
+          <HomePage onNavigate={navigateTo} />
         )}
 
         {currentRoute === 'mobile' && (
@@ -84,15 +94,6 @@ export function App() {
 
         {currentRoute === 'ai' && (
           <AiPage onNavigate={navigateTo} />
-        )}
-
-        {currentRoute === 'extensions' && (
-          <ExtensionsPage
-            onNavigate={navigateTo}
-            selectedExtension={selectedExtension}
-            onOpenExtensionModal={handleOpenExtensionModal}
-            onCloseExtensionModal={handleCloseExtensionModal}
-          />
         )}
 
         {currentRoute === 'download' && (
@@ -139,10 +140,6 @@ export function App() {
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
         onNavigate={navigateTo}
-        onOpenExtension={(ext) => {
-          setSelectedExtension(ext);
-          navigateTo('extensions');
-        }}
       />
     </div>
   );

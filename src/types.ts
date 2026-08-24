@@ -3,7 +3,6 @@ export type PageRoute =
   | 'mobile'
   | 'desktop'
   | 'ai'
-  | 'extensions'
   | 'download'
   | 'docs'
   | 'resources'
@@ -14,7 +13,9 @@ export type PageRoute =
   | 'terms'
   | 'cookies'
   | 'acceptable-use'
-  | 'licenses';
+  | 'licenses'
+  | 'app-privacy'
+  | 'mobile-privacy';
 
 export interface ProductFeature {
   title: string;
@@ -34,36 +35,6 @@ export interface ProductInfo {
   route: PageRoute;
   features: ProductFeature[];
   specs: { label: string; value: string }[];
-}
-
-export type ExtensionCategory = 
-  | 'all'
-  | 'languages'
-  | 'developer-tools'
-  | 'themes'
-  | 'debugging'
-  | 'formatting'
-  | 'linters';
-
-export interface ExtensionItem {
-  id: string;
-  name: string;
-  displayName: string;
-  category: ExtensionCategory;
-  version: string;
-  size: string;
-  publisher: string;
-  verified: boolean;
-  shortDescription: string;
-  longDescription: string;
-  compatibility: ('Mobile' | 'Desktop')[];
-  iconName: string;
-  rating: number;
-  downloads: string;
-  tags: string[];
-  features: string[];
-  command: string;
-  lastUpdated: string;
 }
 
 export interface PlatformDownload {
@@ -163,7 +134,7 @@ export interface SearchResultItem {
   id: string;
   title: string;
   description: string;
-  category: 'Product' | 'Extension' | 'Docs' | 'Download' | 'Resource' | 'Legal';
+  category: 'Product' | 'Docs' | 'Download' | 'Resource' | 'Legal';
   route: PageRoute;
   targetId?: string;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { YeminiLogo } from './YeminiLogo';
 import { PageRoute } from '../types';
-import { Github, Twitter, Linkedin, Youtube, ShieldCheck, Globe, Terminal, ArrowUpRight } from 'lucide-react';
+import { Github, Twitter, Linkedin, Youtube, ArrowUpRight } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (route: PageRoute) => void;
@@ -107,14 +107,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   <span className="text-[9px] font-mono px-1 rounded bg-[#5b0000]/60 text-[#ff8585] border border-[#ff6767]/30">Preview</span>
                 </button>
               </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('extensions')}
-                  className="hover:text-white transition-colors text-left"
-                >
-                  Extensions Marketplace
-                </button>
-              </li>
             </ul>
           </div>
 
@@ -180,7 +172,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li>
                 <button
                   onClick={() => onNavigate('about')}
-                  className="hover:text-white transition-colors flex items-center gap-1 group text-left"
+                  className="hover:text-white transition-colors flex items-center gap-1.5 group text-left"
                 >
                   <span>STF Ecosystem</span>
                   <ArrowUpRight className="w-3 h-3 text-zinc-600 group-hover:text-white" />

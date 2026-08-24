@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import defaultYeminiImg from '../assets/yemini.png';
+import fallbackSymbolImg from '../assets/yeminilogo.png';
 
 interface YeminiLogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -11,9 +13,13 @@ export const YeminiLogo: React.FC<YeminiLogoProps> = ({
   size = 'md',
   showSubtitle = true,
   className = '',
-  imageSrc = '/yemini.png'
+  imageSrc
 }) => {
-  const [imageError, setImageError] = useState(false);
+  // Stage 0: default direct import / passed src
+  // Stage 1: try public relative url
+  // Stage 2: fallback symbol
+  // Stage 3: SVG vector fallback
+  const [loadStage, setLoadStage] = useState<number>(0);
 
   // Height mappings for the horizontal logotype
   const logoHeights = {
@@ -30,38 +36,67 @@ export const YeminiLogo: React.FC<YeminiLogoProps> = ({
     xl: 'text-xs'
   };
 
+  // Determine current image candidate
+  const currentSrc = imageSrc || defaultYeminiImg;
+
+  const handlePrimaryError = () => {
+    if (loadStage === 0) {
+      setLoadStage(1);
+    } else if (loadStage === 1) {
+      setLoadStage(2);
+    } else {
+      setLoadStage(3);
+    }
+  };
+
   return (
-    <div className={`inline-flex flex-col items-center justify-center select-none group text-center ${className}`}>
-      {/* Horizontal Logotype Image (yemini.png) */}
-      <div className="flex items-center justify-center">
-        {!imageError ? (
+    <span className={`inline-flex flex-col items-center justify-center select-none group text-center ${className}`}>
+      {/* Horizontal Logotype Image */}
+      <span className="inline-flex items-center justify-center">
+        {loadStage <= 1 ? (
           <img
-            src={imageSrc}
+            src={loadStage === 0 ? currentSrc : '/yemini.png'}
             alt="Yemini"
             className={`${logoHeights[size]} w-auto object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-[0_2px_14px_rgba(255,103,103,0.2)]`}
             referrerPolicy="no-referrer"
-            onError={() => setImageError(true)}
+            onError={handlePrimaryError}
           />
-        ) : (
-          <div className="flex items-center gap-2.5">
+        ) : loadStage === 2 ? (
+          <span className="inline-flex items-center gap-2.5">
             <img
-              src="/yeminilogo.png"
+              src={fallbackSymbolImg || '/yeminilogo.png'}
               alt="Yemini Symbol"
               className="w-9 h-9 object-contain"
               referrerPolicy="no-referrer"
+              onError={() => setLoadStage(3)}
             />
             <span className="font-extrabold text-white text-2xl tracking-tight">Yemini</span>
-          </div>
+          </span>
+        ) : (
+          <span className="inline-flex items-center gap-2.5 py-1">
+            <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#5b0000] via-[#b31217] to-[#ff4d4d] flex items-center justify-center shadow-lg shadow-[#ff4d4d]/20">
+              <svg viewBox="0 0 32 32" className="w-5 h-5" fill="none">
+                <path
+                  d="M7 8L16 16L25 8M16 16V25"
+                  stroke="#ffffff"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+            <span className="font-extrabold text-white text-2xl tracking-tight">Yemini</span>
+          </span>
         )}
-      </div>
+      </span>
 
-      {/* Subtitle centered properly directly under the logo, refined and smaller */}
+      {/* Subtitle centered properly directly under the logo without any unrequested icon */}
       {showSubtitle && (
-        <div className={`${subtitleSizes[size]} text-zinc-400 font-medium tracking-wide -mt-0.5 flex items-center justify-center gap-1`}>
+        <span className={`${subtitleSizes[size]} text-zinc-400 font-medium tracking-wide -mt-0.5 inline-flex items-center justify-center gap-1`}>
           <span className="text-zinc-500 font-normal">by</span>
           <span className="text-zinc-300 font-semibold group-hover:text-white transition-colors">STF Ecosystem</span>
-        </div>
+        </span>
       )}
-    </div>
+    </span>
   );
 };

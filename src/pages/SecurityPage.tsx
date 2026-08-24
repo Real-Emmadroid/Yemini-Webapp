@@ -14,8 +14,8 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({ onNavigate }) => {
     <div className="pt-24 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-20">
       {/* Security Hero */}
       <div className="text-center max-w-3xl mx-auto space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
+          <ShieldCheck className="w-4 h-4 text-[#ff6767]" />
           <span>STF Trust &amp; Security Architecture</span>
         </div>
 
@@ -35,9 +35,9 @@ export const SecurityPage: React.FC<SecurityPageProps> = ({ onNavigate }) => {
           <div className="p-3 rounded-2xl bg-zinc-900 border border-zinc-800 text-[#ff8585] w-fit">
             <Lock className="w-6 h-6" />
           </div>
-          <h3 className="text-xl font-bold text-white">First-Party Curated Marketplace</h3>
+          <h3 className="text-xl font-bold text-white">First-Party Curated Toolchains</h3>
           <p className="text-sm text-zinc-400 leading-relaxed">
-            Unlike traditional open plugin registries that have suffered from typosquatting and malicious credential stealers, the Yemini Extension Marketplace is strictly first-party. Every runtime, formatter, and debugger is compiled and signed directly by STF Ecosystem engineers.
+            Unlike traditional open registries that suffer from typosquatting and malicious credential stealers, Yemini toolchains are strictly first-party. Every runtime, formatter, and debugger is compiled and signed directly by STF Ecosystem engineers.
           </p>
         </div>
 

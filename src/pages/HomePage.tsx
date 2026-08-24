@@ -1,9 +1,9 @@
 import React from 'react';
 import { PageRoute } from '../types';
 import { 
-  ArrowRight, Download, Sparkles, Smartphone, Monitor, Package, 
-  Terminal, ShieldCheck, Zap, Layers, HardDrive, WifiOff, CheckCircle2, 
-  ExternalLink, ChevronRight, Play, Code2, Cpu 
+  ArrowRight, Download, Sparkles, Smartphone, Monitor, 
+  Terminal, ShieldCheck, Zap, HardDrive, WifiOff, CheckCircle2, 
+  Play, Code2, Cpu 
 } from 'lucide-react';
 import { CodeWindow } from '../components/CodeWindow';
 import { PhoneMockup } from '../components/PhoneMockup';
@@ -12,34 +12,25 @@ import { AiAgentInteractive } from '../components/AiAgentInteractive';
 import { OfflineSimulator } from '../components/OfflineSimulator';
 import { HeroInteractiveBackground } from '../components/HeroInteractiveBackground';
 import { YeminiSymbol } from '../components/YeminiSymbol';
-import { extensionsData } from '../data/extensionsData';
-import { ExtensionCard } from '../components/ExtensionCard';
-import { ExtensionItem } from '../types';
 
 interface HomePageProps {
   onNavigate: (route: PageRoute) => void;
-  onOpenExtensionModal: (ext: ExtensionItem) => void;
 }
 
-export const HomePage: React.FC<HomePageProps> = ({
-  onNavigate,
-  onOpenExtensionModal
-}) => {
-  const featuredExtensions = extensionsData.slice(0, 6);
-
+export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   return (
     <div className="space-y-20 sm:space-y-32 pb-24 overflow-hidden">
       {/* HERO SECTION WITH INTERACTIVE BACKGROUND */}
-      <section className="relative pt-24 sm:pt-36 lg:pt-40 px-3.5 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-[75vh] sm:min-h-[80vh] flex flex-col justify-center">
+      <section className="relative pt-36 sm:pt-44 lg:pt-48 px-3.5 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-[75vh] sm:min-h-[80vh] flex flex-col justify-center">
         {/* Interactive Magnetic Wine Particles and Scanline Grid Canvas */}
         <HeroInteractiveBackground />
 
         {/* Ambient Gradient Radial Glow */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[900px] h-[250px] sm:h-[450px] bg-gradient-to-br from-[#5b0000]/30 via-[#ff6767]/10 to-transparent blur-[100px] sm:blur-[130px] pointer-events-none -z-10 rounded-full" />
 
-        <div className="text-center max-w-4xl mx-auto space-y-5 sm:space-y-8 relative z-10">
+        <div className="text-center max-w-4xl mx-auto space-y-5 sm:space-y-8 relative z-10 mt-4 sm:mt-0">
           {/* Massive Headline */}
-          <h1 className="text-4xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight text-white leading-[1.08] sm:leading-[1.05]">
+          <h1 className="text-4xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight text-white leading-[1.12] sm:leading-[1.05]">
             Build without <span className="text-yemini-gradient">limits.</span>
           </h1>
 
@@ -76,7 +67,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
 
         {/* Hero Interactive Code Window (Yemini Workspace) */}
-        <div className="mt-8 sm:mt-16 max-w-5xl mx-auto w-full relative z-10">
+        <div className="mt-10 sm:mt-16 max-w-5xl mx-auto w-full relative z-10">
           <CodeWindow />
         </div>
       </section>
@@ -253,51 +244,6 @@ export const HomePage: React.FC<HomePageProps> = ({
               <p className="text-xs text-zinc-400">Invoke intelligent refactoring and ship without limitations.</p>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* MULTICODE / EXTENSION MARKETPLACE SECTION */}
-      <section className="px-3.5 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8 sm:space-y-12">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6">
-          <div className="space-y-2 sm:space-y-3 max-w-2xl">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#ff8585]">
-              Modular Architecture
-            </span>
-            <h2 className="text-2xl sm:text-5xl font-extrabold text-white tracking-tight">
-              Install what you need.
-            </h2>
-            <p className="text-sm sm:text-lg text-zinc-400">
-              Your environment. Your stack. Yemini avoids multi-gigabyte bloat by allowing you to install only verified first-party language toolchains.
-            </p>
-          </div>
-
-          <button
-            onClick={() => onNavigate('extensions')}
-            className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white font-semibold text-xs sm:text-sm border border-zinc-800 hover:border-zinc-700 transition-colors shrink-0 self-start md:self-auto"
-          >
-            <span>View All Extensions</span>
-            <ArrowRight className="w-4 h-4 text-[#ff6767]" />
-          </button>
-        </div>
-
-        {/* First-Party Guarantee Banner */}
-        <div className="p-3.5 sm:p-4 rounded-2xl bg-[#0e0e14] border border-zinc-800/80 flex items-center gap-2.5 sm:gap-3 text-[11px] sm:text-xs text-zinc-300 font-mono">
-          <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 shrink-0" />
-          <span>
-            First-Party Curation: All Yemini extensions are authored, signed, and maintained exclusively by STF Ecosystem.
-          </span>
-        </div>
-
-        {/* Extension Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {featuredExtensions.map((ext) => (
-            <ExtensionCard
-              key={ext.id}
-              extension={ext}
-              onOpenDetails={onOpenExtensionModal}
-              onNavigateToDownload={() => onNavigate('download')}
-            />
-          ))}
         </div>
       </section>
 
