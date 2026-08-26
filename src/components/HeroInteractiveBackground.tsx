@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 interface Particle {
   x: number;
@@ -20,16 +21,22 @@ interface GridNode {
   y: number;
   row: number;
   col: number;
-  active: boolean;      // Whether this node is active or part of the modular lattice cutouts
-  hasRight: boolean;    // Connects horizontally
-  hasBottom: boolean;   // Connects vertically
-  isFloatingDot: boolean; // Standalone floating node
+  active: boolean;
+  hasRight: boolean;
+  hasBottom: boolean;
+  isFloatingDot: boolean;
   glow: number;
 }
 
 export const HeroInteractiveBackground: React.FC = () => {
+  const { theme } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const themeRef = useRef(theme);
+
+  useEffect(() => {
+    themeRef.current = theme;
+  }, [theme]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -56,17 +63,26 @@ export const HeroInteractiveBackground: React.FC = () => {
     let idleTimer: NodeJS.Timeout | null = null;
     const particles: Particle[] = [];
 
-    // Scanline state: gentle downward progression
+    // Scanline state
     let scanlineY = -50;
     const scanlineSpeed = 0.95;
 
-    // Deep wine & ruby palette
-    const winePalette = [
+    // Dark wine & ruby palette
+    const darkWinePalette = [
       'rgba(255, 103, 103,',  // Bright ruby
       'rgba(255, 77, 77,',    // Crimson
       'rgba(170, 17, 17,',    // Deep wine
       'rgba(255, 160, 160,',  // Rose glow
       'rgba(91, 0, 0,'        // Obsidian wine
+    ];
+
+    // Light mode palette: refined graphite, sapphire, slate, light ruby
+    const lightPalette = [
+      'rgba(0, 102, 204,',    // Apple blue
+      'rgba(134, 134, 139,',  // Slate gray
+      'rgba(186, 23, 36,',    // Ruby accent
+      'rgba(66, 66, 69,',     // Charcoal
+      'rgba(0, 68, 136,'      // Deep sapphire
     ];
 
     // Build the curved perspective node lattice
@@ -75,11 +91,8 @@ export const HeroInteractiveBackground: React.FC = () => {
       gridNodes = [];
       const cols = Math.ceil(width / 38) + 4;
       const rows = Math.ceil(height / 38) + 4;
-      const centerX = width / 2;
 
-      // Deterministic seed for aesthetic modular cutouts (like in reference image)
       const isCellActive = (r: number, c: number) => {
-        // Density pattern creating organic clusters with some open pockets
         const val = Math.sin(r * 0.45 + c * 0.3) * Math.cos(r * 0.25 - c * 0.5);
         const centerDist = Math.hypot((c - cols / 2) / cols, (r - rows / 2) / rows);
         return val > -0.28 || centerDist < 0.45;
@@ -88,10 +101,9 @@ export const HeroInteractiveBackground: React.FC = () => {
       for (let r = 0; r <= rows; r++) {
         const rowNodes: GridNode[] = [];
         for (let c = 0; c <= cols; c++) {
-          const normX = (c - cols / 2) / (cols / 2); // -1 to 1
+          const normX = (c - cols / 2) / (cols / 2);
           const normY = r / rows;
 
-          // Spherical / barrel perspective curvature (curving upwards toward the horizon)
           const curveOffset = Math.pow(normX, 2) * -38 * (1 - normY * 0.3);
           const rawX = c * 38 - 50;
           const rawY = r * 38 - 30 + curveOffset;
@@ -145,13 +157,14 @@ export const HeroInteractiveBackground: React.FC = () => {
       mouse.y = newY;
       mouse.isMoving = true;
 
-      // Spawn particles only while actively moving pointer
+      const currentPalette = themeRef.current === 'light' ? lightPalette : darkWinePalette;
+
       if (dist > 1.2 && particles.length < 80) {
         const count = Math.min(Math.floor(dist / 4) + 1, 3);
         for (let i = 0; i < count; i++) {
           const angle = Math.random() * Math.PI * 2;
           const spread = Math.random() * 18 + 4;
-          const colorBase = winePalette[Math.floor(Math.random() * winePalette.length)];
+          const colorBase = currentPalette[Math.floor(Math.random() * currentPalette.length)];
           const maxLife = Math.random() * 45 + 35;
 
           particles.push({
@@ -169,7 +182,6 @@ export const HeroInteractiveBackground: React.FC = () => {
         }
       }
 
-      // If cursor pauses for 90ms, particles sleep
       if (idleTimer) clearTimeout(idleTimer);
       idleTimer = setTimeout(() => {
         mouse.isMoving = false;
@@ -187,9 +199,9 @@ export const HeroInteractiveBackground: React.FC = () => {
     window.addEventListener('mousemove', handlePointerMove);
     container.addEventListener('mouseleave', handlePointerLeave);
 
-    // Animation Loop
     const render = () => {
       ctx.clearRect(0, 0, width, height);
+      const isLight = themeRef.current === 'light';
 
       // 1. Advance scanline
       scanlineY += scanlineSpeed;
@@ -200,19 +212,33 @@ export const HeroInteractiveBackground: React.FC = () => {
       // Draw subtle ambient scanline glow band
       if (scanlineY >= -50 && scanlineY <= height + 50) {
         const beamGrad = ctx.createLinearGradient(0, scanlineY - 60, 0, scanlineY + 60);
-        beamGrad.addColorStop(0, 'rgba(91, 0, 0, 0)');
-        beamGrad.addColorStop(0.5, 'rgba(255, 77, 77, 0.07)');
-        beamGrad.addColorStop(1, 'rgba(91, 0, 0, 0)');
+        if (isLight) {
+          beamGrad.addColorStop(0, 'rgba(0, 102, 204, 0)');
+          beamGrad.addColorStop(0.5, 'rgba(0, 102, 204, 0.04)');
+          beamGrad.addColorStop(1, 'rgba(0, 102, 204, 0)');
+        } else {
+          beamGrad.addColorStop(0, 'rgba(91, 0, 0, 0)');
+          beamGrad.addColorStop(0.5, 'rgba(255, 77, 77, 0.07)');
+          beamGrad.addColorStop(1, 'rgba(91, 0, 0, 0)');
+        }
         ctx.fillStyle = beamGrad;
         ctx.fillRect(0, scanlineY - 60, width, 120);
 
-        // Core thin laser sweep line
+        // Core laser sweep line
         const laser = ctx.createLinearGradient(0, scanlineY, width, scanlineY);
-        laser.addColorStop(0, 'rgba(91, 0, 0, 0)');
-        laser.addColorStop(0.2, 'rgba(170, 17, 17, 0.35)');
-        laser.addColorStop(0.5, 'rgba(255, 103, 103, 0.8)');
-        laser.addColorStop(0.8, 'rgba(170, 17, 17, 0.35)');
-        laser.addColorStop(1, 'rgba(91, 0, 0, 0)');
+        if (isLight) {
+          laser.addColorStop(0, 'rgba(0, 102, 204, 0)');
+          laser.addColorStop(0.2, 'rgba(0, 102, 204, 0.15)');
+          laser.addColorStop(0.5, 'rgba(0, 102, 204, 0.4)');
+          laser.addColorStop(0.8, 'rgba(0, 102, 204, 0.15)');
+          laser.addColorStop(1, 'rgba(0, 102, 204, 0)');
+        } else {
+          laser.addColorStop(0, 'rgba(91, 0, 0, 0)');
+          laser.addColorStop(0.2, 'rgba(170, 17, 17, 0.35)');
+          laser.addColorStop(0.5, 'rgba(255, 103, 103, 0.8)');
+          laser.addColorStop(0.8, 'rgba(170, 17, 17, 0.35)');
+          laser.addColorStop(1, 'rgba(91, 0, 0, 0)');
+        }
         ctx.strokeStyle = laser;
         ctx.lineWidth = 1.2;
         ctx.beginPath();
@@ -226,7 +252,6 @@ export const HeroInteractiveBackground: React.FC = () => {
         for (let c = 0; c < gridNodes[r].length; c++) {
           const node = gridNodes[r][c];
 
-          // Magnetic interaction: slight gravitational tug from moving mouse
           if (mouse.isMoving && mouse.x > 0) {
             const dx = mouse.x - node.baseX;
             const dy = mouse.y - node.baseY;
@@ -247,7 +272,6 @@ export const HeroInteractiveBackground: React.FC = () => {
             node.glow *= 0.94;
           }
 
-          // Scanline excitation
           const distToScanline = Math.abs(node.y - scanlineY);
           if (distToScanline < 35) {
             node.glow = Math.max(node.glow, (1 - distToScanline / 35) * 0.85);
@@ -259,9 +283,15 @@ export const HeroInteractiveBackground: React.FC = () => {
             if (node.hasRight && c + 1 < gridNodes[r].length) {
               const rightNode = gridNodes[r][c + 1];
               const lineGlow = Math.max(node.glow, rightNode.glow);
-              ctx.strokeStyle = lineGlow > 0.1
-                ? `rgba(255, 103, 103, ${0.15 + lineGlow * 0.45})`
-                : 'rgba(255, 255, 255, 0.11)';
+              if (isLight) {
+                ctx.strokeStyle = lineGlow > 0.1
+                  ? `rgba(0, 102, 204, ${0.15 + lineGlow * 0.4})`
+                  : 'rgba(0, 0, 0, 0.06)';
+              } else {
+                ctx.strokeStyle = lineGlow > 0.1
+                  ? `rgba(255, 103, 103, ${0.15 + lineGlow * 0.45})`
+                  : 'rgba(255, 255, 255, 0.11)';
+              }
               ctx.lineWidth = lineGlow > 0.3 ? 1.4 : 0.9;
               ctx.beginPath();
               ctx.moveTo(node.x, node.y);
@@ -273,9 +303,15 @@ export const HeroInteractiveBackground: React.FC = () => {
             if (node.hasBottom && r + 1 < gridNodes.length) {
               const bottomNode = gridNodes[r + 1][c];
               const lineGlow = Math.max(node.glow, bottomNode.glow);
-              ctx.strokeStyle = lineGlow > 0.1
-                ? `rgba(255, 103, 103, ${0.15 + lineGlow * 0.45})`
-                : 'rgba(255, 255, 255, 0.11)';
+              if (isLight) {
+                ctx.strokeStyle = lineGlow > 0.1
+                  ? `rgba(0, 102, 204, ${0.15 + lineGlow * 0.4})`
+                  : 'rgba(0, 0, 0, 0.06)';
+              } else {
+                ctx.strokeStyle = lineGlow > 0.1
+                  ? `rgba(255, 103, 103, ${0.15 + lineGlow * 0.45})`
+                  : 'rgba(255, 255, 255, 0.11)';
+              }
               ctx.lineWidth = lineGlow > 0.3 ? 1.4 : 0.9;
               ctx.beginPath();
               ctx.moveTo(node.x, node.y);
@@ -286,22 +322,26 @@ export const HeroInteractiveBackground: React.FC = () => {
             // Draw Node Intersection Dot
             ctx.save();
             if (node.glow > 0.15) {
-              ctx.fillStyle = `rgba(255, 200, 200, ${0.7 + node.glow * 0.3})`;
-              ctx.shadowColor = 'rgba(255, 103, 103, 0.9)';
+              if (isLight) {
+                ctx.fillStyle = `rgba(0, 102, 204, ${0.7 + node.glow * 0.3})`;
+                ctx.shadowColor = 'rgba(0, 102, 204, 0.6)';
+              } else {
+                ctx.fillStyle = `rgba(255, 200, 200, ${0.7 + node.glow * 0.3})`;
+                ctx.shadowColor = 'rgba(255, 103, 103, 0.9)';
+              }
               ctx.shadowBlur = 6;
               ctx.beginPath();
               ctx.arc(node.x, node.y, 2.2 + node.glow * 0.8, 0, Math.PI * 2);
               ctx.fill();
             } else {
-              ctx.fillStyle = 'rgba(220, 220, 230, 0.65)';
+              ctx.fillStyle = isLight ? 'rgba(0, 0, 0, 0.15)' : 'rgba(220, 220, 230, 0.65)';
               ctx.beginPath();
               ctx.arc(node.x, node.y, 1.6, 0, Math.PI * 2);
               ctx.fill();
             }
             ctx.restore();
           } else if (node.isFloatingDot) {
-            // Floating isolated point (from sample image)
-            ctx.fillStyle = 'rgba(200, 200, 215, 0.4)';
+            ctx.fillStyle = isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(200, 200, 215, 0.4)';
             ctx.beginPath();
             ctx.arc(node.x, node.y, 1.3, 0, Math.PI * 2);
             ctx.fill();
@@ -309,13 +349,12 @@ export const HeroInteractiveBackground: React.FC = () => {
         }
       }
 
-      // 3. Render Magnetic Cursor Particles (Active on movement, sleeping on idle)
+      // 3. Render Magnetic Cursor Particles
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
         p.life++;
 
         if (mouse.isMoving && mouse.x > 0 && mouse.y > 0) {
-          // Magnet attraction physics towards cursor
           const dx = mouse.x - p.x;
           const dy = mouse.y - p.y;
           const dist = Math.hypot(dx, dy);
@@ -329,7 +368,6 @@ export const HeroInteractiveBackground: React.FC = () => {
           p.vx *= 0.91;
           p.vy *= 0.91;
         } else {
-          // Pointer stopped moving: decelerate and swift sleep-fade
           p.vx *= 0.82;
           p.vy *= 0.82;
           p.alpha *= 0.86;
@@ -349,20 +387,22 @@ export const HeroInteractiveBackground: React.FC = () => {
         // Draw particle dot with glow
         ctx.save();
         ctx.fillStyle = `${p.color} ${currentAlpha})`;
-        ctx.shadowColor = 'rgba(255, 103, 103, 0.8)';
+        ctx.shadowColor = isLight ? 'rgba(0, 102, 204, 0.6)' : 'rgba(255, 103, 103, 0.8)';
         ctx.shadowBlur = 8;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
 
-        // Magnetic connecting filaments when moving
+        // Magnetic connecting filaments
         if (mouse.isMoving) {
           for (let j = i - 1; j >= 0; j--) {
             const p2 = particles[j];
             const linkDist = Math.hypot(p.x - p2.x, p.y - p2.y);
             if (linkDist < 40) {
               const linkAlpha = (1 - linkDist / 40) * currentAlpha * 0.3;
-              ctx.strokeStyle = `rgba(255, 103, 103, ${linkAlpha})`;
+              ctx.strokeStyle = isLight 
+                ? `rgba(0, 102, 204, ${linkAlpha})`
+                : `rgba(255, 103, 103, ${linkAlpha})`;
               ctx.lineWidth = 0.7;
               ctx.beginPath();
               ctx.moveTo(p.x, p.y);
@@ -388,10 +428,12 @@ export const HeroInteractiveBackground: React.FC = () => {
     };
   }, []);
 
+  const isLight = theme === 'light';
+
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0"
+      className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0 transition-opacity duration-300"
       aria-hidden="true"
     >
       <canvas
@@ -399,8 +441,16 @@ export const HeroInteractiveBackground: React.FC = () => {
         className="w-full h-full block"
       />
       {/* Vignette gradients for edge blending */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#070709] via-transparent to-[#070709] pointer-events-none opacity-85" />
-      <div className="absolute inset-0 bg-radial-at-c from-transparent via-[#070709]/30 to-[#070709] pointer-events-none" />
+      <div className={`absolute inset-0 pointer-events-none transition-colors duration-300 ${
+        isLight 
+          ? 'bg-gradient-to-b from-[#f5f5f7]/80 via-transparent to-[#f5f5f7]/90' 
+          : 'bg-gradient-to-b from-[#070709] via-transparent to-[#070709] opacity-85'
+      }`} />
+      <div className={`absolute inset-0 pointer-events-none transition-colors duration-300 ${
+        isLight 
+          ? 'bg-radial-at-c from-transparent via-[#f5f5f7]/20 to-[#f5f5f7]' 
+          : 'bg-radial-at-c from-transparent via-[#070709]/30 to-[#070709]'
+      }`} />
     </div>
   );
 };

@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { PageRoute } from '../types';
 import { AiAgentInteractive } from '../components/AiAgentInteractive';
 import { YeminiSymbol } from '../components/YeminiSymbol';
+import { StatusBadge } from '../components/StatusBadge';
 import { 
   Sparkles, ShieldCheck, Terminal, FileCode, CheckCircle2, 
-  ArrowRight, Lock, Check, Send 
+  ArrowRight, Lock, Check, Send, BellRing 
 } from 'lucide-react';
 import { productsData } from '../data/productsData';
 
@@ -28,12 +29,10 @@ export const AiPage: React.FC<AiPageProps> = ({ onNavigate }) => {
     <div className="pt-24 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-24">
       {/* AI Hero */}
       <div className="text-center max-w-4xl mx-auto space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
+        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
           <YeminiSymbol size="xs" />
-          <span>Yemini AI Agent</span>
-          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#5b0000] text-[#ff8585] ml-1">
-            Coming Soon
-          </span>
+          <span>Yemini Intelligence</span>
+          <StatusBadge status="in-development" size="sm" />
         </div>
 
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight">
@@ -50,7 +49,7 @@ export const AiPage: React.FC<AiPageProps> = ({ onNavigate }) => {
           {submitted ? (
             <div className="p-4 rounded-2xl bg-emerald-950/60 border border-emerald-800/60 text-emerald-300 text-sm flex items-center justify-center gap-2 animate-fadeIn">
               <Check className="w-5 h-5" />
-              <span>You&apos;re on the early developer waitlist! We&apos;ll notify you upon release.</span>
+              <span>You&apos;re on the Yemini Intelligence developer waitlist!</span>
             </div>
           ) : (
             <form onSubmit={handleWaitlistSubmit} className="flex items-center gap-2 bg-[#0e0e13] border border-zinc-800 p-2 rounded-2xl shadow-xl">
@@ -64,14 +63,15 @@ export const AiPage: React.FC<AiPageProps> = ({ onNavigate }) => {
               />
               <button
                 type="submit"
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#5b0000] to-[#ff4d4d] hover:brightness-110 text-white font-semibold text-xs transition-all active:scale-95 shrink-0"
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#5b0000] to-[#ff4d4d] hover:brightness-110 text-white font-semibold text-xs transition-all active:scale-95 shrink-0 flex items-center gap-1.5"
               >
-                Join Beta
+                <BellRing className="w-3.5 h-3.5" />
+                <span>Join Beta</span>
               </button>
             </form>
           )}
           <p className="text-[11px] font-mono text-zinc-500 mt-2">
-            Target Release: Q4 2026 • Private preview builds for STF developers
+            In active development • Private preview rollout for STF developers
           </p>
         </div>
       </div>
@@ -80,7 +80,7 @@ export const AiPage: React.FC<AiPageProps> = ({ onNavigate }) => {
       <div className="space-y-6">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-mono uppercase tracking-widest text-[#ff8585]">
-            Live Simulation
+            Live Interactive Concept
           </span>
           <h2 className="text-2xl sm:text-3xl font-bold text-white">
             See the multi-turn agent loop in action

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PageRoute } from './types';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { GlobalSearchModal } from './components/GlobalSearchModal';
@@ -18,9 +19,12 @@ import { ContactPage } from './pages/ContactPage';
 import { LegalPage } from './pages/LegalPage';
 import { AppPrivacyPage } from './pages/AppPrivacyPage';
 
-export function App() {
+function AppContent() {
+  const { theme } = useTheme();
   const [currentRoute, setCurrentRoute] = useState<PageRoute>('home');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const isLight = theme === 'light';
 
   // Sync hash and pathname routing
   useEffect(() => {
@@ -63,14 +67,22 @@ export function App() {
 
   if (isStandaloneAppPrivacy) {
     return (
-      <div className="min-h-screen bg-[#070709] text-zinc-100 font-sans selection:bg-[#5b0000] selection:text-[#ff8585]">
+      <div className={`min-h-screen font-sans ${
+        isLight 
+          ? 'bg-[#f5f5f7] text-[#1d1d1f] selection:bg-[#0066cc] selection:text-white' 
+          : 'bg-black text-[#fadcd9] selection:bg-[#ba1724] selection:text-white'
+      }`}>
         <AppPrivacyPage />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#070709] text-zinc-100 flex flex-col font-sans selection:bg-[#5b0000] selection:text-[#ff8585]">
+    <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 ${
+      isLight 
+        ? 'bg-[#f5f5f7] text-[#1d1d1f] selection:bg-[#0066cc] selection:text-white' 
+        : 'bg-black text-[#fadcd9] selection:bg-[#ba1724] selection:text-white'
+    }`}>
       {/* Global Navbar */}
       <Navbar
         currentRoute={currentRoute}
@@ -142,6 +154,14 @@ export function App() {
         onNavigate={navigateTo}
       />
     </div>
+  );
+}
+
+export function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 

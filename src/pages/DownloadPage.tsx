@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { PageRoute, PlatformDownload } from '../types';
 import { platformsData, changelogData } from '../data/downloadsData';
+import { StatusBadge } from '../components/StatusBadge';
 import { 
   Download, Smartphone, Monitor, ShieldCheck, CheckCircle2, 
-  Copy, Check, FileCode2, Terminal, Info, Clock, Layers, Sparkles 
+  Copy, Check, FileCode2, Terminal, Info, Clock, Layers, Sparkles, BellRing
 } from 'lucide-react';
 
 interface DownloadPageProps {
@@ -14,9 +15,13 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
   const [activePlatformId, setActivePlatformId] = useState<'android' | 'windows' | 'macos' | 'linux'>('android');
   const [copiedSha, setCopiedSha] = useState(false);
   const [downloadModalTriggered, setDownloadModalTriggered] = useState<string | null>(null);
+  const [waitlistModalPlatform, setWaitlistModalPlatform] = useState<string | null>(null);
+  const [waitlistEmail, setWaitlistEmail] = useState('');
+  const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
   const [showChangelogModal, setShowChangelogModal] = useState(false);
 
   const activePlatform = platformsData.find(p => p.id === activePlatformId)!;
+  const isAvailable = activePlatform.status === 'available';
 
   const handleCopySha = (sha: string) => {
     navigator.clipboard.writeText(sha);
@@ -24,8 +29,21 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
     setTimeout(() => setCopiedSha(false), 2000);
   };
 
-  const handleDownloadClick = (platform: PlatformDownload) => {
-    setDownloadModalTriggered(platform.name);
+  const handleActionClick = (platform: PlatformDownload) => {
+    if (platform.status === 'available') {
+      setDownloadModalTriggered(platform.name);
+    } else {
+      setWaitlistModalPlatform(platform.name);
+      setWaitlistSubmitted(false);
+      setWaitlistEmail('');
+    }
+  };
+
+  const handleWaitlistSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (waitlistEmail.trim()) {
+      setWaitlistSubmitted(true);
+    }
   };
 
   return (
@@ -43,7 +61,7 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
         </h1>
 
         <p className="text-base sm:text-lg text-zinc-400">
-          Download the latest stable release for Android, Windows, macOS, or Linux. All packages are signed and maintained directly by STF Ecosystem.
+          Download the latest release for Android today, or join the developer waitlist for our upcoming desktop previews for macOS, Windows, and Linux.
         </p>
 
         <div className="flex items-center justify-center gap-3 pt-2 text-xs font-mono">
@@ -74,6 +92,11 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
               >
                 {plat.category === 'mobile' ? <Smartphone className="w-4 h-4" /> : <Monitor className="w-4 h-4" />}
                 <span>{plat.name}</span>
+                {plat.status === 'available' ? (
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                ) : (
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400/80" />
+                )}
               </button>
             );
           })}
@@ -84,25 +107,28 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
       <div className="max-w-4xl mx-auto bg-[#09090d] border border-zinc-800 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-8 yemini-glow-hover">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pb-6 border-b border-zinc-800">
           <div className="space-y-1">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
                 {activePlatform.name} — {activePlatform.subtitle}
               </h3>
+              <StatusBadge status={activePlatform.status} size="sm" />
             </div>
             <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-zinc-400 pt-1">
-              <span className="text-emerald-400 font-semibold">{activePlatform.version}</span>
+              <span className={isAvailable ? 'text-emerald-400 font-semibold' : 'text-amber-400 font-semibold'}>
+                {activePlatform.version}
+              </span>
               <span>•</span>
-              <span>Released {activePlatform.releaseDate}</span>
+              <span>{isAvailable ? `Released ${activePlatform.releaseDate}` : activePlatform.releaseDate}</span>
               <span>•</span>
               <span>{activePlatform.fileSize}</span>
             </div>
           </div>
 
           <button
-            onClick={() => handleDownloadClick(activePlatform)}
+            onClick={() => handleActionClick(activePlatform)}
             className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-[#5b0000] to-[#ff4d4d] hover:brightness-110 shadow-xl shadow-[#5b0000]/40 transition-all active:scale-95 shrink-0"
           >
-            <Download className="w-5 h-5" />
+            {isAvailable ? <Download className="w-5 h-5" /> : <BellRing className="w-5 h-5" />}
             <span>{activePlatform.downloadLabel}</span>
           </button>
         </div>
@@ -117,13 +143,15 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
           <div className="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 space-y-1">
             <div className="flex items-center justify-between">
               <span className="text-zinc-500">SHA-256 Checksum</span>
-              <button
-                onClick={() => handleCopySha(activePlatform.sha256)}
-                className="text-zinc-400 hover:text-white flex items-center gap-1 text-[10px]"
-              >
-                {copiedSha ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                <span>{copiedSha ? 'Copied' : 'Copy'}</span>
-              </button>
+              {isAvailable && (
+                <button
+                  onClick={() => handleCopySha(activePlatform.sha256)}
+                  className="text-zinc-400 hover:text-white flex items-center gap-1 text-[10px]"
+                >
+                  {copiedSha ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                  <span>{copiedSha ? 'Copied' : 'Copy'}</span>
+                </button>
+              )}
             </div>
             <span className="text-zinc-300 font-mono text-[11px] truncate block" title={activePlatform.sha256}>
               {activePlatform.sha256}
@@ -135,7 +163,7 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
           <div className="space-y-3">
             <h4 className="text-xs font-mono uppercase tracking-widest text-zinc-400">
-              Installation Instructions
+              {isAvailable ? 'Installation Instructions' : 'Roadmap & Distribution Plan'}
             </h4>
             <div className="space-y-2">
               {activePlatform.installSteps.map((step, idx) => (
@@ -165,7 +193,7 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
         </div>
       </div>
 
-      {/* Download Trigger Confirmation Modal */}
+      {/* Download Trigger Confirmation Modal (Mobile APK) */}
       {downloadModalTriggered && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
           <div className="w-full max-w-md bg-[#0e0e13] border border-zinc-800 rounded-3xl p-6 shadow-2xl space-y-5 text-center">
@@ -175,17 +203,17 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
 
             <div className="space-y-1">
               <h3 className="text-xl font-bold text-white">
-                Preparing {downloadModalTriggered} Package
+                Downloading {downloadModalTriggered} APK
               </h3>
               <p className="text-xs text-zinc-400">
-                Verifying digital signature from STF Ecosystem release mirror.
+                Official signed release package (v1.2.0-stable).
               </p>
             </div>
 
             <div className="p-3.5 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300 text-left space-y-1">
-              <p className="text-emerald-400">✔ Release signed by: Sphere Tech Foundation</p>
-              <p className="text-zinc-400">✔ Package: {activePlatform.packageType}</p>
-              <p className="text-zinc-400">✔ Checksum verification: Valid</p>
+              <p className="text-emerald-400">✔ Signed by: Sphere Tech Foundation</p>
+              <p className="text-zinc-400">✔ Package: yemini-mobile-v1.2.0.apk</p>
+              <p className="text-zinc-400">✔ Cryptographic Checksum: Verified</p>
             </div>
 
             <div className="flex gap-2">
@@ -202,9 +230,66 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
                 }}
                 className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#5b0000] to-[#ff4d4d] text-white text-xs font-semibold transition-all hover:brightness-110"
               >
-                View Setup Docs
+                View Setup Guide
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Desktop Waitlist Modal */}
+      {waitlistModalPlatform && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+          <div className="w-full max-w-md bg-[#0e0e13] border border-zinc-800 rounded-3xl p-6 shadow-2xl space-y-5 text-center">
+            <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-zinc-800 text-[#ff8585] flex items-center justify-center mx-auto shadow-lg">
+              <Monitor className="w-6 h-6" />
+            </div>
+
+            <div className="space-y-1">
+              <div className="flex items-center justify-center gap-2">
+                <h3 className="text-xl font-bold text-white">
+                  Yemini Desktop for {waitlistModalPlatform}
+                </h3>
+              </div>
+              <p className="text-xs text-zinc-400">
+                Currently in private development. Enter your email to be notified when the preview build is ready.
+              </p>
+            </div>
+
+            {waitlistSubmitted ? (
+              <div className="p-4 rounded-xl bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs space-y-2">
+                <Check className="w-5 h-5 mx-auto" />
+                <p className="font-semibold">You&apos;re on the {waitlistModalPlatform} waitlist!</p>
+                <p className="text-[11px] text-emerald-400/80">We will email you with your private access token as soon as builds roll out.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleWaitlistSubmit} className="space-y-3 text-left">
+                <div>
+                  <label className="text-xs font-mono text-zinc-400 block mb-1">Developer Email</label>
+                  <input
+                    type="email"
+                    value={waitlistEmail}
+                    onChange={(e) => setWaitlistEmail(e.target.value)}
+                    placeholder="name@company.com"
+                    required
+                    className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-3 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#ff6767]"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#5b0000] to-[#ff4d4d] text-white text-xs font-semibold hover:brightness-110 transition-all"
+                >
+                  Request Early Access
+                </button>
+              </form>
+            )}
+
+            <button
+              onClick={() => setWaitlistModalPlatform(null)}
+              className="w-full py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold transition-colors"
+            >
+              Close
+            </button>
           </div>
         </div>
       )}

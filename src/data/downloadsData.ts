@@ -29,17 +29,43 @@ export const platformsData: PlatformDownload[] = [
     ]
   },
   {
+    id: 'macos',
+    name: 'macOS',
+    subtitle: 'Yemini Desktop for Apple Silicon & Intel',
+    category: 'desktop',
+    version: 'Preview in development',
+    releaseDate: 'Coming Q4 2026',
+    status: 'coming-soon',
+    fileSize: '~85 MB (Target)',
+    packageType: '.dmg / Homebrew (In development)',
+    downloadLabel: 'Join macOS Waitlist',
+    sha256: 'In development — checksum published upon release',
+    supportedArchitectures: ['Apple Silicon (M1/M2/M3/M4)', 'Intel (x86_64)'],
+    requirements: [
+      'macOS 12.0 (Monterey) or newer (Sonoma / Sequoia ready)',
+      '4 GB unified memory minimum (8 GB+ recommended)',
+      '500 MB disk space',
+      'Metal GPU support enabled'
+    ],
+    installSteps: [
+      'Join the developer waitlist to receive access to the private beta build.',
+      'When released, DMG package will be signed with Apple Developer ID.',
+      'Homebrew Cask installation (`brew install --cask yemini`) will be enabled on launch.',
+      'Hardware-accelerated Metal text engine runs out of the box.'
+    ]
+  },
+  {
     id: 'windows',
     name: 'Windows',
     subtitle: 'Yemini Desktop for Windows 10 & 11',
     category: 'desktop',
-    version: '1.2.0-stable',
-    releaseDate: 'August 14, 2026',
-    status: 'available',
-    fileSize: '84.2 MB',
-    packageType: '.exe / .msi Installer',
-    downloadLabel: 'Download for Windows (x64)',
-    sha256: '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08',
+    version: 'Preview in development',
+    releaseDate: 'Coming Q4 2026',
+    status: 'coming-soon',
+    fileSize: '~80 MB (Target)',
+    packageType: '.exe / .msi (In development)',
+    downloadLabel: 'Join Windows Waitlist',
+    sha256: 'In development — checksum published upon release',
     supportedArchitectures: ['x64 (64-bit Intel/AMD)', 'ARM64 (Snapdragon X Elite)'],
     requirements: [
       'Windows 10 (version 1909+) or Windows 11',
@@ -48,36 +74,10 @@ export const platformsData: PlatformDownload[] = [
       'DirectX 11 or higher capable GPU for hardware-accelerated canvas rendering'
     ],
     installSteps: [
-      'Download `Yemini-Setup-1.2.0-x64.exe` installer.',
-      'Double-click the installer and follow the prompt (default installation path is `AppData\\Local\\Programs\\Yemini`).',
-      'Select "Add to PATH" if you wish to run `yemini` from PowerShell or Command Prompt.',
-      'Launch Yemini from the Start Menu and select your workspace folder.'
-    ]
-  },
-  {
-    id: 'macos',
-    name: 'macOS',
-    subtitle: 'Yemini Desktop for Apple Silicon & Intel',
-    category: 'desktop',
-    version: '1.2.0-stable',
-    releaseDate: 'August 14, 2026',
-    status: 'available',
-    fileSize: '88.7 MB (Universal Binary)',
-    packageType: '.dmg / Homebrew Cask',
-    downloadLabel: 'Download for macOS (Universal)',
-    sha256: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
-    supportedArchitectures: ['Apple Silicon (M1/M2/M3/M4)', 'Intel (x86_64)'],
-    requirements: [
-      'macOS 12.0 (Monterey) or newer (macOS Sonoma / Sequoia tested)',
-      '4 GB unified memory minimum (8 GB+ recommended)',
-      '500 MB disk space',
-      'Metal GPU support enabled'
-    ],
-    installSteps: [
-      'Download `Yemini-1.2.0-Universal.dmg`.',
-      'Open the `.dmg` archive and drag the Yemini icon into your `Applications` folder.',
-      'To install via Homebrew: run `brew install --cask yemini` in your Terminal.',
-      'Launch Yemini and enjoy native Metal-accelerated performance.'
+      'Join the developer waitlist for preview access notification.',
+      'Installers will include both standalone `.exe` and MSI enterprise deployment packages.',
+      'Supports integrated PowerShell, WSL2, and Windows Terminal interoperability.',
+      'Signed with STF Ecosystem EV code signing certificate.'
     ]
   },
   {
@@ -85,13 +85,13 @@ export const platformsData: PlatformDownload[] = [
     name: 'Linux',
     subtitle: 'Yemini Desktop for Debian, Ubuntu, Fedora, Arch',
     category: 'desktop',
-    version: '1.2.0-stable',
-    releaseDate: 'August 14, 2026',
-    status: 'available',
-    fileSize: '79.1 MB',
-    packageType: '.deb / .rpm / .AppImage / tar.gz',
-    downloadLabel: 'Download for Linux (.deb / AppImage)',
-    sha256: '4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a',
+    version: 'Preview in development',
+    releaseDate: 'Coming Q4 2026',
+    status: 'coming-soon',
+    fileSize: '~75 MB (Target)',
+    packageType: '.deb / AppImage / Flatpak (In development)',
+    downloadLabel: 'Join Linux Waitlist',
+    sha256: 'In development — checksum published upon release',
     supportedArchitectures: ['x86_64', 'aarch64 (ARM64)'],
     requirements: [
       'glibc 2.28+ (Ubuntu 20.04+, Debian 11+, Fedora 34+, Arch Linux)',
@@ -100,10 +100,9 @@ export const platformsData: PlatformDownload[] = [
       '500 MB available disk space'
     ],
     installSteps: [
-      'For Debian/Ubuntu: `sudo dpkg -i yemini_1.2.0_amd64.deb`',
-      'For AppImage: `chmod +x Yemini-1.2.0.AppImage && ./Yemini-1.2.0.AppImage`',
-      'For Arch (AUR): `yay -S yemini-bin`',
-      'Or extract the portable `yemini-1.2.0-linux-x64.tar.gz` to `/opt/yemini`.'
+      'Join the developer waitlist for the open beta release announcement.',
+      'Packages will be distributed via `.deb`, AppImage, AUR (`yemini-bin`), and Flatpak.',
+      'Zero external daemon dependencies; native POSIX shell execution.'
     ]
   }
 ];
@@ -112,13 +111,13 @@ export const changelogData: ChangelogRelease[] = [
   {
     version: 'v1.2.0',
     date: 'August 14, 2026',
-    badge: 'Latest Stable',
+    badge: 'Latest Stable (Mobile)',
     summary: 'Massive performance boost for mobile runtimes, new Rust toolchain support, and unified workspace syncing.',
     highlights: [
       'Introduced official first-party Rust Analyzer & Cargo toolchain extension',
       'Up to 40% faster cold starts on Android with native binary pre-compilation',
-      'Added split terminal support with multi-tab session management on Desktop',
-      'Refined touch accessory bar with gesture flicking for quick symbol input'
+      'Refined touch accessory bar with gesture flicking for quick symbol input',
+      'Added preview architecture for upcoming desktop unified workspace synchronization'
     ],
     changes: [
       {
@@ -143,7 +142,7 @@ export const changelogData: ChangelogRelease[] = [
         items: [
           'Resolved an issue where mobile terminal input would disconnect during backgrounding',
           'Fixed Prettier formatting timeout on large multi-megabyte JSON schema files',
-          'Corrected window frame snapping behavior on multi-monitor macOS setups'
+          'Corrected touch input cursor snapping on high-density OLED displays'
         ]
       },
       {
@@ -160,7 +159,7 @@ export const changelogData: ChangelogRelease[] = [
     date: 'June 28, 2026',
     summary: 'Node.js 22 LTS toolchain, improved Python Pyright language server, and full offline build capabilities.',
     highlights: [
-      'Added official Node.js 22 & TypeScript 5.8 runtime toolchain',
+      'Added official Node.js 22 & TypeScript runtime toolchain',
       'Upgraded Python extension with real-time Pyright type analysis',
       'Implemented offline-first project caching and build pipelines'
     ],
@@ -185,9 +184,9 @@ export const changelogData: ChangelogRelease[] = [
   {
     version: 'v1.0.0',
     date: 'May 02, 2026',
-    summary: 'Initial public launch of the Yemini developer ecosystem by STF Ecosystem (Sphere Tech Foundation).',
+    summary: 'Initial public launch of Yemini Mobile for Android by STF Ecosystem (Sphere Tech Foundation).',
     highlights: [
-      'Public debut of Yemini Mobile for Android and Yemini Desktop for Windows, macOS, and Linux',
+      'Public debut of Yemini Mobile for Android',
       'First-party extension marketplace debut with Python, C++, Go, Java, and Prettier',
       'Core offline development engine and local shell integration'
     ],

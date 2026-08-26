@@ -2,6 +2,7 @@ import React from 'react';
 import { PageRoute } from '../types';
 import { PhoneMockup } from '../components/PhoneMockup';
 import { YeminiSymbol } from '../components/YeminiSymbol';
+import { StatusBadge } from '../components/StatusBadge';
 import { 
   Download, Terminal, Cpu, HardDrive, Keyboard, 
   ShieldCheck, ArrowRight, Zap, CheckCircle2, FileCode2, Layers 
@@ -20,9 +21,10 @@ export const MobilePage: React.FC<MobilePageProps> = ({ onNavigate }) => {
       {/* Mobile Hero Header */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-6 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
+          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
             <YeminiSymbol size="xs" />
             <span>Android Native IDE</span>
+            <StatusBadge status="available" size="sm" />
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight">
@@ -55,6 +57,8 @@ export const MobilePage: React.FC<MobilePageProps> = ({ onNavigate }) => {
             <span>Package Size: ~48 MB</span>
             <span>•</span>
             <span>Android 10.0+ (ARM64 / x86)</span>
+            <span>•</span>
+            <span className="text-emerald-400">Available Now</span>
           </div>
         </div>
 
@@ -122,7 +126,10 @@ export const MobilePage: React.FC<MobilePageProps> = ({ onNavigate }) => {
 
       {/* Technical Specifications */}
       <div className="p-8 sm:p-12 rounded-3xl bg-[#09090d] border border-zinc-800 space-y-8">
-        <h3 className="text-2xl font-bold text-white">Technical Specifications</h3>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <h3 className="text-2xl font-bold text-white">Technical Specifications</h3>
+          <StatusBadge status="available" size="md" />
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-sm">
           {mobileData.specs.map((spec, i) => (
             <div key={i} className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80">
@@ -141,7 +148,7 @@ export const MobilePage: React.FC<MobilePageProps> = ({ onNavigate }) => {
           className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-[#5b0000] to-[#ff4d4d] hover:brightness-110 shadow-xl shadow-[#5b0000]/40 transition-all active:scale-95"
         >
           <Download className="w-5 h-5" />
-          <span>Download Yemini Mobile APK</span>
+          <span>Download Yemini Mobile APK (v1.2.0)</span>
         </button>
       </div>
     </div>

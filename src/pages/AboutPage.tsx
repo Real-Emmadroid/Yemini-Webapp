@@ -2,7 +2,7 @@ import React from 'react';
 import { PageRoute } from '../types';
 import { 
   ShieldCheck, Cpu, Terminal, 
-  ArrowRight, Users, CheckCircle2 
+  ArrowRight, Users, CheckCircle2, Globe, HeartHandshake, Compass
 } from 'lucide-react';
 
 interface AboutPageProps {
@@ -20,12 +20,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
         </div>
 
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight">
-          Empowering builders <br />
-          <span className="text-yemini-gradient">across every screen.</span>
+          Software that makes creation <br />
+          <span className="text-yemini-gradient">accessible to anyone.</span>
         </h1>
 
         <p className="text-lg sm:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed">
-          Yemini is an independent developer technology product engineered and governed by STF Ecosystem (Sphere Tech Foundation). We believe high-performance developer tooling should be portable, modular, and unencumbered by artificial cloud lock-ins.
+          Yemini is a technology company building software that makes creation and technology accessible to anyone. We are starting with high-performance developer tools across mobile and desktop.
         </p>
       </div>
 
@@ -33,33 +33,33 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-[#09090d] border border-zinc-800 rounded-3xl p-8 sm:p-14">
         <div className="lg:col-span-7 space-y-6">
           <span className="text-xs font-mono uppercase tracking-widest text-[#ff8585]">
-            Our Mission
+            Mission &amp; Scope
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-            Why we started Yemini.
+            Starting with developer tools.
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
-            Modern development has become increasingly fragmented. Desktop IDEs have grown bloated, consuming gigabytes of memory for basic tasks, while mobile devices with massive computational capacity have been relegated to passive media consumption rather than active software creation.
+            Our mission is broad: to make creation and technology accessible to anyone, everywhere. The fastest way to empower the next generation of builders is by equipping them with tools that run directly on the hardware they already own.
           </p>
           <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
-            STF Ecosystem created Yemini to unify mobile, desktop, and AI-assisted workflows into a single, cohesive developer operating experience. By building native on-device toolchains, we give developers total autonomy over their workflows.
+            Billions of people have powerful mobile silicon in their pockets, yet software engineering remains tethered to heavy laptops and persistent cloud connections. Under the stewardship of the STF Ecosystem (Sphere Tech Foundation), Yemini removes these artificial barriers with native, offline-capable developer software.
           </p>
         </div>
 
         <div className="lg:col-span-5 flex justify-center">
           <div className="p-8 rounded-3xl bg-zinc-900/60 border border-zinc-800 text-center space-y-5 max-w-sm w-full">
             <div className="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 text-[#ff6767] mx-auto w-fit">
-              <ShieldCheck className="w-8 h-8" />
+              <Compass className="w-8 h-8" />
             </div>
             <div className="space-y-1">
-              <h4 className="text-lg font-bold text-white">STF Ecosystem Standard</h4>
+              <h4 className="text-lg font-bold text-white">Mission-First, Product-Honest</h4>
               <p className="text-xs text-zinc-400">
-                Sphere Tech Foundation stewards core protocols, security audits, and first-party toolchains for Yemini.
+                Governed by Sphere Tech Foundation to guarantee openness, cryptographic integrity, and sustained longevity.
               </p>
             </div>
             <div className="pt-2 text-xs font-mono text-emerald-400 flex items-center justify-center gap-1.5">
               <CheckCircle2 className="w-4 h-4" />
-              <span>Independent &amp; Sovereign Tooling</span>
+              <span>Independent &amp; Sovereign Software</span>
             </div>
           </div>
         </div>
@@ -81,9 +81,19 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
             <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-[#ff8585] w-fit">
               <Cpu className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-bold text-white">Native Performance First</h3>
+            <h3 className="text-lg font-bold text-white">Native Performance</h3>
             <p className="text-xs text-zinc-400 leading-relaxed">
-              We reject sluggish web wrappers where native code belongs. Yemini leverages native GPU rendering, C++ and Rust engines for blazing responsiveness.
+              We reject sluggish web wrappers where native code belongs. Yemini leverages native GPU rendering, C++ and Rust engines for instant responsiveness.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-[#09090d] border border-zinc-800 space-y-3">
+            <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-[#ff8585] w-fit">
+              <Globe className="w-5 h-5" />
+            </div>
+            <h3 className="text-lg font-bold text-white">Universal Accessibility</h3>
+            <p className="text-xs text-zinc-400 leading-relaxed">
+              Creation tools shouldn&apos;t require high-end workstations or constant gigabit Wi-Fi. We optimize for memory frugality and offline-first workflows.
             </p>
           </div>
 
@@ -91,19 +101,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
             <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-[#ff8585] w-fit">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-bold text-white">First-Party Trust &amp; Security</h3>
+            <h3 className="text-lg font-bold text-white">Verified Trust &amp; Privacy</h3>
             <p className="text-xs text-zinc-400 leading-relaxed">
-              Our architecture is verified first-party. STF Ecosystem cryptographically audits and signs every toolchain to protect your machine from supply-chain risks.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-[#09090d] border border-zinc-800 space-y-3">
-            <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-[#ff8585] w-fit">
-              <Terminal className="w-5 h-5" />
-            </div>
-            <h3 className="text-lg font-bold text-white">True Offline Autonomy</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              You should be able to compile, run tests, and debug in an airplane or isolated subnet without being tethered to remote server clusters.
+              Zero telemetry tracking of user source code. All extension packages and toolchain binaries are cryptographically signed and audited.
             </p>
           </div>
         </div>
@@ -112,10 +112,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
       {/* Community CTA */}
       <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-[#0d0d14] to-[#09090d] border border-zinc-800 text-center space-y-6">
         <h3 className="text-2xl sm:text-3xl font-bold text-white">
-          Join our global engineering community
+          Join our global community of builders
         </h3>
         <p className="text-sm text-zinc-400 max-w-xl mx-auto">
-          Participate in technical RFCs, suggest runtime integrations, and shape the future of mobile and desktop coding.
+          Participate in technical RFCs, suggest runtime integrations, and help build software that makes creation accessible to everyone.
         </p>
         <div className="flex justify-center gap-4">
           <button

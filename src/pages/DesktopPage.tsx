@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PageRoute } from '../types';
 import { DesktopIdeMockup } from '../components/DesktopIdeMockup';
 import { YeminiSymbol } from '../components/YeminiSymbol';
+import { StatusBadge } from '../components/StatusBadge';
 import { 
-  Download, Zap, Terminal, Layers, ShieldCheck, 
-  ArrowRight, Cpu, CheckCircle2, SplitSquareHorizontal, Eye 
+  Zap, Terminal, Layers, ShieldCheck, 
+  ArrowRight, Cpu, CheckCircle2, SplitSquareHorizontal, Check, BellRing, Mail
 } from 'lucide-react';
 import { productsData } from '../data/productsData';
 
@@ -14,14 +15,25 @@ interface DesktopPageProps {
 
 export const DesktopPage: React.FC<DesktopPageProps> = ({ onNavigate }) => {
   const desktopData = productsData.find(p => p.id === 'desktop')!;
+  const [waitlistEmail, setWaitlistEmail] = useState('');
+  const [waitlistOS, setWaitlistOS] = useState<'macos' | 'windows' | 'linux'>('macos');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleWaitlistSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (waitlistEmail.trim()) {
+      setSubmitted(true);
+    }
+  };
 
   return (
     <div className="pt-24 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-24">
       {/* Desktop Hero */}
       <div className="text-center max-w-4xl mx-auto space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
+        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
           <YeminiSymbol size="xs" />
           <span>macOS • Windows • Linux</span>
+          <StatusBadge status="in-development" size="sm" />
         </div>
 
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight">
@@ -33,29 +45,65 @@ export const DesktopPage: React.FC<DesktopPageProps> = ({ onNavigate }) => {
           {desktopData.fullDescription}
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-          <button
-            onClick={() => onNavigate('download')}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-[#5b0000] to-[#ff4d4d] hover:brightness-110 shadow-lg shadow-[#5b0000]/40 transition-all active:scale-95"
-          >
-            <Download className="w-4 h-4" />
-            <span>Download for Desktop (v1.2.0)</span>
-          </button>
+        {/* Waitlist Box */}
+        <div className="max-w-md mx-auto pt-4">
+          {submitted ? (
+            <div className="p-4 rounded-2xl bg-emerald-950/60 border border-emerald-800/60 text-emerald-300 text-sm flex items-center justify-center gap-2 animate-fadeIn">
+              <Check className="w-5 h-5" />
+              <span>You&apos;re on the early developer waitlist for {waitlistOS.toUpperCase()}!</span>
+            </div>
+          ) : (
+            <form onSubmit={handleWaitlistSubmit} className="space-y-2.5">
+              <div className="flex items-center gap-2 bg-[#0e0e13] border border-zinc-800 p-2 rounded-2xl shadow-xl">
+                <input
+                  type="email"
+                  value={waitlistEmail}
+                  onChange={(e) => setWaitlistEmail(e.target.value)}
+                  placeholder="Enter email for private preview..."
+                  required
+                  className="flex-1 bg-transparent px-3 text-sm text-white placeholder-zinc-500 focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#5b0000] to-[#ff4d4d] hover:brightness-110 text-white font-semibold text-xs transition-all active:scale-95 shrink-0 flex items-center gap-1.5"
+                >
+                  <BellRing className="w-3.5 h-3.5" />
+                  <span>Notify Me</span>
+                </button>
+              </div>
 
-          <button
-            onClick={() => onNavigate('docs')}
-            className="w-full sm:w-auto px-6 py-3.5 rounded-xl font-semibold text-zinc-300 bg-zinc-900 border border-zinc-800 hover:text-white transition-colors"
-          >
-            Read Desktop Docs
-          </button>
+              {/* OS Selection Pills */}
+              <div className="flex items-center justify-center gap-2 text-xs font-mono">
+                <span className="text-zinc-500">Target OS:</span>
+                {(['macos', 'windows', 'linux'] as const).map((os) => (
+                  <button
+                    type="button"
+                    key={os}
+                    onClick={() => setWaitlistOS(os)}
+                    className={`px-2.5 py-0.5 rounded-full capitalize transition-colors ${
+                      waitlistOS === os
+                        ? 'bg-zinc-800 text-white border border-zinc-700'
+                        : 'text-zinc-500 hover:text-zinc-300'
+                    }`}
+                  >
+                    {os}
+                  </button>
+                ))}
+              </div>
+            </form>
+          )}
+
+          <p className="text-[11px] font-mono text-zinc-500 mt-3">
+            In active development • Private preview rollout targeted for Q4 2026
+          </p>
         </div>
 
         <div className="flex items-center justify-center gap-4 text-xs font-mono text-zinc-500 pt-2">
-          <span>Sub-second startup</span>
+          <span>Sub-300ms startup</span>
           <span>•</span>
-          <span>&lt;180MB RAM Idle</span>
+          <span>&lt;100MB RAM Target</span>
           <span>•</span>
-          <span>GPU Text Engine</span>
+          <span>GPU Metal / DirectX / Vulkan</span>
         </div>
       </div>
 
@@ -113,7 +161,10 @@ export const DesktopPage: React.FC<DesktopPageProps> = ({ onNavigate }) => {
 
       {/* Technical Specifications */}
       <div className="p-8 sm:p-12 rounded-3xl bg-[#09090d] border border-zinc-800 space-y-8">
-        <h3 className="text-2xl font-bold text-white">Desktop System Specifications</h3>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <h3 className="text-2xl font-bold text-white">Desktop System Specifications</h3>
+          <StatusBadge status="in-development" size="md" />
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-sm">
           {desktopData.specs.map((spec, i) => (
             <div key={i} className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80">
@@ -122,6 +173,21 @@ export const DesktopPage: React.FC<DesktopPageProps> = ({ onNavigate }) => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Bottom Cross-Platform CTA */}
+      <div className="text-center space-y-6 pt-4">
+        <h3 className="text-2xl sm:text-3xl font-bold text-white">Need an environment today?</h3>
+        <p className="text-sm text-zinc-400 max-w-xl mx-auto">
+          Yemini Mobile is available now with full local toolchains, terminal, and touch-optimized ergonomics.
+        </p>
+        <button
+          onClick={() => onNavigate('mobile')}
+          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-[#5b0000] to-[#ff4d4d] hover:brightness-110 shadow-xl shadow-[#5b0000]/40 transition-all active:scale-95"
+        >
+          <span>Explore Yemini Mobile (Available Now)</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
       </div>
     </div>
   );

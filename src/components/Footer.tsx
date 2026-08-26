@@ -1,257 +1,221 @@
 import React from 'react';
-import { YeminiLogo } from './YeminiLogo';
 import { PageRoute } from '../types';
-import { Github, Twitter, Linkedin, Youtube, ArrowUpRight } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 interface FooterProps {
   onNavigate: (route: PageRoute) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
-  return (
-    <footer className="bg-[#050507] border-t border-zinc-800/80 text-zinc-400 text-sm relative overflow-hidden">
-      {/* Subtle background glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-[#5b0000]/10 blur-3xl pointer-events-none" />
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 lg:gap-8 mb-16">
-          {/* Column 1: Brand & Philosophy (Takes 2 cols on lg) */}
-          <div className="lg:col-span-2 space-y-4">
+  return (
+    <footer className={`pt-16 pb-8 px-6 border-t transition-colors duration-300 ${
+      isLight 
+        ? 'bg-white text-gray-500 border-gray-200' 
+        : 'bg-black text-[#ab8986] border-[#43302f]'
+    }`}>
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+          {/* Column 1 & 2: Brand */}
+          <div className="col-span-2 lg:col-span-2">
             <button
               onClick={() => onNavigate('home')}
-              className="text-left focus:outline-none"
+              className={`font-semibold tracking-tight text-lg flex items-center gap-1.5 mb-4 focus:outline-none hover:opacity-80 transition-opacity ${
+                isLight ? 'text-black' : 'text-[#fadcd9]'
+              }`}
             >
-              <YeminiLogo size="lg" />
+              <span className={`w-6 h-6 rounded-sm flex items-center justify-center text-xs font-bold shadow-sm ${
+                isLight ? 'bg-black text-white' : 'bg-[#ba1724] text-white'
+              }`}>
+                Y
+              </span>
+              <span className="tracking-wider">YEMINI</span>
             </button>
-            
-            <p className="text-zinc-400 text-sm leading-relaxed max-w-sm">
-              Developer tools for building without limits. Created by <span className="text-white font-medium">STF Ecosystem (Sphere Tech Foundation)</span> to bring high-performance coding across mobile and desktop.
+            <p className={`text-xs max-w-xs mb-6 leading-relaxed ${
+              isLight ? 'text-gray-500' : 'text-[#ab8986]'
+            }`}>
+              Developer tools for building without limits. Designed by STF Ecosystem to bring high-performance coding everywhere.
             </p>
-
-            <div className="pt-2 flex items-center gap-3">
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>All systems operational</span>
-              </div>
-              <span className="text-xs font-mono text-zinc-500">v1.2.0-stable</span>
-            </div>
-
-            {/* Social Icons */}
-            <div className="pt-3 flex items-center gap-3">
-              <a
-                href="https://github.com/SphereTechFoundation"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-zinc-900/80 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
-                aria-label="GitHub Repository"
-              >
-                <Github className="w-4 h-4" />
-              </a>
-              <a
-                href="https://twitter.com/STFEcosystem"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-zinc-900/80 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
-                aria-label="X Twitter"
-              >
-                <Twitter className="w-4 h-4" />
-              </a>
-              <a
-                href="https://linkedin.com/company/spheretechfoundation"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-zinc-900/80 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-4 h-4" />
-              </a>
-              <a
-                href="https://youtube.com/@STFEcosystem"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-zinc-900/80 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
-                aria-label="YouTube"
-              >
-                <Youtube className="w-4 h-4" />
-              </a>
+            <div className={`flex items-center gap-2 text-[11px] ${
+              isLight ? 'text-gray-600' : 'text-[#e4beba]'
+            }`}>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Offline-first runtime toolchains ready</span>
             </div>
           </div>
 
-          {/* Column 2: Products */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-mono uppercase tracking-widest text-zinc-200">Products</h3>
-            <ul className="space-y-2">
+          {/* Column 3: Products */}
+          <div>
+            <h4 className={`text-xs font-semibold mb-4 ${
+              isLight ? 'text-black' : 'text-[#fadcd9]'
+            }`}>
+              Products
+            </h4>
+            <ul className={`flex flex-col gap-2.5 text-xs ${
+              isLight ? 'text-gray-500' : 'text-[#ab8986]'
+            }`}>
               <li>
-                <button
-                  onClick={() => onNavigate('mobile')}
-                  className="hover:text-white transition-colors flex items-center gap-1 group text-left"
+                <button 
+                  onClick={() => onNavigate('desktop')} 
+                  className={`transition-colors text-left ${isLight ? 'hover:text-black' : 'hover:text-[#fadcd9]'}`}
                 >
-                  <span>Yemini Mobile</span>
-                  <span className="text-[10px] font-mono text-zinc-500 group-hover:text-[#ff8585]">Android</span>
+                  Yemini Mac
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('desktop')}
-                  className="hover:text-white transition-colors text-left"
+                <button 
+                  onClick={() => onNavigate('desktop')} 
+                  className={`transition-colors text-left ${isLight ? 'hover:text-black' : 'hover:text-[#fadcd9]'}`}
                 >
-                  Yemini Desktop
+                  Yemini Windows
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('ai')}
-                  className="hover:text-white transition-colors flex items-center gap-1.5 group text-left"
+                <button 
+                  onClick={() => onNavigate('mobile')} 
+                  className={`transition-colors text-left ${isLight ? 'hover:text-black' : 'hover:text-[#fadcd9]'}`}
                 >
-                  <span>Yemini AI</span>
-                  <span className="text-[9px] font-mono px-1 rounded bg-[#5b0000]/60 text-[#ff8585] border border-[#ff6767]/30">Preview</span>
+                  Yemini Mobile
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => onNavigate('ai')} 
+                  className={`transition-colors text-left ${isLight ? 'hover:text-black' : 'hover:text-[#fadcd9]'}`}
+                >
+                  Yemini Intelligence
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Resources */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-mono uppercase tracking-widest text-zinc-200">Resources</h3>
-            <ul className="space-y-2">
+          {/* Column 4: Resources */}
+          <div>
+            <h4 className={`text-xs font-semibold mb-4 ${
+              isLight ? 'text-black' : 'text-[#fadcd9]'
+            }`}>
+              Resources
+            </h4>
+            <ul className={`flex flex-col gap-2.5 text-xs ${
+              isLight ? 'text-gray-500' : 'text-[#ab8986]'
+            }`}>
               <li>
-                <button
-                  onClick={() => onNavigate('docs')}
-                  className="hover:text-white transition-colors text-left"
+                <button 
+                  onClick={() => onNavigate('docs')} 
+                  className={`transition-colors text-left ${isLight ? 'hover:text-black' : 'hover:text-[#fadcd9]'}`}
                 >
                   Documentation
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('download')}
-                  className="hover:text-white transition-colors text-left"
+                <button 
+                  onClick={() => onNavigate('download')} 
+                  className={`transition-colors text-left ${isLight ? 'hover:text-black' : 'hover:text-[#fadcd9]'}`}
                 >
-                  Downloads & APKs
+                  Downloads
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('resources')}
-                  className="hover:text-white transition-colors text-left"
+                <button 
+                  onClick={() => onNavigate('resources')} 
+                  className={`transition-colors text-left ${isLight ? 'hover:text-black' : 'hover:text-[#fadcd9]'}`}
                 >
-                  Release Changelog
+                  Release Notes
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('resources')}
-                  className="hover:text-white transition-colors text-left"
+                <button 
+                  onClick={() => onNavigate('resources')} 
+                  className={`transition-colors text-left ${isLight ? 'hover:text-black' : 'hover:text-[#fadcd9]'}`}
                 >
-                  Engineering Blog
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('docs')}
-                  className="hover:text-white transition-colors text-left"
-                >
-                  Keyboard Shortcuts
+                  Developer Blog
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: Company & STF */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-mono uppercase tracking-widest text-zinc-200">Company</h3>
-            <ul className="space-y-2">
+          {/* Column 5: Company */}
+          <div>
+            <h4 className={`text-xs font-semibold mb-4 ${
+              isLight ? 'text-black' : 'text-[#fadcd9]'
+            }`}>
+              Company
+            </h4>
+            <ul className={`flex flex-col gap-2.5 text-xs ${
+              isLight ? 'text-gray-500' : 'text-[#ab8986]'
+            }`}>
               <li>
-                <button
-                  onClick={() => onNavigate('about')}
-                  className="hover:text-white transition-colors text-left"
+                <button 
+                  onClick={() => onNavigate('about')} 
+                  className={`transition-colors text-left ${isLight ? 'hover:text-black' : 'hover:text-[#fadcd9]'}`}
                 >
                   About Yemini
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('about')}
-                  className="hover:text-white transition-colors flex items-center gap-1.5 group text-left"
+                <button 
+                  onClick={() => onNavigate('security')} 
+                  className={`transition-colors text-left ${isLight ? 'hover:text-black' : 'hover:text-[#fadcd9]'}`}
                 >
-                  <span>STF Ecosystem</span>
-                  <ArrowUpRight className="w-3 h-3 text-zinc-600 group-hover:text-white" />
+                  Security
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('security')}
-                  className="hover:text-white transition-colors text-left"
+                <button 
+                  onClick={() => onNavigate('privacy')} 
+                  className={`transition-colors text-left ${isLight ? 'hover:text-black' : 'hover:text-[#fadcd9]'}`}
                 >
-                  Security Philosophy
+                  Privacy
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('contact')}
-                  className="hover:text-white transition-colors text-left"
-                >
-                  Contact & Enquiries
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 5: Legal */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-mono uppercase tracking-widest text-zinc-200">Legal</h3>
-            <ul className="space-y-2">
-              <li>
-                <button
-                  onClick={() => onNavigate('privacy')}
-                  className="hover:text-white transition-colors text-left"
-                >
-                  Privacy Policy
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('terms')}
-                  className="hover:text-white transition-colors text-left"
+                <button 
+                  onClick={() => onNavigate('terms')} 
+                  className={`transition-colors text-left ${isLight ? 'hover:text-black' : 'hover:text-[#fadcd9]'}`}
                 >
                   Terms of Service
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('cookies')}
-                  className="hover:text-white transition-colors text-left"
+                <button 
+                  onClick={() => onNavigate('contact')} 
+                  className={`transition-colors text-left ${isLight ? 'hover:text-black' : 'hover:text-[#fadcd9]'}`}
                 >
-                  Cookie Policy
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('acceptable-use')}
-                  className="hover:text-white transition-colors text-left"
-                >
-                  Acceptable Use
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('licenses')}
-                  className="hover:text-white transition-colors text-left"
-                >
-                  Open Source Licenses
+                  Contact
                 </button>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright & Attribution */}
-        <div className="pt-8 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 font-mono">
-          <p>© 2026 STF Ecosystem (Sphere Tech Foundation). All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <span>Independent Product Brand</span>
-            <span>•</span>
-            <span>Designed for Global Developers</span>
+        {/* Bottom copyright line */}
+        <div className={`pt-8 border-t flex flex-col md:flex-row justify-between items-center text-[10px] ${
+          isLight ? 'border-gray-200 text-gray-400' : 'border-[#43302f] text-[#ab8986]'
+        }`}>
+          <p>Copyright © 2026 STF Ecosystem (Sphere Tech Foundation). All rights reserved.</p>
+          <div className="flex gap-4 mt-4 md:mt-0">
+            <button 
+              onClick={() => onNavigate('privacy')} 
+              className={`transition-colors ${isLight ? 'hover:text-gray-600' : 'hover:text-[#fadcd9]'}`}
+            >
+              Privacy Policy
+            </button>
+            <span className={isLight ? 'text-gray-300' : 'text-[#5b403e]'}>|</span>
+            <button 
+              onClick={() => onNavigate('terms')} 
+              className={`transition-colors ${isLight ? 'hover:text-gray-600' : 'hover:text-[#fadcd9]'}`}
+            >
+              Terms of Use
+            </button>
+            <span className={isLight ? 'text-gray-300' : 'text-[#5b403e]'}>|</span>
+            <button 
+              onClick={() => onNavigate('licenses')} 
+              className={`transition-colors ${isLight ? 'hover:text-gray-600' : 'hover:text-[#fadcd9]'}`}
+            >
+              Licenses &amp; Site Map
+            </button>
           </div>
         </div>
       </div>
