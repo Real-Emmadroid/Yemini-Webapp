@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, X, BookOpen, Download, Sparkles, FileText, ArrowRight, CornerDownLeft, ShieldCheck, Smartphone, Monitor } from 'lucide-react';
+import { Search, X, BookOpen, Download, Sparkles, FileText, ArrowRight, CornerDownLeft, ShieldCheck, Smartphone, Monitor, RefreshCw } from 'lucide-react';
 import { PageRoute, SearchResultItem } from '../types';
 import { useTheme } from '../context/ThemeContext';
 import { StatusBadge } from './StatusBadge';
@@ -59,11 +59,25 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
       status: 'in-development'
     },
     {
-      id: 'legal-app-privacy',
-      title: 'Yemini Android App Privacy Policy',
+      id: 'legal-editor-privacy',
+      title: 'Yemini Code Editor Privacy Policy',
       description: 'Dedicated in-app privacy policy for Yemini Code Editor Android app & offline runtime plugins.',
       category: 'Legal',
-      route: 'app-privacy'
+      route: 'editorapp-privacy'
+    },
+    {
+      id: 'legal-notepad-privacy',
+      title: 'Yemini Notepad Privacy Policy',
+      description: 'Dedicated in-app privacy policy for Yemini Notepad Android application, checklists & voice memos.',
+      category: 'Legal',
+      route: 'notepadapp-privacy'
+    },
+    {
+      id: 'legal-converter-privacy',
+      title: 'Yemini Converter Privacy Policy',
+      description: 'Dedicated in-app privacy policy for Yemini Converter offline media & document processing.',
+      category: 'Legal',
+      route: 'converterapp-privacy'
     },
     // Docs
     ...Object.values(docArticles).map(doc => ({
@@ -138,7 +152,9 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
   if (!isOpen) return null;
 
   const getCategoryIcon = (category: string, id: string) => {
-    if (id.includes('mobile')) return <Smartphone className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
+    if (id.includes('mobile') || id.includes('editor')) return <Smartphone className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
+    if (id.includes('notepad')) return <FileText className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
+    if (id.includes('converter')) return <RefreshCw className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
     if (id.includes('desktop')) return <Monitor className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
     if (id.includes('ai')) return <Sparkles className={`w-4 h-4 ${isLight ? 'text-purple-600' : 'text-[#ff6767]'}`} />;
 
@@ -204,7 +220,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
           {filteredItems.length === 0 ? (
             <div className={`py-12 text-center ${isLight ? 'text-gray-400' : 'text-zinc-500'}`}>
               <p className="text-sm">No results found for &ldquo;{query}&rdquo;</p>
-              <p className="text-xs mt-1 opacity-70">Try searching for &quot;Python&quot;, &quot;Android&quot;, &quot;Privacy&quot;, &quot;Terminal&quot;, or &quot;Desktop&quot;</p>
+              <p className="text-xs mt-1 opacity-70">Try searching for &quot;Python&quot;, &quot;Android&quot;, &quot;Privacy&quot;, &quot;Notepad&quot;, &quot;Editor&quot;, or &quot;Desktop&quot;</p>
             </div>
           ) : (
             filteredItems.map((item, index) => {

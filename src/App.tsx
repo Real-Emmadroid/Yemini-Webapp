@@ -17,7 +17,9 @@ import { AboutPage } from './pages/AboutPage';
 import { SecurityPage } from './pages/SecurityPage';
 import { ContactPage } from './pages/ContactPage';
 import { LegalPage } from './pages/LegalPage';
-import { AppPrivacyPage } from './pages/AppPrivacyPage';
+import { EditorAppPrivacyPage } from './pages/EditorAppPrivacyPage';
+import { NotepadAppPrivacyPage } from './pages/NotepadAppPrivacyPage';
+import { ConverterAppPrivacyPage } from './pages/ConverterAppPrivacyPage';
 
 function AppContent() {
   const { theme } = useTheme();
@@ -36,7 +38,7 @@ function AppContent() {
         'home', 'mobile', 'desktop', 'ai', 
         'download', 'docs', 'resources', 'about', 'security', 
         'contact', 'privacy', 'terms', 'cookies', 'acceptable-use', 'licenses',
-        'app-privacy', 'mobile-privacy'
+        'editorapp-privacy', 'notepadapp-privacy', 'converterapp-privacy', 'app-privacy', 'mobile-privacy'
       ];
 
       if (hash && validRoutes.includes(hash)) {
@@ -62,17 +64,43 @@ function AppContent() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Standalone in-app privacy policy route (no navbar, no footer) for Android WebView embed
-  const isStandaloneAppPrivacy = currentRoute === 'app-privacy' || currentRoute === 'mobile-privacy';
+  // Standalone in-app privacy policy routes (headless & footerless for Android WebView embeds)
+  const isEditorAppPrivacy = currentRoute === 'editorapp-privacy' || currentRoute === 'app-privacy' || currentRoute === 'mobile-privacy';
+  const isNotepadAppPrivacy = currentRoute === 'notepadapp-privacy';
+  const isConverterAppPrivacy = currentRoute === 'converterapp-privacy';
 
-  if (isStandaloneAppPrivacy) {
+  if (isEditorAppPrivacy) {
     return (
       <div className={`min-h-screen font-sans ${
         isLight 
           ? 'bg-[#f5f5f7] text-[#1d1d1f] selection:bg-[#0066cc] selection:text-white' 
           : 'bg-black text-[#fadcd9] selection:bg-[#ba1724] selection:text-white'
       }`}>
-        <AppPrivacyPage />
+        <EditorAppPrivacyPage />
+      </div>
+    );
+  }
+
+  if (isNotepadAppPrivacy) {
+    return (
+      <div className={`min-h-screen font-sans ${
+        isLight 
+          ? 'bg-[#f5f5f7] text-[#1d1d1f] selection:bg-[#0066cc] selection:text-white' 
+          : 'bg-black text-[#fadcd9] selection:bg-[#ba1724] selection:text-white'
+      }`}>
+        <NotepadAppPrivacyPage />
+      </div>
+    );
+  }
+
+  if (isConverterAppPrivacy) {
+    return (
+      <div className={`min-h-screen font-sans ${
+        isLight 
+          ? 'bg-[#f5f5f7] text-[#1d1d1f] selection:bg-[#0066cc] selection:text-white' 
+          : 'bg-black text-[#fadcd9] selection:bg-[#ba1724] selection:text-white'
+      }`}>
+        <ConverterAppPrivacyPage />
       </div>
     );
   }
