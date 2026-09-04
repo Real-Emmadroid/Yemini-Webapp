@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { PageRoute } from '../types';
 import { useTheme } from '../context/ThemeContext';
 import { StatusBadge } from './StatusBadge';
+import headerLogoImg from '../assets/headerlogo.png';
+import headerDarkImg from '../assets/headerdark.png';
 import { 
   Search, Menu, X, Smartphone, Monitor, Sparkles, 
   Download, Sun, Moon, ArrowRight
@@ -64,21 +66,14 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Left: Logo */}
           <button
             onClick={() => handleLinkClick('home')}
-            className={`font-semibold tracking-tight text-sm flex items-center gap-1.5 hover:opacity-80 transition-opacity focus:outline-none ${
-              isLight ? 'text-black' : 'text-[#fadcd9]'
-            }`}
+            className="flex items-center gap-2 hover:opacity-85 transition-opacity focus:outline-none"
             aria-label="Yemini Home"
           >
-            <span className={`w-5 h-5 rounded-sm flex items-center justify-center text-[10px] font-bold shadow-sm ${
-              isLight ? 'bg-black text-white' : 'bg-[#ba1724] text-white'
-            }`}>
-              Y
-            </span>
-            <span className={`font-semibold tracking-wider text-xs sm:text-sm ${
-              isLight ? 'text-black' : 'text-[#fadcd9]'
-            }`}>
-              YEMINI
-            </span>
+            <img
+              src={isLight ? headerDarkImg : headerLogoImg}
+              alt="Yemini Logo"
+              className="h-6 sm:h-7 w-auto object-contain"
+            />
           </button>
 
           {/* Center: Desktop Navigation Links */}

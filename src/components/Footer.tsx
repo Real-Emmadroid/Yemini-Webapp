@@ -1,6 +1,8 @@
 import React from 'react';
 import { PageRoute } from '../types';
 import { useTheme } from '../context/ThemeContext';
+import headerLogoImg from '../assets/headerlogo.png';
+import headerDarkImg from '../assets/headerdark.png';
 
 interface FooterProps {
   onNavigate: (route: PageRoute) => void;
@@ -22,16 +24,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div className="col-span-2 lg:col-span-2">
             <button
               onClick={() => onNavigate('home')}
-              className={`font-semibold tracking-tight text-lg flex items-center gap-1.5 mb-4 focus:outline-none hover:opacity-80 transition-opacity ${
-                isLight ? 'text-black' : 'text-[#fadcd9]'
-              }`}
+              className="flex items-center gap-2 mb-4 focus:outline-none hover:opacity-85 transition-opacity"
             >
-              <span className={`w-6 h-6 rounded-sm flex items-center justify-center text-xs font-bold shadow-sm ${
-                isLight ? 'bg-black text-white' : 'bg-[#ba1724] text-white'
-              }`}>
-                Y
-              </span>
-              <span className="tracking-wider">YEMINI</span>
+              <img
+                src={isLight ? headerDarkImg : headerLogoImg}
+                alt="Yemini Logo"
+                className="h-7 sm:h-8 w-auto object-contain"
+              />
             </button>
             <p className={`text-xs max-w-xs mb-6 leading-relaxed ${
               isLight ? 'text-gray-500' : 'text-[#ab8986]'
