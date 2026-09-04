@@ -7,7 +7,7 @@ export const ConverterAppPrivacyPage: React.FC = () => {
         
         {/* Document Header */}
         <header className="space-y-4 pb-8 border-b border-zinc-800/80">
-          <div className="inline-block px-3 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#ff8585]">
+          <div className="inline-block px-3 py-1 bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#ff8585]">
             Official Privacy Policy • Android Application
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -34,9 +34,8 @@ export const ConverterAppPrivacyPage: React.FC = () => {
           <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
             1. Summary
           </h2>
-          <div className="p-4 sm:p-5 rounded-2xl bg-zinc-900/90 border border-zinc-800 space-y-2">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <div className="p-4 sm:p-5 bg-zinc-900/90 border border-zinc-800 space-y-2">
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">
               On-Device Offline Processing
             </h3>
             <p className="text-zinc-300 text-sm leading-relaxed">
@@ -176,7 +175,7 @@ export const ConverterAppPrivacyPage: React.FC = () => {
           <p>
             If you have questions or feedback regarding this Privacy Policy or Yemini Converter, please contact us at:
           </p>
-          <div className="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 space-y-1 font-mono text-xs sm:text-sm text-zinc-300">
+          <div className="p-4 bg-zinc-900/90 border border-zinc-800 space-y-1 font-mono text-xs sm:text-sm text-zinc-300">
             <p><strong>Organization:</strong> STF Ecosystem (Sphere Tech Foundation)</p>
             <p><strong>Privacy Inquiries:</strong> <a href="mailto:privacy@spheretech.org" className="text-[#ff8585] hover:underline">privacy@spheretech.org</a></p>
             <p><strong>Developer Support:</strong> <a href="mailto:support@yemini.dev" className="text-[#ff8585] hover:underline">support@yemini.dev</a></p>
@@ -196,3 +195,5 @@ export const ConverterAppPrivacyPage: React.FC = () => {
     </div>
   );
 };
+
+export default ConverterAppPrivacyPage;

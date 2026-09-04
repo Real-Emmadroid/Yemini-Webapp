@@ -20,6 +20,7 @@ import { LegalPage } from './pages/LegalPage';
 import { EditorAppPrivacyPage } from './pages/EditorAppPrivacyPage';
 import { NotepadAppPrivacyPage } from './pages/NotepadAppPrivacyPage';
 import { ConverterAppPrivacyPage } from './pages/ConverterAppPrivacyPage';
+import { ShareAppPrivacyPage } from './pages/ShareAppPrivacyPage';
 
 function AppContent() {
   const { theme } = useTheme();
@@ -38,7 +39,7 @@ function AppContent() {
         'home', 'mobile', 'desktop', 'ai', 
         'download', 'docs', 'resources', 'about', 'security', 
         'contact', 'privacy', 'terms', 'cookies', 'acceptable-use', 'licenses',
-        'editorapp-privacy', 'notepadapp-privacy', 'converterapp-privacy', 'app-privacy', 'mobile-privacy'
+        'editorapp-privacy', 'notepadapp-privacy', 'converterapp-privacy', 'shareapp-privacy', 'app-privacy', 'mobile-privacy'
       ];
 
       if (hash && validRoutes.includes(hash)) {
@@ -68,6 +69,7 @@ function AppContent() {
   const isEditorAppPrivacy = currentRoute === 'editorapp-privacy' || currentRoute === 'app-privacy' || currentRoute === 'mobile-privacy';
   const isNotepadAppPrivacy = currentRoute === 'notepadapp-privacy';
   const isConverterAppPrivacy = currentRoute === 'converterapp-privacy';
+  const isShareAppPrivacy = currentRoute === 'shareapp-privacy';
 
   if (isEditorAppPrivacy) {
     return (
@@ -101,6 +103,18 @@ function AppContent() {
           : 'bg-black text-[#fadcd9] selection:bg-[#ba1724] selection:text-white'
       }`}>
         <ConverterAppPrivacyPage />
+      </div>
+    );
+  }
+
+  if (isShareAppPrivacy) {
+    return (
+      <div className={`min-h-screen font-sans ${
+        isLight 
+          ? 'bg-[#f5f5f7] text-[#1d1d1f] selection:bg-[#0066cc] selection:text-white' 
+          : 'bg-black text-[#fadcd9] selection:bg-[#ba1724] selection:text-white'
+      }`}>
+        <ShareAppPrivacyPage />
       </div>
     );
   }

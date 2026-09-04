@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PageRoute } from '../types';
 import { legalDocuments } from '../data/legalData';
-import { Scale, Smartphone, ExternalLink, FileText, RefreshCw } from 'lucide-react';
+import { Scale, Smartphone, ExternalLink, FileText, RefreshCw, Share2 } from 'lucide-react';
 
 interface LegalPageProps {
   onNavigate: (route: PageRoute) => void;
@@ -43,7 +43,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({
       </div>
 
       {/* Standalone Android Apps Privacy Policies Callout Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Editor App Policy Card */}
         <div className="p-4 sm:p-5 rounded-2xl bg-zinc-900/90 border border-zinc-800 flex flex-col justify-between gap-4">
           <div className="flex items-start gap-3">
@@ -106,6 +106,28 @@ export const LegalPage: React.FC<LegalPageProps> = ({
             className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-xs font-semibold text-white transition-colors"
           >
             <span>View Converter Policy</span>
+            <ExternalLink className="w-3.5 h-3.5 text-[#ff6767]" />
+          </button>
+        </div>
+
+        {/* Share App Policy Card */}
+        <div className="p-4 sm:p-5 rounded-2xl bg-zinc-900/90 border border-zinc-800 flex flex-col justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <div className="p-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-[#ff8585] shrink-0">
+              <Share2 className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-white">Yemini Share</h4>
+              <p className="text-xs text-zinc-400 mt-0.5">
+                Offline P2P file sharing &amp; transfer policy.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => onNavigate('shareapp-privacy')}
+            className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-xs font-semibold text-white transition-colors"
+          >
+            <span>View Share Policy</span>
             <ExternalLink className="w-3.5 h-3.5 text-[#ff6767]" />
           </button>
         </div>

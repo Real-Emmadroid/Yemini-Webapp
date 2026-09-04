@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, X, BookOpen, Download, Sparkles, FileText, ArrowRight, CornerDownLeft, ShieldCheck, Smartphone, Monitor, RefreshCw } from 'lucide-react';
+import { Search, X, BookOpen, Download, Sparkles, FileText, ArrowRight, CornerDownLeft, ShieldCheck, Smartphone, Monitor, RefreshCw, Share2 } from 'lucide-react';
 import { PageRoute, SearchResultItem } from '../types';
 import { useTheme } from '../context/ThemeContext';
 import { StatusBadge } from './StatusBadge';
@@ -79,6 +79,13 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
       category: 'Legal',
       route: 'converterapp-privacy'
     },
+    {
+      id: 'legal-share-privacy',
+      title: 'Yemini Share Privacy Policy',
+      description: 'Dedicated in-app privacy policy for Yemini Share offline P2P file sharing & transfers.',
+      category: 'Legal',
+      route: 'shareapp-privacy'
+    },
     // Docs
     ...Object.values(docArticles).map(doc => ({
       id: `doc-${doc.id}`,
@@ -155,6 +162,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
     if (id.includes('mobile') || id.includes('editor')) return <Smartphone className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
     if (id.includes('notepad')) return <FileText className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
     if (id.includes('converter')) return <RefreshCw className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
+    if (id.includes('share')) return <Share2 className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
     if (id.includes('desktop')) return <Monitor className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
     if (id.includes('ai')) return <Sparkles className={`w-4 h-4 ${isLight ? 'text-purple-600' : 'text-[#ff6767]'}`} />;
 

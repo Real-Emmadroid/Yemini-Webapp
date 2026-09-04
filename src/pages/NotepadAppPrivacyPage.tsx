@@ -7,7 +7,7 @@ export const NotepadAppPrivacyPage: React.FC = () => {
         
         {/* Document Header */}
         <header className="space-y-4 pb-8 border-b border-zinc-800/80">
-          <div className="inline-block px-3 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#ff8585]">
+          <div className="inline-block px-3 py-1 bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#ff8585]">
             Official Privacy Policy • Android Application
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -28,9 +28,8 @@ export const NotepadAppPrivacyPage: React.FC = () => {
             <strong>Yemini Notepad</strong> (&ldquo;the App,&rdquo; &ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;), provided by <strong>STF Ecosystem (Sphere Tech Foundation)</strong>, is committed to protecting your privacy. This Privacy Policy explains how we handle information when you use our mobile application.
           </p>
           
-          <div className="p-4 sm:p-5 rounded-2xl bg-zinc-900/90 border border-zinc-800 space-y-2">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <div className="p-4 sm:p-5 bg-zinc-900/90 border border-zinc-800 space-y-2">
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">
               Executive Summary
             </h3>
             <p className="text-zinc-300 text-sm leading-relaxed">
@@ -139,7 +138,7 @@ export const NotepadAppPrivacyPage: React.FC = () => {
             The application utilizes trusted third-party service providers for core platform functionality, crash diagnostics, and optional non-intrusive advertising. Below are links to their privacy policies:
           </p>
           <ul className="space-y-2.5 pl-2 font-mono text-xs sm:text-sm">
-            <li className="p-2.5 rounded-lg bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
+            <li className="p-2.5 bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
               <span className="text-white font-semibold">Google Play Services</span>
               <a 
                 href="https://policies.google.com/privacy" 
@@ -150,7 +149,7 @@ export const NotepadAppPrivacyPage: React.FC = () => {
                 Privacy Policy ↗
               </a>
             </li>
-            <li className="p-2.5 rounded-lg bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
+            <li className="p-2.5 bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
               <span className="text-white font-semibold">Google AdMob</span>
               <a 
                 href="https://support.google.com/admob/answer/6128543?hl=en" 
@@ -161,7 +160,7 @@ export const NotepadAppPrivacyPage: React.FC = () => {
                 Privacy Policy ↗
               </a>
             </li>
-            <li className="p-2.5 rounded-lg bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
+            <li className="p-2.5 bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
               <span className="text-white font-semibold">Google Analytics for Firebase</span>
               <a 
                 href="https://firebase.google.com/policies/analytics" 
@@ -172,7 +171,7 @@ export const NotepadAppPrivacyPage: React.FC = () => {
                 Privacy Policy ↗
               </a>
             </li>
-            <li className="p-2.5 rounded-lg bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
+            <li className="p-2.5 bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
               <span className="text-white font-semibold">Firebase Crashlytics</span>
               <a 
                 href="https://firebase.google.com/support/privacy" 
@@ -186,83 +185,35 @@ export const NotepadAppPrivacyPage: React.FC = () => {
           </ul>
         </section>
 
-        {/* Section 6: Log Data & Diagnostics */}
+        {/* Section 6: Children's Privacy */}
         <section className="space-y-3">
           <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-            6. Log Data &amp; Crash Diagnostics
+            6. Children&apos;s Privacy
           </h2>
           <p>
-            In the event of an unhandled crash or application exception, we collect diagnostic telemetry called <strong>Log Data</strong> through third-party services like Firebase Crashlytics.
-          </p>
-          <p>
-            This Log Data may include your device model, Android OS version, app configuration at the time of the error, stack traces, and operational error codes. This diagnostic data is anonymized and used solely to identify and resolve software bugs.
+            Yemini Notepad is not directed at children under 13, and we do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal data, please contact us so we can promptly delete such information.
           </p>
         </section>
 
-        {/* Section 7: Cookies & Local Storage */}
+        {/* Section 7: Changes to This Policy */}
         <section className="space-y-3">
           <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-            7. Cookies &amp; Local On-Device Storage
+            7. Changes to This Privacy Policy
           </h2>
           <p>
-            The native Android application does not use traditional browser tracking cookies. The app uses Android SharedPreferences and local SQLite databases to store your display preferences (dark/light themes, typography scale, sorting order) and authentication session tokens locally on your device.
+            We may update our Privacy Policy from time to time. We will notify you of any material changes by posting the updated policy on this page and updating the effective date.
           </p>
         </section>
 
-        {/* Section 8: Data Retention */}
-        <section className="space-y-3">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-            8. Data Retention
-          </h2>
-          <p>
-            We retain your data according to the following principles:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-zinc-300">
-            <li><strong>Local Device Data:</strong> Retained indefinitely on your physical device until you delete the notes or uninstall the application.</li>
-            <li><strong>Cloud Backup Data:</strong> Retained as long as your Yemini Account remains active. If you delete a note or request account deletion, the data is permanently purged from our cloud storage.</li>
-            <li><strong>Diagnostic Crash Logs:</strong> Automatically purged on a rolling 90-day retention schedule.</li>
-          </ul>
-        </section>
-
-        {/* Section 9: Security */}
-        <section className="space-y-3">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-            9. Security
-          </h2>
-          <p>
-            We value your trust in choosing Yemini Notepad and strive to use commercially acceptable means to protect your information. Cloud backups are transmitted over TLS 1.3 and stored with AES-256 encryption. However, please be aware that no method of transmission over the internet or method of electronic storage is 100% secure, and we cannot guarantee absolute security.
-          </p>
-        </section>
-
-        {/* Section 10: Children's Privacy */}
-        <section className="space-y-3">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-            10. Children&apos;s Privacy
-          </h2>
-          <p>
-            These Services do not address anyone under the age of 13. We do not knowingly collect personally identifiable information from children under 13 years of age. If we discover that a child under 13 has provided us with personal information, we immediately delete this from our servers. If you are a parent or guardian and become aware that your child has provided us with personal information, please contact us immediately.
-          </p>
-        </section>
-
-        {/* Section 11: Changes to This Privacy Policy */}
-        <section className="space-y-3">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-            11. Changes to This Privacy Policy
-          </h2>
-          <p>
-            We may update our Privacy Policy from time to time. We encourage you to review this page periodically for any updates. We will notify you of any material changes by updating the effective date at the top of this policy and posting the revision on this page.
-          </p>
-        </section>
-
-        {/* Section 12: Contact Us */}
+        {/* Section 8: Contact Us */}
         <section className="space-y-3 pt-6 border-t border-zinc-800/80">
           <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-            12. Contact Us
+            8. Contact Us
           </h2>
           <p>
-            If you have questions, feedback, or data deletion inquiries regarding this Privacy Policy or Yemini Notepad, please contact us:
+            If you have any questions or suggestions about our Privacy Policy, please contact us at:
           </p>
-          <div className="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 space-y-1 font-mono text-xs sm:text-sm text-zinc-300">
+          <div className="p-4 bg-zinc-900/90 border border-zinc-800 space-y-1 font-mono text-xs sm:text-sm text-zinc-300">
             <p><strong>Organization:</strong> STF Ecosystem (Sphere Tech Foundation)</p>
             <p><strong>Privacy Inquiries:</strong> <a href="mailto:privacy@spheretech.org" className="text-[#ff8585] hover:underline">privacy@spheretech.org</a></p>
             <p><strong>Developer Support:</strong> <a href="mailto:support@yemini.dev" className="text-[#ff8585] hover:underline">support@yemini.dev</a></p>
@@ -280,3 +231,5 @@ export const NotepadAppPrivacyPage: React.FC = () => {
     </div>
   );
 };
+
+export default NotepadAppPrivacyPage;

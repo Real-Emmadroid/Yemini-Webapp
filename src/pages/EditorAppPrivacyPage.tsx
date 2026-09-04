@@ -7,7 +7,7 @@ export const EditorAppPrivacyPage: React.FC = () => {
         
         {/* Document Header */}
         <header className="space-y-4 pb-8 border-b border-zinc-800/80">
-          <div className="inline-block px-3 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#ff8585]">
+          <div className="inline-block px-3 py-1 bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#ff8585]">
             Official Privacy Policy • Android Application
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -122,7 +122,7 @@ export const EditorAppPrivacyPage: React.FC = () => {
             The application utilizes third-party services that may collect information used to identify your device, serve advertisements, and analyze app stability. Below are links to the privacy policies of the third-party service providers used by Yemini Code Editor:
           </p>
           <ul className="space-y-2.5 pl-2 font-mono text-xs sm:text-sm">
-            <li className="p-2.5 rounded-lg bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
+            <li className="p-2.5 bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
               <span className="text-white font-semibold">Google Play Services</span>
               <a 
                 href="https://policies.google.com/privacy" 
@@ -133,7 +133,7 @@ export const EditorAppPrivacyPage: React.FC = () => {
                 Privacy Policy ↗
               </a>
             </li>
-            <li className="p-2.5 rounded-lg bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
+            <li className="p-2.5 bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
               <span className="text-white font-semibold">Google AdMob</span>
               <a 
                 href="https://support.google.com/admob/answer/6128543?hl=en" 
@@ -144,7 +144,7 @@ export const EditorAppPrivacyPage: React.FC = () => {
                 Privacy Policy ↗
               </a>
             </li>
-            <li className="p-2.5 rounded-lg bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
+            <li className="p-2.5 bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
               <span className="text-white font-semibold">Google Analytics for Firebase</span>
               <a 
                 href="https://firebase.google.com/policies/analytics" 
@@ -155,7 +155,7 @@ export const EditorAppPrivacyPage: React.FC = () => {
                 Privacy Policy ↗
               </a>
             </li>
-            <li className="p-2.5 rounded-lg bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
+            <li className="p-2.5 bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
               <span className="text-white font-semibold">Firebase Crashlytics</span>
               <a 
                 href="https://firebase.google.com/support/privacy" 
@@ -166,7 +166,7 @@ export const EditorAppPrivacyPage: React.FC = () => {
                 Privacy Policy ↗
               </a>
             </li>
-            <li className="p-2.5 rounded-lg bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
+            <li className="p-2.5 bg-zinc-900/80 border border-zinc-800 flex items-center justify-between">
               <span className="text-white font-semibold">GitHub API Services</span>
               <a 
                 href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" 
@@ -306,7 +306,7 @@ export const EditorAppPrivacyPage: React.FC = () => {
           <p>
             If you have any questions, suggestions, or data deletion requests regarding our Privacy Policy or the Yemini Code Editor Android app, do not hesitate to contact us:
           </p>
-          <div className="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 space-y-1 font-mono text-xs sm:text-sm text-zinc-300">
+          <div className="p-4 bg-zinc-900/90 border border-zinc-800 space-y-1 font-mono text-xs sm:text-sm text-zinc-300">
             <p><strong>Organization:</strong> STF Ecosystem (Sphere Tech Foundation)</p>
             <p><strong>Privacy Inquiries:</strong> <a href="mailto:privacy@spheretech.org" className="text-[#ff8585] hover:underline">privacy@spheretech.org</a></p>
             <p><strong>Developer Support:</strong> <a href="mailto:support@yemini.dev" className="text-[#ff8585] hover:underline">support@yemini.dev</a></p>
@@ -324,3 +324,5 @@ export const EditorAppPrivacyPage: React.FC = () => {
     </div>
   );
 };
+
+export default EditorAppPrivacyPage;

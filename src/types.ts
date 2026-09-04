@@ -17,6 +17,7 @@ export type PageRoute =
   | 'editorapp-privacy'
   | 'notepadapp-privacy'
   | 'converterapp-privacy'
+  | 'shareapp-privacy'
   | 'app-privacy'
   | 'mobile-privacy';
 
