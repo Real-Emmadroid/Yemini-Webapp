@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, X, BookOpen, Download, Sparkles, FileText, ArrowRight, CornerDownLeft, ShieldCheck, Smartphone, Monitor, RefreshCw, Share2 } from 'lucide-react';
 import { PageRoute, SearchResultItem } from '../types';
 import { useTheme } from '../context/ThemeContext';
 import { StatusBadge } from './StatusBadge';
 import { docArticles } from '../data/docsData';
 import { platformsData } from '../data/downloadsData';
 import { resourcesData } from '../data/resourcesData';
+import { MobileVisual, DesktopVisual, AiVisual, SuiteVisual } from './ProductVisuals';
 
 interface GlobalSearchModalProps {
   isOpen: boolean;
@@ -25,7 +25,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
 
   const isLight = theme === 'light';
 
-  // Build searchable index
+  // Search dataset
   const searchItems: (SearchResultItem & { status?: 'available' | 'in-development' })[] = [
     {
       id: 'prod-home',
@@ -45,7 +45,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
     {
       id: 'prod-desktop',
       title: 'Yemini Desktop IDE',
-      description: 'Professional desktop IDE for macOS, Windows, and Linux. In active development.',
+      description: 'Professional desktop IDE for macOS, Windows, and Linux. Sub-100MB RAM footprint.',
       category: 'Product',
       route: 'desktop',
       status: 'in-development'
@@ -53,7 +53,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
     {
       id: 'prod-ai',
       title: 'Yemini Intelligence',
-      description: 'Autonomous coding agent, AST repository graph, and multi-turn refactoring. In development.',
+      description: 'Autonomous coding agent, AST repository graph, and multi-turn refactoring.',
       category: 'Product',
       route: 'ai',
       status: 'in-development'
@@ -86,7 +86,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
       category: 'Legal',
       route: 'shareapp-privacy'
     },
-    // Docs
+    // Documentation articles
     ...Object.values(docArticles).map(doc => ({
       id: `doc-${doc.id}`,
       title: doc.title,
@@ -103,7 +103,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
       category: 'Download' as const,
       route: 'download' as PageRoute,
       targetId: p.id,
-      status: p.status === 'available' ? 'available' as const : 'in-development' as const
+      status: p.status === 'available' ? ('available' as const) : ('in-development' as const)
     })),
     // Resources
     ...resourcesData.map(r => ({
@@ -117,18 +117,18 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
   ];
 
   const filteredItems = query.trim() === ''
-    ? searchItems.slice(0, 8)
+    ? []
     : searchItems.filter(item => 
         item.title.toLowerCase().includes(query.toLowerCase()) ||
         item.description.toLowerCase().includes(query.toLowerCase()) ||
         item.category.toLowerCase().includes(query.toLowerCase())
-      ).slice(0, 12);
+      ).slice(0, 10);
 
   useEffect(() => {
     if (isOpen) {
       setQuery('');
       setSelectedIndex(0);
-      setTimeout(() => inputRef.current?.focus(), 50);
+      setTimeout(() => inputRef.current?.focus(), 80);
     }
   }, [isOpen]);
 
@@ -136,7 +136,6 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
     setSelectedIndex(0);
   }, [query]);
 
-  // Handle keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -156,167 +155,290 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
     }
   };
 
-  if (!isOpen) return null;
-
-  const getCategoryIcon = (category: string, id: string) => {
-    if (id.includes('mobile') || id.includes('editor')) return <Smartphone className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
-    if (id.includes('notepad')) return <FileText className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
-    if (id.includes('converter')) return <RefreshCw className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
-    if (id.includes('share')) return <Share2 className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
-    if (id.includes('desktop')) return <Monitor className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
-    if (id.includes('ai')) return <Sparkles className={`w-4 h-4 ${isLight ? 'text-purple-600' : 'text-[#ff6767]'}`} />;
-
-    switch (category) {
-      case 'Product':
-        return <Sparkles className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ff6767]'}`} />;
-      case 'Docs':
-        return <BookOpen className={`w-4 h-4 ${isLight ? 'text-blue-500' : 'text-sky-400'}`} />;
-      case 'Download':
-        return <Download className="w-4 h-4 text-emerald-500" />;
-      case 'Legal':
-        return <ShieldCheck className={`w-4 h-4 ${isLight ? 'text-purple-500' : 'text-[#ff8585]'}`} />;
-      default:
-        return <FileText className={`w-4 h-4 ${isLight ? 'text-gray-400' : 'text-zinc-400'}`} />;
-    }
+  const handleSelectProduct = (route: PageRoute) => {
+    onNavigate(route);
+    onClose();
   };
 
-  return (
-    <div className={`fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 backdrop-blur-md animate-fadeIn ${
-      isLight ? 'bg-black/40' : 'bg-black/80'
-    }`}>
-      <div className={`relative w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] border ${
-        isLight ? 'bg-white border-gray-200' : 'bg-[#0e0e13] border-zinc-800'
-      }`}>
-        {/* Search Input Bar */}
-        <div className={`flex items-center px-4 py-3.5 border-b gap-3 ${
-          isLight ? 'border-gray-100' : 'border-zinc-800'
-        }`}>
-          <Search className={`w-5 h-5 shrink-0 ${isLight ? 'text-gray-400' : 'text-zinc-400'}`} />
-          <input
-            ref={inputRef}
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Search documentation, downloads, guides..."
-            className={`w-full bg-transparent text-base focus:outline-none ${
-              isLight ? 'text-gray-900 placeholder-gray-400' : 'text-white placeholder-zinc-500'
-            }`}
-          />
-          {query && (
-            <button
-              onClick={() => setQuery('')}
-              className={`p-1 ${isLight ? 'text-gray-400 hover:text-gray-600' : 'text-zinc-500 hover:text-zinc-300'}`}
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
-          <button
-            onClick={onClose}
-            className={`px-2 py-1 text-xs font-mono rounded border ${
-              isLight 
-                ? 'text-gray-500 bg-gray-100 border-gray-200 hover:text-black' 
-                : 'text-zinc-400 bg-zinc-800/80 border-zinc-700 hover:text-white'
-            }`}
-          >
-            ESC
-          </button>
-        </div>
+  if (!isOpen) return null;
 
-        {/* Results List */}
-        <div className="overflow-y-auto p-2 space-y-1">
-          {filteredItems.length === 0 ? (
-            <div className={`py-12 text-center ${isLight ? 'text-gray-400' : 'text-zinc-500'}`}>
-              <p className="text-sm">No results found for &ldquo;{query}&rdquo;</p>
-              <p className="text-xs mt-1 opacity-70">Try searching for &quot;Python&quot;, &quot;Android&quot;, &quot;Privacy&quot;, &quot;Notepad&quot;, &quot;Editor&quot;, or &quot;Desktop&quot;</p>
+  return (
+    <div className="fixed inset-0 z-50 flex items-start justify-center md:justify-end pt-16 md:pt-20 px-4 md:px-8 lg:px-16 overflow-y-auto">
+      {/* Dimmed backdrop */}
+      <div 
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+
+      {/* Floating Card Modal Styled Exactly Like Meta's tyhyu.JPG */}
+      <div 
+        className={`relative w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden transition-all transform duration-200 z-10 my-4 ${
+          isLight 
+            ? 'bg-white text-gray-900 border border-gray-100 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.25)]' 
+            : 'bg-[#140808] text-[#fadcd9] border border-[#3d2423] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)]'
+        }`}
+      >
+        <div className="p-6 sm:p-8">
+          {/* Top Bar: Title & Close Button (Matching tyhyu.JPG) */}
+          <div className="flex items-center justify-between mb-6">
+            <h2 className={`text-2xl sm:text-3xl font-medium tracking-tight ${
+              isLight ? 'text-gray-900' : 'text-white'
+            }`}>
+              Search Yemini
+            </h2>
+
+            {/* Custom SVG Close Button */}
+            <button
+              onClick={onClose}
+              className={`p-2 rounded-full transition-colors cursor-pointer ${
+                isLight 
+                  ? 'hover:bg-gray-100 text-gray-700' 
+                  : 'hover:bg-[#2c1b1a] text-[#fadcd9]'
+              }`}
+              aria-label="Close search"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Search Input Box (Matching rounded box with search icon in tyhyu.JPG) */}
+          <div className={`relative flex items-center gap-3 px-4 py-3 rounded-2xl border transition-all ${
+            isLight 
+              ? 'bg-white border-gray-300 focus-within:border-black focus-within:ring-2 focus-within:ring-black/5' 
+              : 'bg-[#1f0e0d] border-[#43302f] focus-within:border-[#ff8585] focus-within:ring-2 focus-within:ring-[#580c14]/40'
+          }`}>
+            {/* Custom SVG Magnifying Glass Icon */}
+            <svg 
+              className={`w-5 h-5 shrink-0 ${isLight ? 'text-gray-400' : 'text-[#ab8986]'}`} 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <line x1="16.5" y1="16.5" x2="21" y2="21" />
+            </svg>
+
+            <input
+              ref={inputRef}
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Search for products or articles"
+              className={`w-full bg-transparent text-base sm:text-lg focus:outline-none ${
+                isLight ? 'text-gray-900 placeholder-gray-400' : 'text-white placeholder-zinc-500'
+              }`}
+            />
+
+            {query && (
+              <button
+                onClick={() => setQuery('')}
+                className={`p-1 rounded-full text-xs font-semibold ${
+                  isLight ? 'text-gray-400 hover:text-black' : 'text-[#ab8986] hover:text-white'
+                }`}
+                aria-label="Clear query"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            )}
+          </div>
+
+          {/* Initial View (query is empty): Devices / Products Quick Grid (Exactly matching tyhyu.JPG) */}
+          {query.trim() === '' ? (
+            <div className="mt-8 space-y-6">
+              <div>
+                <h3 className={`text-xs font-bold uppercase tracking-wider mb-4 ${
+                  isLight ? 'text-gray-500' : 'text-[#ab8986]'
+                }`}>
+                  Products
+                </h3>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+                  {/* Product 1: Yemini Mobile */}
+                  <button
+                    onClick={() => handleSelectProduct('mobile')}
+                    className={`group p-4 rounded-2xl border text-center flex flex-col items-center justify-between transition-all cursor-pointer ${
+                      isLight 
+                        ? 'bg-gray-50/70 border-gray-200/80 hover:bg-white hover:border-gray-300 hover:shadow-md' 
+                        : 'bg-[#1b0c0b] border-[#43302f] hover:bg-[#271312] hover:border-[#580c14]'
+                    }`}
+                  >
+                    <div className="w-full h-24 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+                      <MobileVisual size="sm" />
+                    </div>
+                    <div>
+                      <div className={`text-sm font-semibold tracking-tight ${
+                        isLight ? 'text-gray-900' : 'text-white'
+                      }`}>
+                        Yemini Mobile
+                      </div>
+                      <div className={`text-[11px] mt-0.5 ${
+                        isLight ? 'text-gray-500' : 'text-[#ab8986]'
+                      }`}>
+                        Android APK (v1.2.0)
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* Product 2: Yemini Desktop */}
+                  <button
+                    onClick={() => handleSelectProduct('desktop')}
+                    className={`group p-4 rounded-2xl border text-center flex flex-col items-center justify-between transition-all cursor-pointer ${
+                      isLight 
+                        ? 'bg-gray-50/70 border-gray-200/80 hover:bg-white hover:border-gray-300 hover:shadow-md' 
+                        : 'bg-[#1b0c0b] border-[#43302f] hover:bg-[#271312] hover:border-[#580c14]'
+                    }`}
+                  >
+                    <div className="w-full h-24 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+                      <DesktopVisual size="sm" />
+                    </div>
+                    <div>
+                      <div className={`text-sm font-semibold tracking-tight ${
+                        isLight ? 'text-gray-900' : 'text-white'
+                      }`}>
+                        Yemini Desktop
+                      </div>
+                      <div className={`text-[11px] mt-0.5 ${
+                        isLight ? 'text-gray-500' : 'text-[#ab8986]'
+                      }`}>
+                        macOS, Windows, Linux
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* Product 3: Yemini Intelligence */}
+                  <button
+                    onClick={() => handleSelectProduct('ai')}
+                    className={`group p-4 rounded-2xl border text-center flex flex-col items-center justify-between transition-all cursor-pointer col-span-2 sm:col-span-1 ${
+                      isLight 
+                        ? 'bg-gray-50/70 border-gray-200/80 hover:bg-white hover:border-gray-300 hover:shadow-md' 
+                        : 'bg-[#1b0c0b] border-[#43302f] hover:bg-[#271312] hover:border-[#580c14]'
+                    }`}
+                  >
+                    <div className="w-full h-24 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+                      <AiVisual size="sm" />
+                    </div>
+                    <div>
+                      <div className={`text-sm font-semibold tracking-tight ${
+                        isLight ? 'text-gray-900' : 'text-white'
+                      }`}>
+                        Yemini Intelligence
+                      </div>
+                      <div className={`text-[11px] mt-0.5 ${
+                        isLight ? 'text-gray-500' : 'text-[#ab8986]'
+                      }`}>
+                        AST Autonomous Partner
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              {/* Popular quick searches */}
+              <div>
+                <h4 className={`text-xs font-semibold mb-2.5 ${isLight ? 'text-gray-400' : 'text-[#ab8986]'}`}>
+                  Suggested Searches
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    { label: 'Download APK', query: 'Download' },
+                    { label: 'Offline Compilers', query: 'Offline' },
+                    { label: 'Python on Android', query: 'Python' },
+                    { label: 'Desktop Waitlist', query: 'Desktop' },
+                    { label: 'Privacy Policy', query: 'Privacy' },
+                    { label: 'Documentation', query: 'Docs' }
+                  ].map((chip) => (
+                    <button
+                      key={chip.label}
+                      onClick={() => setQuery(chip.query)}
+                      className={`px-3 py-1.5 rounded-full text-xs transition-colors cursor-pointer ${
+                        isLight 
+                          ? 'bg-gray-100 hover:bg-gray-200 text-gray-700' 
+                          : 'bg-[#271716] hover:bg-[#372624] text-[#fadcd9]'
+                      }`}
+                    >
+                      {chip.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           ) : (
-            filteredItems.map((item, index) => {
-              const isSelected = index === selectedIndex;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    onNavigate(item.route, item.targetId);
-                    onClose();
-                  }}
-                  onMouseEnter={() => setSelectedIndex(index)}
-                  className={`w-full flex items-center justify-between p-3 rounded-xl text-left transition-all ${
-                    isSelected
-                      ? (isLight 
-                          ? 'bg-blue-50/80 border border-blue-200 text-black' 
-                          : 'bg-zinc-800/90 border border-[#ff6767]/30 text-white')
-                      : (isLight 
-                          ? 'hover:bg-gray-50 text-gray-700 border border-transparent' 
-                          : 'hover:bg-zinc-900/60 text-zinc-300 border border-transparent')
-                  }`}
-                >
-                  <div className="flex items-start gap-3 min-w-0">
-                    <div className={`mt-0.5 shrink-0 p-1.5 rounded-lg border ${
-                      isLight ? 'bg-gray-100 border-gray-200' : 'bg-zinc-900 border-zinc-800'
-                    }`}>
-                      {getCategoryIcon(item.category, item.id)}
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className={`font-semibold text-sm truncate ${isLight ? 'text-gray-900' : 'text-white'}`}>
-                          {item.title}
-                        </span>
-                        {item.status && (
-                          <StatusBadge status={item.status} size="sm" />
-                        )}
-                        <span className={`text-[10px] uppercase font-mono px-1.5 py-0.5 rounded border ${
-                          isLight 
-                            ? 'bg-gray-100 text-gray-600 border-gray-200' 
-                            : 'bg-zinc-800/80 text-zinc-400 border-zinc-700/50'
+            /* Live Filtered Results List */
+            <div className="mt-4 max-h-[50vh] overflow-y-auto divide-y space-y-1">
+              {filteredItems.length === 0 ? (
+                <div className={`py-12 text-center ${isLight ? 'text-gray-400' : 'text-zinc-500'}`}>
+                  <p className="text-base font-medium">No results found for &ldquo;{query}&rdquo;</p>
+                  <p className="text-xs mt-1 opacity-70">
+                    Try &ldquo;Mobile&rdquo;, &ldquo;Desktop&rdquo;, &ldquo;Python&rdquo;, &ldquo;Download&rdquo;, or &ldquo;Privacy&rdquo;
+                  </p>
+                </div>
+              ) : (
+                filteredItems.map((item, index) => {
+                  const isSelected = index === selectedIndex;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        onNavigate(item.route, item.targetId);
+                        onClose();
+                      }}
+                      onMouseEnter={() => setSelectedIndex(index)}
+                      className={`w-full flex items-center justify-between p-3.5 rounded-xl text-left transition-all cursor-pointer ${
+                        isSelected
+                          ? isLight 
+                            ? 'bg-[#580c14]/10 text-black' 
+                            : 'bg-[#580c14]/40 text-white'
+                          : isLight 
+                            ? 'hover:bg-gray-50 text-gray-700' 
+                            : 'hover:bg-[#271312] text-[#fadcd9]'
+                      }`}
+                    >
+                      <div className="min-w-0 pr-3">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className={`font-semibold text-sm truncate ${
+                            isLight ? 'text-gray-900' : 'text-white'
+                          }`}>
+                            {item.title}
+                          </span>
+                          {item.status && (
+                            <StatusBadge status={item.status} size="sm" />
+                          )}
+                          <span className={`text-[10px] uppercase font-mono px-1.5 py-0.2 rounded border ${
+                            isLight 
+                              ? 'bg-gray-100 text-gray-600 border-gray-200' 
+                              : 'bg-black text-[#ab8986] border-[#43302f]'
+                          }`}>
+                            {item.category}
+                          </span>
+                        </div>
+                        <p className={`text-xs line-clamp-1 ${
+                          isLight ? 'text-gray-500' : 'text-[#ab8986]'
                         }`}>
-                          {item.category}
-                        </span>
+                          {item.description}
+                        </p>
                       </div>
-                      <p className={`text-xs line-clamp-1 mt-0.5 ${isLight ? 'text-gray-500' : 'text-zinc-400'}`}>
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 pl-3 shrink-0">
-                    {isSelected && (
-                      <span className={`flex items-center gap-1 text-[11px] font-mono ${
-                        isLight ? 'text-blue-600' : 'text-[#ff6767]'
-                      }`}>
-                        <span>Select</span>
-                        <CornerDownLeft className="w-3 h-3" />
-                      </span>
-                    )}
-                    <ArrowRight className={`w-4 h-4 ${isLight ? 'text-gray-400' : 'text-zinc-600'}`} />
-                  </div>
-                </button>
-              );
-            })
-          )}
-        </div>
 
-        {/* Footer shortcuts helper */}
-        <div className={`px-4 py-2.5 border-t flex items-center justify-between text-xs font-mono ${
-          isLight ? 'bg-gray-50 border-gray-100 text-gray-500' : 'bg-[#0a0a0d] border-zinc-800/80 text-zinc-500'
-        }`}>
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5">
-              <kbd className={`px-1.5 py-0.5 rounded border text-[10px] ${
-                isLight ? 'bg-white border-gray-200 text-gray-600' : 'bg-zinc-800 border-zinc-700 text-zinc-300'
-              }`}>↑</kbd>
-              <kbd className={`px-1.5 py-0.5 rounded border text-[10px] ${
-                isLight ? 'bg-white border-gray-200 text-gray-600' : 'bg-zinc-800 border-zinc-700 text-zinc-300'
-              }`}>↓</kbd>
-              <span>Navigate</span>
-            </span>
-            <span className="flex items-center gap-1.5">
-              <kbd className={`px-1.5 py-0.5 rounded border text-[10px] ${
-                isLight ? 'bg-white border-gray-200 text-gray-600' : 'bg-zinc-800 border-zinc-700 text-zinc-300'
-              }`}>↵</kbd>
-              <span>Open</span>
-            </span>
-          </div>
-          <span>Yemini Ecosystem Index</span>
+                      {/* Custom Arrow SVG */}
+                      <svg className={`w-4 h-4 shrink-0 ${isLight ? 'text-gray-400' : 'text-[#ab8986]'}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <polyline points="9 18 15 12 9 6" />
+                      </svg>
+                    </button>
+                  );
+                })
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,25 +1,38 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { PageRoute } from '../types';
 import { useTheme } from '../context/ThemeContext';
-import { HeroInteractiveBackground } from '../components/HeroInteractiveBackground';
 import { StatusBadge } from '../components/StatusBadge';
 import { 
-  ChevronRight, CheckCircle2, Play, Copy, Check, ArrowRight,
-  Smartphone, Monitor, Sparkles, Download, BellRing, Terminal
+  CheckCircle2, ArrowRight, Download
 } from 'lucide-react';
 
 interface HomePageProps {
   onNavigate: (route: PageRoute) => void;
 }
 
+const SWITCHING_WORDS = ['Everyone', 'Developers', 'Creators', 'Writers', 'Students'];
+
 export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   const { theme } = useTheme();
   const [networkMode, setNetworkMode] = useState<'online' | 'offline'>('offline');
-  const [isCopied, setIsCopied] = useState(false);
-  const [isRunningCode, setIsRunningCode] = useState(false);
-  const [runOutput, setRunOutput] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Switching word state & animation
+  const [wordIndex, setWordIndex] = useState(0);
+  const [isFading, setIsFading] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsFading(true);
+      setTimeout(() => {
+        setWordIndex((prev) => (prev + 1) % SWITCHING_WORDS.length);
+        setIsFading(false);
+      }, 350);
+    }, 2800);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const isLight = theme === 'light';
 
@@ -34,116 +47,128 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
     }
   };
 
-  const handleCopyCode = () => {
-    const code = `// Yemini Native Core - Multi-Platform Compiler\nuse std::time::Instant;\n\nfn compile_pipeline(target: String) -> String {\n    let timer = Instant::now();\n    println!("[{}] Compiling for {} architecture...", "yemini-core", target);\n    format!("Compiled in {:.2?} with 0 memory leaks", timer.elapsed())\n}\n\nfn main() {\n    let targets = vec!["android-arm64", "macos-metal", "win-x64"];\n    for target in targets {\n        let result = compile_pipeline(target);\n        println!("✔ Target: {} -> {}", target, result);\n    }\n}`;
-    navigator.clipboard.writeText(code);
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000);
-  };
-
-  const handleRunCode = () => {
-    setIsRunningCode(true);
-    setRunOutput('Compiling rustc on-device target...');
-    setTimeout(() => {
-      setRunOutput('✔ Target: android-arm64 -> Compiled in 1.42ms (0 leaks)\n✔ Target: macos-metal -> In development preview\n✔ Target: win-x64 -> In development preview\n>>> [Yemini Runtime] Finished with exit code 0');
-      setIsRunningCode(false);
-    }, 600);
-  };
-
   return (
     <div className={`relative min-h-screen selection:text-white transition-colors duration-300 overflow-x-hidden ${
-      isLight ? 'bg-[#f5f5f7] text-[#1d1d1f] selection:bg-[#0066cc]' : 'bg-black text-[#fadcd9] selection:bg-[#ba1724]'
+      isLight ? 'bg-[#f5f5f7] text-[#1d1d1f] selection:bg-[#580c14]' : 'bg-black text-[#fadcd9] selection:bg-[#580c14]'
     }`}>
-      {/* Interactive Cursor Particle / Grid Background Animation */}
-      <HeroInteractiveBackground />
+      {/* HERO SECTION - Immersive Edge-to-Edge Fullscreen Video Hero */}
+      <section className="relative w-full h-[100svh] min-h-[600px] sm:min-h-[680px] flex flex-col justify-between overflow-hidden">
+        {/* Background Fullscreen Video */}
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        >
+          <source src="/hero-video.mp4" type="video/mp4" />
+          <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
 
-      <main className="relative pt-24 sm:pt-28 pb-24 flex flex-col gap-24 sm:gap-32 z-10">
-        {/* HERO SECTION - Immersive Video Banner matching Meta Glasses style */}
-        <section className="relative w-full max-w-[1440px] mx-auto px-4 sm:px-6">
-          <div className="relative w-full h-[82vh] sm:h-[88vh] rounded-3xl overflow-hidden shadow-2xl bg-black flex flex-col justify-between p-6 sm:p-12 md:p-16">
-            
-            {/* Background Video */}
-            <video
-              ref={videoRef}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover opacity-85 pointer-events-none"
+        {/* Natural Vignette Overlay for Text Contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/25 to-black/75 pointer-events-none" />
+
+        {/* Top Area: Hero Headline */}
+        <div className="relative z-10 pt-24 sm:pt-28 md:pt-32 px-6 sm:px-10 md:px-16 lg:px-20">
+          {/* Mobile Display: "Accessibility built for" + switching word below */}
+          <h1 className="md:hidden text-5xl sm:text-6xl font-bold text-white tracking-tight leading-[1.08] drop-shadow-lg">
+            Accessibility<br />
+            built for<br />
+            <span 
+              className={`inline-block transition-all duration-350 ease-out transform ${
+                isFading ? 'opacity-0 translate-y-2.5 scale-95' : 'opacity-100 translate-y-0 scale-100'
+              }`}
             >
-              <source src="https://assets.mixkit.co/videos/preview/mixkit-hands-typing-on-a-laptop-keyboard-42848-large.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+              {SWITCHING_WORDS[wordIndex]}
+            </span>
+          </h1>
 
-            {/* Gradient Overlay for Text Readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/40 pointer-events-none" />
+          {/* Desktop Display: Top-Left "Accessibility built for" */}
+          <h1 className="hidden md:block text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-white tracking-tighter leading-none drop-shadow-xl">
+            Accessibility built for
+          </h1>
+        </div>
 
-            {/* Top Row: Top-Left Aligned Headline */}
-            <div className="relative z-10 flex justify-between items-start">
-              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter leading-none max-w-2xl drop-shadow-md">
-                Meet the all-new
-              </h1>
+        {/* Bottom Area: Subtitle, CTAs & Bottom-Right Switching Text / Play-Pause Button */}
+        <div className="relative z-10 pb-8 sm:pb-12 md:pb-16 px-6 sm:px-10 md:px-16 lg:px-20 flex flex-col md:flex-row justify-between md:items-end gap-6 sm:gap-8">
+          
+          {/* Bottom-Left: Subtitle & Responsive Action Buttons */}
+          <div className="flex flex-col items-start gap-4 max-w-lg">
+            <p className="text-white text-sm sm:text-base md:text-lg font-medium tracking-tight drop-shadow-md leading-relaxed">
+              Software that makes creation<br className="hidden sm:inline" /> accessible to anyone.
+            </p>
+
+            {/* Responsive non-breaking action button container */}
+            <div className="flex flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto flex-nowrap py-1">
+              {/* Primary Explore Yemini Button (Deep Wine #580c14) */}
+              <button
+                onClick={() => {
+                  const el = document.getElementById('ecosystem');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  else onNavigate('mobile');
+                }}
+                className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm md:text-base font-medium bg-[#580c14] hover:bg-[#43080e] text-white shadow-xl transition-all active:scale-95 whitespace-nowrap shrink-0 text-center cursor-pointer"
+              >
+                Explore Yemini
+              </button>
+
+              {/* Secondary Learn More Button (Light Rounded Pill) */}
+              <button
+                onClick={() => {
+                  const el = document.getElementById('ecosystem');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="px-5 sm:px-7 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm md:text-base font-medium bg-[#ede5e0] hover:bg-white text-black shadow-lg transition-all active:scale-95 whitespace-nowrap shrink-0 text-center cursor-pointer"
+              >
+                Learn more
+              </button>
             </div>
-
-            {/* Bottom Row: Bottom-Left Subtitle & Buttons, Bottom-Right Headline & Play/Pause */}
-            <div className="relative z-10 flex flex-col md:flex-row justify-between items-end gap-6">
-              
-              {/* Bottom-Left: Subtitle & CTA */}
-              <div className="flex flex-col items-start gap-4 max-w-md">
-                <p className="text-white/90 text-sm sm:text-base md:text-lg font-normal tracking-tight drop-shadow">
-                  Bold developer tools. Signature performance. Powerful AI. Starting at $0.
-                </p>
-                <div className="flex items-center gap-3 w-full sm:w-auto">
-                  <button
-                    onClick={() => onNavigate('mobile')}
-                    className="px-6 py-3 rounded-full text-sm sm:text-base font-medium bg-[#0066cc] text-white hover:bg-[#0051a8] transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2"
-                  >
-                    <Download className="w-4 h-4" />
-                    <span>Shop / Download</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      const el = document.getElementById('ecosystem');
-                      if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className="px-6 py-3 rounded-full text-sm sm:text-base font-medium bg-white/20 backdrop-blur-md text-white hover:bg-white/30 transition-all active:scale-95 border border-white/20"
-                  >
-                    Learn more
-                  </button>
-                </div>
-              </div>
-
-              {/* Bottom-Right: Headline & Play/Pause Button */}
-              <div className="flex items-end gap-4">
-                <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter leading-none drop-shadow-md">
-                  Yemini Platform
-                </h2>
-                
-                {/* Video Play/Pause Toggle Button */}
-                <button
-                  onClick={toggleVideoPlay}
-                  className="w-11 h-11 rounded-full bg-black/50 backdrop-blur-md border border-white/25 flex items-center justify-center text-white hover:bg-black/70 transition-all active:scale-95 shadow-lg mb-1"
-                  title={isPlaying ? "Pause video" : "Play video"}
-                  aria-label={isPlaying ? "Pause video" : "Play video"}
-                >
-                  {isPlaying ? (
-                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                      <rect x="6" y="4" width="4" height="16" rx="1" />
-                      <rect x="14" y="4" width="4" height="16" rx="1" />
-                    </svg>
-                  ) : (
-                    <Play className="w-4 h-4 fill-current ml-0.5" />
-                  )}
-                </button>
-              </div>
-
-            </div>
-
           </div>
-        </section>
 
+          {/* Bottom-Right: Desktop "Everyone" (Switching Text) & Video Play/Pause Toggle */}
+          <div className="flex items-end justify-between md:justify-end gap-4 sm:gap-6 w-full md:w-auto">
+            {/* Desktop Headline at Bottom-Right: Switching Text */}
+            <h2 className="hidden md:block text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-white tracking-tighter leading-none drop-shadow-xl whitespace-nowrap min-w-[320px] text-right">
+              <span 
+                className={`inline-block transition-all duration-350 ease-out transform ${
+                  isFading ? 'opacity-0 translate-y-3 scale-95' : 'opacity-100 translate-y-0 scale-100'
+                }`}
+              >
+                {SWITCHING_WORDS[wordIndex]}
+              </span>
+            </h2>
+
+            {/* Video Play / Pause Toggle Button */}
+            <button
+              onClick={toggleVideoPlay}
+              className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/25 text-white flex items-center justify-center hover:bg-black/60 active:scale-95 transition-all shadow-xl flex-shrink-0 cursor-pointer"
+              title={isPlaying ? "Pause video" : "Play video"}
+              aria-label={isPlaying ? "Pause video" : "Play video"}
+            >
+              {isPlaying ? (
+                /* Pause Icon (||) */
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <rect x="6" y="4.5" width="3.5" height="15" rx="1" />
+                  <rect x="14.5" y="4.5" width="3.5" height="15" rx="1" />
+                </svg>
+              ) : (
+                /* Play Icon (▶) */
+                <svg className="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              )}
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <main className="relative pb-24 flex flex-col gap-24 sm:gap-32 z-10">
         {/* ECOSYSTEM SECTION */}
-        <section className="px-4 sm:px-6 max-w-7xl mx-auto w-full pt-12 sm:pt-16" id="ecosystem">
+        <section className="px-4 sm:px-6 max-w-7xl mx-auto w-full pt-16 sm:pt-24" id="ecosystem">
           <div className="text-center mb-12 sm:mb-20">
             <h2 className={`text-3xl sm:text-5xl md:text-6xl tracking-tighter font-semibold mb-4 ${
               isLight ? 'text-black' : 'text-[#fadcd9]'
@@ -191,7 +216,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                     className={`font-semibold flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-sm transition-all shadow-sm ${
                       isLight 
                         ? 'bg-black text-white hover:bg-gray-800' 
-                        : 'bg-[#ba1724] text-white hover:bg-[#930015]'
+                        : 'bg-[#580c14] text-white hover:bg-[#43080e]'
                     }`}
                   >
                     <Download className="w-4 h-4" />
@@ -202,7 +227,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                     onClick={() => onNavigate('mobile')}
                     className={`font-medium flex items-center gap-1 text-sm ${
                       isLight 
-                        ? 'text-blue-600 hover:underline' 
+                        ? 'text-[#580c14] hover:underline' 
                         : 'text-[#ffb3ae] hover:underline'
                     }`}
                   >
@@ -228,12 +253,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                 }`}>
                   <pre>
                     <code>
-                      <span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>import</span> math{'\n'}
-                      <span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>def</span> <span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>compute_orbit</span>(radius):{'\n'}
+                      <span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>import</span> math{'\n'}
+                      <span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>def</span> <span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>compute_orbit</span>(radius):{'\n'}
                       {'    '}<span className={isLight ? 'text-gray-400 italic' : 'text-[#ab8986] italic'}># Local orbital calculations</span>{'\n'}
                       {'    '}speed = math.sqrt(<span className={isLight ? 'text-orange-600' : 'text-amber-400'}>398600</span> / radius){'\n'}
                       {'    '}<span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>print</span>(<span className={isLight ? 'text-orange-600' : 'text-amber-400'}>{`f"Velocity: {speed:.2f} km/s"`}</span>){'\n'}
-                      {'    '}<span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>return</span> speed{'\n\n'}
+                      {'    '}<span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>return</span> speed{'\n\n'}
                       <span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>compute_orbit</span>(<span className={isLight ? 'text-orange-600' : 'text-amber-400'}>6771.0</span>)
                     </code>
                   </pre>
@@ -383,7 +408,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                       onClick={() => setNetworkMode('offline')}
                       className={`px-4 py-1.5 rounded-full transition-colors ${
                         networkMode === 'offline' 
-                          ? (isLight ? 'bg-white shadow-xs text-black font-semibold' : 'bg-[#ba1724] text-white shadow-xs')
+                          ? (isLight ? 'bg-white shadow-xs text-black font-semibold' : 'bg-[#580c14] text-white shadow-xs')
                           : (isLight ? 'text-gray-500 hover:text-black' : 'text-[#ab8986] hover:text-[#fadcd9]')
                       }`}
                     >
@@ -400,10 +425,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                   <pre>
                     <code>
                       <span className={isLight ? 'text-gray-400 italic' : 'text-[#ab8986] italic'}>// 100% Offline Capable</span>{'\n'}
-                      <span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>#include</span> <span className={isLight ? 'text-green-600' : 'text-emerald-400'}>&lt;iostream&gt;</span>{'\n'}
-                      <span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>int</span> <span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>main</span>() {'{\n'}
-                      {'    '}<span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>std</span>::<span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>cout</span> &lt;&lt; <span className={isLight ? 'text-orange-600' : 'text-amber-400'}>&quot;Running on local toolchain.&quot;</span>;{'\n'}
-                      {'    '}<span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>return</span> <span className={isLight ? 'text-orange-600' : 'text-amber-400'}>0</span>;{'\n'}
+                      <span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>#include</span> <span className={isLight ? 'text-green-600' : 'text-emerald-400'}>&lt;iostream&gt;</span>{'\n'}
+                      <span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>int</span> <span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>main</span>() {'{\n'}
+                      {'    '}<span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>std</span>::<span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>cout</span> &lt;&lt; <span className={isLight ? 'text-orange-600' : 'text-amber-400'}>&quot;Running on local toolchain.&quot;</span>;{'\n'}
+                      {'    '}<span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>return</span> <span className={isLight ? 'text-orange-600' : 'text-amber-400'}>0</span>;{'\n'}
                       {'}'}
                     </code>
                   </pre>
@@ -461,7 +486,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                 className={`w-full py-2.5 rounded-full text-sm font-medium transition-colors mt-auto shadow-md ${
                   isLight 
                     ? 'bg-black text-white hover:bg-gray-800' 
-                    : 'bg-[#ba1724] text-white hover:bg-[#930015] hover:text-[#ffdad7]'
+                    : 'bg-[#580c14] text-white hover:bg-[#43080e]'
                 }`}
               >
                 Download APK
@@ -489,7 +514,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                 className={`w-full py-2.5 rounded-full text-sm font-medium transition-colors mt-auto ${
                   isLight 
                     ? 'bg-gray-100 text-black hover:bg-gray-200 border border-gray-300' 
-                    : 'bg-[#372624] text-[#fadcd9] hover:bg-[#43302f] border border-[#5b403e]'
+                    : 'bg-[#372624] text-[#fadcd9] hover:bg-[#43080e] border border-[#5b403e]'
                 }`}
               >
                 Join Waitlist
@@ -517,7 +542,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                 className={`w-full py-2.5 rounded-full text-sm font-medium transition-colors mt-auto ${
                   isLight 
                     ? 'bg-gray-100 text-black hover:bg-gray-200 border border-gray-300' 
-                    : 'bg-[#372624] text-[#fadcd9] hover:bg-[#43302f] border border-[#5b403e]'
+                    : 'bg-[#372624] text-[#fadcd9] hover:bg-[#43080e] border border-[#5b403e]'
                 }`}
               >
                 Join Waitlist
@@ -545,7 +570,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                 className={`w-full py-2.5 rounded-full text-sm font-medium transition-colors mt-auto ${
                   isLight 
                     ? 'bg-gray-100 text-black hover:bg-gray-200 border border-gray-300' 
-                    : 'bg-[#372624] text-[#fadcd9] hover:bg-[#43302f] border border-[#5b403e]'
+                    : 'bg-[#372624] text-[#fadcd9] hover:bg-[#43080e] border border-[#5b403e]'
                 }`}
               >
                 Join Waitlist

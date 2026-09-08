@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PageRoute } from '../types';
 import { useTheme } from '../context/ThemeContext';
 import { StatusBadge } from './StatusBadge';
 import headerLogoImg from '../assets/headerlogo.png';
 import headerDarkImg from '../assets/headerdark.png';
-import { 
-  Search, Menu, X, Smartphone, Monitor, Sparkles, 
-  Download, Sun, Moon, ArrowRight
-} from 'lucide-react';
+import { MobileVisual, DesktopVisual, AiVisual } from './ProductVisuals';
 
 interface NavbarProps {
   currentRoute: PageRoute;
@@ -22,7 +19,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
+  const [productsMegaMenuOpen, setProductsMegaMenuOpen] = useState(false);
+  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
+  const megaMenuTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -39,12 +39,12 @@ export const Navbar: React.FC<NavbarProps> = ({
   const handleLinkClick = (route: PageRoute) => {
     onNavigate(route);
     setMobileMenuOpen(false);
-    setProductsDropdownOpen(false);
+    setProductsMegaMenuOpen(false);
   };
 
   const handleSectionJump = (sectionId: string) => {
     setMobileMenuOpen(false);
-    setProductsDropdownOpen(false);
+    setProductsMegaMenuOpen(false);
     if (currentRoute !== 'home') {
       onNavigate('home');
       setTimeout(() => {
@@ -57,377 +57,731 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
   };
 
+  const handleMouseEnterMegaMenu = () => {
+    if (megaMenuTimeoutRef.current) {
+      clearTimeout(megaMenuTimeoutRef.current);
+    }
+    setProductsMegaMenuOpen(true);
+  };
+
+  const handleMouseLeaveMegaMenu = () => {
+    megaMenuTimeoutRef.current = setTimeout(() => {
+      setProductsMegaMenuOpen(false);
+    }, 150);
+  };
+
   const isLight = theme === 'light';
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 w-full z-50 glass-nav h-[52px] flex items-center justify-between px-4 md:px-8 transition-colors duration-300">
-        <div className="flex items-center gap-8 max-w-7xl mx-auto w-full justify-between text-xs font-medium tracking-wide">
-          {/* Left: Logo */}
-          <button
-            onClick={() => handleLinkClick('home')}
-            className="flex items-center gap-2 hover:opacity-85 transition-opacity focus:outline-none"
-            aria-label="Yemini Home"
-          >
-            <img
-              src={isLight ? headerDarkImg : headerLogoImg}
-              alt="Yemini Logo"
-              className="h-6 sm:h-7 w-auto object-contain"
-            />
-          </button>
-
-          {/* Center: Desktop Navigation Links */}
-          <div className={`hidden md:flex items-center gap-8 font-medium text-xs ${
-            isLight ? 'text-gray-600' : 'text-[#ab8986]'
-          }`}>
-            {/* Products with hover popover */}
-            <div 
-              className="relative"
-              onMouseEnter={() => setProductsDropdownOpen(true)}
-              onMouseLeave={() => setProductsDropdownOpen(false)}
+      {/* Desktop & Main Navbar Header (Clean Meta style matching ooo.JPG) */}
+      <nav 
+        ref={navRef}
+        className={`fixed top-0 left-0 right-0 w-full z-50 h-[56px] flex items-center justify-between px-4 sm:px-8 transition-colors duration-200 border-b ${
+          isLight 
+            ? 'bg-white text-gray-900 border-gray-200/80' 
+            : 'bg-black text-[#fadcd9] border-[#372624]'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
+          {/* Left Group: Brand Logo & Navigation Links */}
+          <div className="flex items-center gap-6 sm:gap-8 lg:gap-10">
+            {/* Logo */}
+            <button
+              onClick={() => handleLinkClick('home')}
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity focus:outline-none cursor-pointer"
+              aria-label="Yemini Home"
             >
+              <img
+                src={isLight ? headerDarkImg : headerLogoImg}
+                alt="Yemini"
+                className="h-6 sm:h-7 w-auto object-contain"
+              />
+            </button>
+
+            {/* Left Nav items (Clean Meta style from ooo.JPG: Products, Ecosystem, Docs, Resources) */}
+            <div className="hidden md:flex items-center gap-7 text-sm font-normal">
+              {/* Products Item with Mega Menu Trigger (Replaces Shop) */}
+              <div
+                className="relative"
+                onMouseEnter={handleMouseEnterMegaMenu}
+                onMouseLeave={handleMouseLeaveMegaMenu}
+              >
+                <button
+                  onClick={() => setProductsMegaMenuOpen(prev => !prev)}
+                  className={`py-4 transition-colors flex items-center gap-1 cursor-pointer font-medium ${
+                    productsMegaMenuOpen || ['mobile', 'desktop', 'ai'].includes(currentRoute)
+                      ? isLight ? 'text-black font-semibold' : 'text-white font-semibold'
+                      : isLight ? 'text-gray-700 hover:text-black' : 'text-[#fadcd9] hover:text-white'
+                  }`}
+                >
+                  <span>Products</span>
+                </button>
+              </div>
+
+              {/* Ecosystem */}
               <button
-                onClick={() => handleLinkClick('home')}
-                className={`py-2 flex items-center gap-1 transition-colors ${
-                  isLight 
-                    ? (['mobile', 'desktop', 'ai'].includes(currentRoute) ? 'text-black font-semibold' : 'hover:text-black')
-                    : (['mobile', 'desktop', 'ai'].includes(currentRoute) ? 'text-[#fadcd9] font-semibold' : 'hover:text-[#fadcd9]')
+                onClick={() => handleSectionJump('ecosystem')}
+                className={`transition-colors cursor-pointer ${
+                  isLight ? 'text-gray-700 hover:text-black' : 'text-[#fadcd9] hover:text-white'
                 }`}
               >
-                Products
+                Ecosystem
               </button>
 
-              {productsDropdownOpen && (
-                <div className={`absolute top-full -left-6 mt-1 w-72 p-2 rounded-2xl shadow-2xl z-50 animate-fadeIn text-left ${
-                  isLight 
-                    ? 'bg-white border border-gray-200 shadow-elevated' 
-                    : 'bg-[#180a09] border border-[#43302f]'
-                }`}>
-                  <button
-                    onClick={() => handleLinkClick('mobile')}
-                    className={`w-full flex items-center justify-between p-2.5 rounded-xl transition-colors text-left group ${
-                      isLight ? 'hover:bg-gray-100' : 'hover:bg-[#2c1b1a]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <Smartphone className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ba1724]'}`} />
-                      <div>
-                        <div className={`text-xs font-semibold ${isLight ? 'text-black' : 'text-[#fadcd9] group-hover:text-white'}`}>
-                          Yemini Mobile
-                        </div>
-                        <div className={`text-[10px] ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`}>
-                          Android native toolchains
-                        </div>
-                      </div>
-                    </div>
-                    <StatusBadge status="available" size="sm" />
-                  </button>
+              {/* Documentation */}
+              <button
+                onClick={() => handleLinkClick('docs')}
+                className={`transition-colors cursor-pointer ${
+                  currentRoute === 'docs'
+                    ? isLight ? 'text-black font-semibold' : 'text-white font-semibold'
+                    : isLight ? 'text-gray-700 hover:text-black' : 'text-[#fadcd9] hover:text-white'
+                }`}
+              >
+                Documentation
+              </button>
 
-                  <button
-                    onClick={() => handleLinkClick('desktop')}
-                    className={`w-full flex items-center justify-between p-2.5 rounded-xl transition-colors text-left group mt-0.5 ${
-                      isLight ? 'hover:bg-gray-100' : 'hover:bg-[#2c1b1a]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <Monitor className={`w-4 h-4 ${isLight ? 'text-blue-600' : 'text-[#ba1724]'}`} />
-                      <div>
-                        <div className={`text-xs font-semibold ${isLight ? 'text-black' : 'text-[#fadcd9] group-hover:text-white'}`}>
-                          Yemini Desktop
-                        </div>
-                        <div className={`text-[10px] ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`}>
-                          macOS, Windows, Linux IDE
-                        </div>
-                      </div>
-                    </div>
-                    <StatusBadge status="in-development" size="sm" />
-                  </button>
-
-                  <button
-                    onClick={() => handleLinkClick('ai')}
-                    className={`w-full flex items-center justify-between p-2.5 rounded-xl transition-colors text-left group mt-0.5 ${
-                      isLight ? 'hover:bg-gray-100' : 'hover:bg-[#2c1b1a]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <Sparkles className={`w-4 h-4 ${isLight ? 'text-purple-600' : 'text-[#ba1724]'}`} />
-                      <div>
-                        <div className={`text-xs font-semibold ${isLight ? 'text-black' : 'text-[#fadcd9] group-hover:text-white'}`}>
-                          Yemini Intelligence
-                        </div>
-                        <div className={`text-[10px] ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`}>
-                          Autonomous coding agent
-                        </div>
-                      </div>
-                    </div>
-                    <StatusBadge status="in-development" size="sm" />
-                  </button>
-                </div>
-              )}
+              {/* Resources */}
+              <button
+                onClick={() => handleLinkClick('resources')}
+                className={`transition-colors cursor-pointer ${
+                  currentRoute === 'resources'
+                    ? isLight ? 'text-black font-semibold' : 'text-white font-semibold'
+                    : isLight ? 'text-gray-700 hover:text-black' : 'text-[#fadcd9] hover:text-white'
+                }`}
+              >
+                Resources
+              </button>
             </div>
-
-            <button 
-              onClick={() => handleSectionJump('ecosystem')}
-              className={`transition-colors ${isLight ? 'hover:text-black' : 'hover:text-[#fadcd9]'}`}
-            >
-              Ecosystem
-            </button>
-
-            <button 
-              onClick={() => {
-                if (currentRoute === 'home') {
-                  handleSectionJump('downloads');
-                } else {
-                  handleLinkClick('download');
-                }
-              }}
-              className={`transition-colors ${
-                isLight 
-                  ? (currentRoute === 'download' ? 'text-black font-semibold' : 'hover:text-black')
-                  : (currentRoute === 'download' ? 'text-[#fadcd9] font-semibold' : 'hover:text-[#fadcd9]')
-              }`}
-            >
-              Downloads
-            </button>
-
-            <button 
-              onClick={() => handleLinkClick('docs')}
-              className={`transition-colors ${
-                isLight 
-                  ? (currentRoute === 'docs' ? 'text-black font-semibold' : 'hover:text-black')
-                  : (currentRoute === 'docs' ? 'text-[#fadcd9] font-semibold' : 'hover:text-[#fadcd9]')
-              }`}
-            >
-              Docs
-            </button>
-
-            <button 
-              onClick={() => handleLinkClick('about')}
-              className={`transition-colors ${
-                isLight 
-                  ? (currentRoute === 'about' ? 'text-black font-semibold' : 'hover:text-black')
-                  : (currentRoute === 'about' ? 'text-[#fadcd9] font-semibold' : 'hover:text-[#fadcd9]')
-              }`}
-            >
-              About
-            </button>
           </div>
 
-          {/* Right Actions */}
-          <div className="flex items-center gap-3">
-            {/* Dark/Light Mode Switcher */}
+          {/* Right Group (Explore, Support, Search Icon, Theme Toggle, Download Button) */}
+          <div className="flex items-center gap-3 sm:gap-4 md:gap-6">
+            {/* Secondary Right Links (Hidden on small mobile) */}
+            <div className="hidden lg:flex items-center gap-6 text-sm font-normal">
+              <button
+                onClick={() => handleLinkClick('about')}
+                className={`transition-colors cursor-pointer ${
+                  isLight ? 'text-gray-700 hover:text-black' : 'text-[#fadcd9] hover:text-white'
+                }`}
+              >
+                About
+              </button>
+              <button
+                onClick={() => handleLinkClick('contact')}
+                className={`transition-colors cursor-pointer ${
+                  isLight ? 'text-gray-700 hover:text-black' : 'text-[#fadcd9] hover:text-white'
+                }`}
+              >
+                Support
+              </button>
+            </div>
+
+            {/* Clean Custom SVG Search Icon Button (Matching Meta style Q in ooo.JPG) */}
+            <button
+              onClick={onOpenSearch}
+              className={`p-2 rounded-full transition-colors cursor-pointer ${
+                isLight 
+                  ? 'hover:bg-gray-100 text-gray-800' 
+                  : 'hover:bg-[#271716] text-[#fadcd9]'
+              }`}
+              title="Search Yemini (⌘K)"
+              aria-label="Search"
+            >
+              <svg 
+                className="w-4 h-4 sm:w-4.5 sm:h-4.5" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="1.9" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <line x1="16.5" y1="16.5" x2="21" y2="21" />
+              </svg>
+            </button>
+
+            {/* Dark / Light Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className={`p-1.5 rounded-full transition-all duration-200 active:scale-90 flex items-center justify-center ${
+              className={`p-2 rounded-full transition-colors cursor-pointer ${
                 isLight 
-                  ? 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-black border border-gray-200/80 shadow-xs' 
-                  : 'bg-[#271716] text-[#e4beba] hover:bg-[#372624] hover:text-white border border-[#43302f]'
+                  ? 'hover:bg-gray-100 text-gray-800' 
+                  : 'hover:bg-[#271716] text-[#fadcd9]'
               }`}
-              title={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
-              aria-label="Toggle dark/light theme"
+              title={isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+              aria-label="Toggle theme"
             >
               {isLight ? (
-                <Moon className="w-3.5 h-3.5 text-gray-700" />
+                /* Moon SVG */
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
               ) : (
-                <Sun className="w-3.5 h-3.5 text-[#ffb3ae]" />
+                /* Sun SVG */
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
               )}
             </button>
 
-            {/* Quick Search Trigger (⌘K) */}
-            <button
-              onClick={onOpenSearch}
-              className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] transition-colors ${
-                isLight 
-                  ? 'bg-gray-100/90 border border-gray-200 text-gray-500 hover:text-black hover:border-gray-300' 
-                  : 'bg-[#271716]/70 border border-[#43302f] text-[#ab8986] hover:text-[#fadcd9] hover:border-[#ab8986]'
-              }`}
-              title="Search (Cmd+K)"
-            >
-              <Search className={`w-3 h-3 ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`} />
-              <span>Search</span>
-              <kbd className={`px-1 py-0.2 rounded text-[9px] ${
-                isLight ? 'bg-white border border-gray-200 text-gray-600' : 'bg-[#180a09] text-[#e4beba]'
-              }`}>⌘K</kbd>
-            </button>
-
-            {/* Download Button */}
+            {/* Download Button (Pill button) */}
             <button
               onClick={() => handleLinkClick('download')}
-              className={`px-3.5 py-1 rounded-full text-xs font-medium transition-colors shadow-sm active:scale-95 ${
+              className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-colors shadow-sm active:scale-95 cursor-pointer ${
                 isLight 
                   ? 'bg-black text-white hover:bg-gray-800' 
-                  : 'bg-[#ba1724] text-white hover:bg-[#930015] hover:text-[#ffdad6]'
+                  : 'bg-[#580c14] text-white hover:bg-[#43080e]'
               }`}
             >
               Download
             </button>
 
-            {/* Mobile Hamburger Menu Toggle */}
+            {/* Mobile Hamburger Toggle (Visible only on mobile) */}
             <button
-              onClick={() => setMobileMenuOpen(prev => !prev)}
-              className={`md:hidden p-1.5 active:scale-95 ${
-                isLight ? 'text-gray-800 hover:text-black' : 'text-[#fadcd9] hover:text-white'
+              onClick={() => setMobileMenuOpen(true)}
+              className={`md:hidden p-2 rounded-lg cursor-pointer ${
+                isLight ? 'text-gray-800 hover:bg-gray-100' : 'text-[#fadcd9] hover:bg-[#271716]'
               }`}
-              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-label="Open mobile menu"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu Dropdown */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40 top-[52px] flex flex-col animate-fadeIn">
+      {/* DESKTOP MEGA MENU DROPDOWN (Styled exactly like Meta's ooo.JPG) */}
+      {productsMegaMenuOpen && (
+        <div
+          className="hidden md:block fixed top-[56px] inset-x-0 w-full z-40 transition-all duration-200"
+          onMouseEnter={handleMouseEnterMegaMenu}
+          onMouseLeave={handleMouseLeaveMegaMenu}
+        >
+          {/* Backdrop for click outside */}
           <div 
-            className={`absolute inset-0 backdrop-blur-md ${isLight ? 'bg-white/85' : 'bg-black/85'}`}
+            className="fixed inset-0 top-[56px] bg-black/40 backdrop-blur-xs -z-10"
+            onClick={() => setProductsMegaMenuOpen(false)}
+          />
+
+          {/* Mega Menu White Container */}
+          <div className={`w-full border-b transition-colors shadow-2xl ${
+            isLight 
+              ? 'bg-white text-gray-900 border-gray-200' 
+              : 'bg-[#120606] text-[#fadcd9] border-[#372624]'
+          }`}>
+            <div className="max-w-7xl mx-auto px-8 sm:px-12 py-10">
+              <div className="grid grid-cols-12 gap-8 lg:gap-12">
+                
+                {/* Column 1: Explore (Meta style from ooo.JPG) */}
+                <div className="col-span-3 space-y-3">
+                  <div className={`text-xs font-semibold uppercase tracking-wider mb-4 ${
+                    isLight ? 'text-gray-400' : 'text-[#ab8986]'
+                  }`}>
+                    Explore
+                  </div>
+                  <ul className="space-y-2.5 text-sm">
+                    <li>
+                      <button
+                        onClick={() => handleLinkClick('mobile')}
+                        className={`transition-colors text-left cursor-pointer ${
+                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
+                        }`}
+                      >
+                        Yemini Mobile IDE
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleLinkClick('desktop')}
+                        className={`transition-colors text-left cursor-pointer ${
+                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
+                        }`}
+                      >
+                        Yemini Desktop IDE
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleLinkClick('ai')}
+                        className={`transition-colors text-left cursor-pointer ${
+                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
+                        }`}
+                      >
+                        Yemini Intelligence
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleSectionJump('offline')}
+                        className={`transition-colors text-left cursor-pointer ${
+                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
+                        }`}
+                      >
+                        On-Device Toolchains
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleSectionJump('offline')}
+                        className={`transition-colors text-left cursor-pointer ${
+                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
+                        }`}
+                      >
+                        Offline Architecture
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleLinkClick('docs')}
+                        className={`transition-colors text-left cursor-pointer ${
+                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
+                        }`}
+                      >
+                        Compare Toolchains
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Column 2: Products (Replaces Shop - as requested!) */}
+                <div className="col-span-3 space-y-3">
+                  <div className={`text-xs font-semibold uppercase tracking-wider mb-4 ${
+                    isLight ? 'text-gray-400' : 'text-[#ab8986]'
+                  }`}>
+                    Products
+                  </div>
+                  <ul className="space-y-2.5 text-sm">
+                    <li>
+                      <button
+                        onClick={() => handleLinkClick('download')}
+                        className={`transition-colors text-left font-medium cursor-pointer ${
+                          isLight ? 'hover:text-[#580c14] text-black' : 'hover:text-[#ff8585] text-white'
+                        }`}
+                      >
+                        All Products &amp; Releases
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleLinkClick('download')}
+                        className={`transition-colors text-left cursor-pointer ${
+                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
+                        }`}
+                      >
+                        Android APK (v1.2.0)
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleLinkClick('desktop')}
+                        className={`transition-colors text-left cursor-pointer ${
+                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
+                        }`}
+                      >
+                        Desktop Private Waitlist
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleLinkClick('ai')}
+                        className={`transition-colors text-left cursor-pointer ${
+                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
+                        }`}
+                      >
+                        AI Early Access
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleLinkClick('notepadapp-privacy')}
+                        className={`transition-colors text-left cursor-pointer ${
+                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
+                        }`}
+                      >
+                        Yemini Notepad
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleLinkClick('converterapp-privacy')}
+                        className={`transition-colors text-left cursor-pointer ${
+                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
+                        }`}
+                      >
+                        Yemini Converter
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleLinkClick('shareapp-privacy')}
+                        className={`transition-colors text-left cursor-pointer ${
+                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
+                        }`}
+                      >
+                        Yemini Share
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Right Columns: Featured Visual Product Cards (Matching the glasses in ooo.JPG) */}
+                <div className="col-span-6 grid grid-cols-3 gap-4">
+                  {/* Featured Product 1: Yemini Mobile */}
+                  <button
+                    onClick={() => handleLinkClick('mobile')}
+                    className={`group flex flex-col items-center text-center p-3 rounded-2xl transition-all cursor-pointer ${
+                      isLight ? 'hover:bg-gray-50' : 'hover:bg-[#200c0b]'
+                    }`}
+                  >
+                    <div className="w-full h-32 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+                      <MobileVisual size="md" />
+                    </div>
+                    <span className={`text-sm font-semibold tracking-tight ${
+                      isLight ? 'text-gray-900' : 'text-white'
+                    }`}>
+                      Yemini Mobile
+                    </span>
+                    <span className={`text-[11px] mt-1 ${
+                      isLight ? 'text-gray-500' : 'text-[#ab8986]'
+                    }`}>
+                      Android v1.2.0
+                    </span>
+                  </button>
+
+                  {/* Featured Product 2: Yemini Desktop */}
+                  <button
+                    onClick={() => handleLinkClick('desktop')}
+                    className={`group flex flex-col items-center text-center p-3 rounded-2xl transition-all cursor-pointer ${
+                      isLight ? 'hover:bg-gray-50' : 'hover:bg-[#200c0b]'
+                    }`}
+                  >
+                    <div className="w-full h-32 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+                      <DesktopVisual size="md" />
+                    </div>
+                    <span className={`text-sm font-semibold tracking-tight ${
+                      isLight ? 'text-gray-900' : 'text-white'
+                    }`}>
+                      Yemini Desktop
+                    </span>
+                    <span className={`text-[11px] mt-1 ${
+                      isLight ? 'text-gray-500' : 'text-[#ab8986]'
+                    }`}>
+                      macOS &amp; Windows
+                    </span>
+                  </button>
+
+                  {/* Featured Product 3: Yemini Intelligence */}
+                  <button
+                    onClick={() => handleLinkClick('ai')}
+                    className={`group flex flex-col items-center text-center p-3 rounded-2xl transition-all cursor-pointer ${
+                      isLight ? 'hover:bg-gray-50' : 'hover:bg-[#200c0b]'
+                    }`}
+                  >
+                    <div className="w-full h-32 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+                      <AiVisual size="md" />
+                    </div>
+                    <span className={`text-sm font-semibold tracking-tight ${
+                      isLight ? 'text-gray-900' : 'text-white'
+                    }`}>
+                      Yemini Intelligence
+                    </span>
+                    <span className={`text-[11px] mt-1 ${
+                      isLight ? 'text-gray-500' : 'text-[#ab8986]'
+                    }`}>
+                      AST Partner
+                    </span>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MOBILE NAV DRAWER (Styled cleanly matching Meta's llk.JPG) */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 z-50 flex flex-col">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setMobileMenuOpen(false)}
           />
-          <div className={`relative border-b p-5 space-y-4 max-h-[calc(100vh-52px)] overflow-y-auto ${
-            isLight ? 'bg-white border-gray-200 text-gray-800' : 'bg-[#180a09] border-[#43302f] text-[#fadcd9]'
+
+          {/* Slide-in Menu Sheet */}
+          <div className={`relative w-full h-full flex flex-col overflow-y-auto ${
+            isLight ? 'bg-white text-gray-900' : 'bg-[#100505] text-[#fadcd9]'
           }`}>
-            <div className="space-y-1">
-              <p className={`text-[10px] uppercase font-bold tracking-widest mb-2 ${
-                isLight ? 'text-gray-400' : 'text-[#ab8986]'
-              }`}>
-                Products &amp; Ecosystem
-              </p>
+            {/* Top Bar: Centered Logo & Close Button (Matching llk.JPG) */}
+            <div className={`px-6 py-4 flex items-center justify-between border-b shrink-0 ${
+              isLight ? 'border-gray-200' : 'border-[#372624]'
+            }`}>
+              <div className="w-6" /> {/* spacer for balance */}
+              
               <button
                 onClick={() => handleLinkClick('home')}
-                className={`w-full text-left py-2 px-3 rounded-lg text-sm ${
-                  isLight ? 'hover:bg-gray-100 text-black' : 'hover:bg-[#2c1b1a] text-[#fadcd9]'
-                }`}
+                className="flex items-center gap-2 cursor-pointer"
               >
-                Overview
+                <img
+                  src={isLight ? headerDarkImg : headerLogoImg}
+                  alt="Yemini"
+                  className="h-6 w-auto object-contain"
+                />
               </button>
+
+              {/* Close Button X (Custom SVG) */}
               <button
-                onClick={() => handleLinkClick('mobile')}
-                className={`w-full text-left py-2 px-3 rounded-lg text-sm flex items-center justify-between ${
-                  isLight ? 'hover:bg-gray-100 text-black' : 'hover:bg-[#2c1b1a] text-[#fadcd9]'
+                onClick={() => setMobileMenuOpen(false)}
+                className={`p-1.5 rounded-full cursor-pointer ${
+                  isLight ? 'text-gray-800 hover:bg-gray-100' : 'text-[#fadcd9] hover:bg-[#271716]'
                 }`}
+                aria-label="Close menu"
               >
-                <div className="flex items-center gap-2">
-                  <Smartphone className="w-4 h-4 text-blue-500" />
-                  <span>Yemini Mobile</span>
-                </div>
-                <StatusBadge status="available" size="sm" />
-              </button>
-              <button
-                onClick={() => handleLinkClick('desktop')}
-                className={`w-full text-left py-2 px-3 rounded-lg text-sm flex items-center justify-between ${
-                  isLight ? 'hover:bg-gray-100 text-black' : 'hover:bg-[#2c1b1a] text-[#fadcd9]'
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <Monitor className="w-4 h-4 text-blue-500" />
-                  <span>Yemini Desktop</span>
-                </div>
-                <StatusBadge status="in-development" size="sm" />
-              </button>
-              <button
-                onClick={() => handleLinkClick('ai')}
-                className={`w-full text-left py-2 px-3 rounded-lg text-sm flex items-center justify-between ${
-                  isLight ? 'hover:bg-gray-100 text-black' : 'hover:bg-[#2c1b1a] text-[#fadcd9]'
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-purple-500" />
-                  <span>Yemini Intelligence</span>
-                </div>
-                <StatusBadge status="in-development" size="sm" />
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
               </button>
             </div>
 
-            <div className={`border-t pt-3 space-y-1 ${isLight ? 'border-gray-200' : 'border-[#43302f]'}`}>
-              <p className={`text-[10px] uppercase font-bold tracking-widest mb-2 ${
-                isLight ? 'text-gray-400' : 'text-[#ab8986]'
-              }`}>
-                Navigation
-              </p>
+            {/* Primary Nav List with chevron > arrows (Matching llk.JPG) */}
+            <div className="p-6 space-y-1">
+              {/* Products (Replaces Shop) */}
+              <div>
+                <button
+                  onClick={() => setMobileProductsOpen(prev => !prev)}
+                  className={`w-full py-4 flex items-center justify-between text-xl font-medium border-b cursor-pointer ${
+                    isLight ? 'border-gray-100 text-gray-900' : 'border-[#271716] text-white'
+                  }`}
+                >
+                  <span>Products</span>
+                  <svg 
+                    className={`w-5 h-5 transition-transform ${mobileProductsOpen ? 'rotate-90' : ''} ${
+                      isLight ? 'text-gray-400' : 'text-[#ab8986]'
+                    }`} 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    strokeWidth="2"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </button>
+
+                {/* Expanded mobile products list */}
+                {mobileProductsOpen && (
+                  <div className={`pl-4 py-2 space-y-2 border-b ${isLight ? 'border-gray-100' : 'border-[#271716]'}`}>
+                    <button
+                      onClick={() => handleLinkClick('mobile')}
+                      className="w-full text-left py-2 text-base font-normal flex items-center justify-between"
+                    >
+                      <span>Yemini Mobile (Android)</span>
+                      <StatusBadge status="available" size="sm" />
+                    </button>
+                    <button
+                      onClick={() => handleLinkClick('desktop')}
+                      className="w-full text-left py-2 text-base font-normal flex items-center justify-between"
+                    >
+                      <span>Yemini Desktop IDE</span>
+                      <StatusBadge status="in-development" size="sm" />
+                    </button>
+                    <button
+                      onClick={() => handleLinkClick('ai')}
+                      className="w-full text-left py-2 text-base font-normal flex items-center justify-between"
+                    >
+                      <span>Yemini Intelligence</span>
+                      <StatusBadge status="in-development" size="sm" />
+                    </button>
+                    <button
+                      onClick={() => handleLinkClick('download')}
+                      className="w-full text-left py-2 text-base font-normal"
+                    >
+                      <span>Download Center</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Ecosystem */}
               <button
                 onClick={() => handleSectionJump('ecosystem')}
-                className={`w-full text-left py-2 px-3 rounded-lg text-sm ${
-                  isLight ? 'hover:bg-gray-100 text-black' : 'hover:bg-[#2c1b1a] text-[#fadcd9]'
+                className={`w-full py-4 flex items-center justify-between text-xl font-medium border-b cursor-pointer ${
+                  isLight ? 'border-gray-100 text-gray-900' : 'border-[#271716] text-white'
                 }`}
               >
-                Ecosystem
+                <span>Ecosystem</span>
+                <svg className={`w-5 h-5 ${isLight ? 'text-gray-400' : 'text-[#ab8986]'}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
               </button>
-              <button
-                onClick={() => handleLinkClick('download')}
-                className={`w-full text-left py-2 px-3 rounded-lg text-sm ${
-                  isLight ? 'hover:bg-gray-100 text-black' : 'hover:bg-[#2c1b1a] text-[#fadcd9]'
-                }`}
-              >
-                Downloads &amp; Waitlist
-              </button>
+
+              {/* Documentation */}
               <button
                 onClick={() => handleLinkClick('docs')}
-                className={`w-full text-left py-2 px-3 rounded-lg text-sm ${
-                  isLight ? 'hover:bg-gray-100 text-black' : 'hover:bg-[#2c1b1a] text-[#fadcd9]'
+                className={`w-full py-4 flex items-center justify-between text-xl font-medium border-b cursor-pointer ${
+                  isLight ? 'border-gray-100 text-gray-900' : 'border-[#271716] text-white'
                 }`}
               >
-                Documentation
+                <span>Documentation</span>
+                <svg className={`w-5 h-5 ${isLight ? 'text-gray-400' : 'text-[#ab8986]'}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
               </button>
+
+              {/* Downloads */}
               <button
-                onClick={() => handleLinkClick('about')}
-                className={`w-full text-left py-2 px-3 rounded-lg text-sm ${
-                  isLight ? 'hover:bg-gray-100 text-black' : 'hover:bg-[#2c1b1a] text-[#fadcd9]'
+                onClick={() => handleLinkClick('download')}
+                className={`w-full py-4 flex items-center justify-between text-xl font-medium border-b cursor-pointer ${
+                  isLight ? 'border-gray-100 text-gray-900' : 'border-[#271716] text-white'
                 }`}
               >
-                About &amp; Mission
-              </button>
-              <button
-                onClick={() => handleLinkClick('resources')}
-                className={`w-full text-left py-2 px-3 rounded-lg text-sm ${
-                  isLight ? 'hover:bg-gray-100 text-black' : 'hover:bg-[#2c1b1a] text-[#fadcd9]'
-                }`}
-              >
-                Resources &amp; Blog
+                <span>Downloads</span>
+                <svg className={`w-5 h-5 ${isLight ? 'text-gray-400' : 'text-[#ab8986]'}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
               </button>
             </div>
 
-            {/* Mobile Theme Toggle & Quick Actions */}
-            <div className={`border-t pt-3 flex flex-col gap-2.5 ${isLight ? 'border-gray-200' : 'border-[#43302f]'}`}>
-              <button
-                onClick={toggleTheme}
-                className={`w-full py-2 px-3 rounded-xl text-xs flex items-center justify-between transition-colors ${
-                  isLight 
-                    ? 'bg-gray-100 text-gray-800 hover:bg-gray-200' 
-                    : 'bg-[#271716] text-[#fadcd9] hover:bg-[#372624]'
-                }`}
-              >
-                <span className="flex items-center gap-2">
-                  {isLight ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4 text-[#ffb3ae]" />}
-                  <span>Theme: {isLight ? 'Light Mode' : 'Dark Mode'}</span>
-                </span>
-                <span className="text-[11px] opacity-70">Tap to switch</span>
-              </button>
+            {/* Featured Section with Product Cards (Matching llk.JPG!) */}
+            <div className="px-6 py-4">
+              <h3 className={`text-sm font-bold uppercase tracking-wider mb-4 ${
+                isLight ? 'text-gray-400' : 'text-[#ab8986]'
+              }`}>
+                Featured
+              </h3>
 
-              <div className="flex gap-2">
+              <div className="flex gap-4 overflow-x-auto pb-4 pt-1 no-scrollbar">
+                {/* Mobile */}
                 <button
-                  onClick={onOpenSearch}
-                  className={`flex-1 py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2 ${
+                  onClick={() => handleLinkClick('mobile')}
+                  className={`shrink-0 w-44 p-3.5 rounded-2xl border text-center flex flex-col items-center justify-between cursor-pointer ${
                     isLight 
-                      ? 'bg-gray-100 border border-gray-200 text-gray-800' 
-                      : 'bg-[#271716] border border-[#43302f] text-[#fadcd9]'
+                      ? 'bg-gray-50 border-gray-200 hover:bg-white' 
+                      : 'bg-[#180a09] border-[#372624] hover:bg-[#200d0c]'
                   }`}
                 >
-                  <Search className="w-3.5 h-3.5" />
-                  <span>Search</span>
+                  <div className="h-28 flex items-center justify-center mb-2">
+                    <MobileVisual size="sm" />
+                  </div>
+                  <div className={`text-xs font-semibold ${isLight ? 'text-gray-900' : 'text-white'}`}>
+                    Yemini Mobile
+                  </div>
+                  <div className={`text-[10px] mt-0.5 ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`}>
+                    Android Release v1.2.0
+                  </div>
                 </button>
+
+                {/* Desktop */}
                 <button
-                  onClick={() => handleLinkClick('download')}
-                  className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 ${
+                  onClick={() => handleLinkClick('desktop')}
+                  className={`shrink-0 w-44 p-3.5 rounded-2xl border text-center flex flex-col items-center justify-between cursor-pointer ${
                     isLight 
-                      ? 'bg-black text-white' 
-                      : 'bg-[#ba1724] text-white'
+                      ? 'bg-gray-50 border-gray-200 hover:bg-white' 
+                      : 'bg-[#180a09] border-[#372624] hover:bg-[#200d0c]'
                   }`}
                 >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Download</span>
+                  <div className="h-28 flex items-center justify-center mb-2">
+                    <DesktopVisual size="sm" />
+                  </div>
+                  <div className={`text-xs font-semibold ${isLight ? 'text-gray-900' : 'text-white'}`}>
+                    Yemini Desktop
+                  </div>
+                  <div className={`text-[10px] mt-0.5 ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`}>
+                    macOS, Windows, Linux
+                  </div>
+                </button>
+
+                {/* AI */}
+                <button
+                  onClick={() => handleLinkClick('ai')}
+                  className={`shrink-0 w-44 p-3.5 rounded-2xl border text-center flex flex-col items-center justify-between cursor-pointer ${
+                    isLight 
+                      ? 'bg-gray-50 border-gray-200 hover:bg-white' 
+                      : 'bg-[#180a09] border-[#372624] hover:bg-[#200d0c]'
+                  }`}
+                >
+                  <div className="h-28 flex items-center justify-center mb-2">
+                    <AiVisual size="sm" />
+                  </div>
+                  <div className={`text-xs font-semibold ${isLight ? 'text-gray-900' : 'text-white'}`}>
+                    Yemini Intelligence
+                  </div>
+                  <div className={`text-[10px] mt-0.5 ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`}>
+                    AST Autonomous Partner
+                  </div>
                 </button>
               </div>
             </div>
+
+            {/* Divider (Matching llk.JPG) */}
+            <div className={`border-t my-2 ${isLight ? 'border-gray-200' : 'border-[#372624]'}`} />
+
+            {/* Bottom Section (Matching llk.JPG: Globe/Language, Explore, Support) */}
+            <div className="p-6 space-y-3 mt-auto">
+              {/* Globe Icon / Language & Theme */}
+              <div className="flex items-center justify-between py-2 text-base font-normal">
+                <div className="flex items-center gap-2.5">
+                  <svg className="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="2" y1="12" x2="22" y2="12" />
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                  </svg>
+                  <span>Global (English)</span>
+                </div>
+
+                <button
+                  onClick={toggleTheme}
+                  className={`px-3 py-1 rounded-full text-xs font-medium border ${
+                    isLight 
+                      ? 'bg-gray-100 border-gray-200 text-gray-800' 
+                      : 'bg-[#271716] border-[#43302f] text-[#fadcd9]'
+                  }`}
+                >
+                  {isLight ? 'Switch to Dark' : 'Switch to Light'}
+                </button>
+              </div>
+
+              {/* Explore Yemini */}
+              <button
+                onClick={() => handleLinkClick('about')}
+                className={`w-full py-3 flex items-center justify-between text-base font-normal cursor-pointer ${
+                  isLight ? 'text-gray-800 hover:text-black' : 'text-[#fadcd9] hover:text-white'
+                }`}
+              >
+                <span>Explore Yemini</span>
+                <svg className={`w-4 h-4 ${isLight ? 'text-gray-400' : 'text-[#ab8986]'}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+
+              {/* Support */}
+              <button
+                onClick={() => handleLinkClick('contact')}
+                className={`w-full py-3 flex items-center justify-between text-base font-normal cursor-pointer ${
+                  isLight ? 'text-gray-800 hover:text-black' : 'text-[#fadcd9] hover:text-white'
+                }`}
+              >
+                <span>Support &amp; Community</span>
+                <svg className={`w-4 h-4 ${isLight ? 'text-gray-400' : 'text-[#ab8986]'}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+
           </div>
         </div>
       )}
