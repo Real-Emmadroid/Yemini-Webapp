@@ -66,7 +66,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             isLight ? 'text-black' : 'text-[#fadcd9]'
           }`}>
             Software that makes creation<br />
-            <span className="text-gradient">accessible to anyone.</span>
+            <span>accessible to anyone.</span>
           </h1>
 
           {/* Subtitle */}
