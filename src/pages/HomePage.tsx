@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { PageRoute } from '../types';
 import { useTheme } from '../context/ThemeContext';
 import { HeroInteractiveBackground } from '../components/HeroInteractiveBackground';
@@ -18,8 +18,21 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   const [isCopied, setIsCopied] = useState(false);
   const [isRunningCode, setIsRunningCode] = useState(false);
   const [runOutput, setRunOutput] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const isLight = theme === 'light';
+
+  const toggleVideoPlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
 
   const handleCopyCode = () => {
     const code = `// Yemini Native Core - Multi-Platform Compiler\nuse std::time::Instant;\n\nfn compile_pipeline(target: String) -> String {\n    let timer = Instant::now();\n    println!("[{}] Compiling for {} architecture...", "yemini-core", target);\n    format!("Compiled in {:.2?} with 0 memory leaks", timer.elapsed())\n}\n\nfn main() {\n    let targets = vec!["android-arm64", "macos-metal", "win-x64"];\n    for target in targets {\n        let result = compile_pipeline(target);\n        println!("✔ Target: {} -> {}", target, result);\n    }\n}`;
@@ -44,184 +57,88 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
       {/* Interactive Cursor Particle / Grid Background Animation */}
       <HeroInteractiveBackground />
 
-      <main className="relative pt-28 sm:pt-32 pb-24 flex flex-col gap-24 sm:gap-32 z-10">
-        {/* HERO SECTION */}
-        <section className="relative flex flex-col items-center text-center px-4 sm:px-6 max-w-7xl mx-auto w-full">
-          {/* Hero Glow Accent */}
-          <div className="hero-glow" />
-
-          {/* Identity Eyebrow / Mission Line */}
-          <div className="inline-flex items-center gap-2 mb-4 animate-fadeIn">
-            <span className={`text-xs sm:text-sm font-mono uppercase tracking-widest px-3 py-1 rounded-full border ${
-              isLight 
-                ? 'bg-white/80 border-gray-300 text-gray-700 shadow-xs' 
-                : 'bg-[#271716]/80 border-[#43302f] text-[#ffb3ae]'
-            }`}>
-              STF Ecosystem • Sphere Tech Foundation
-            </span>
-          </div>
-
-          {/* Main Headline - Mission-first & Product-honest */}
-          <h1 className={`text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tighter mb-6 max-w-5xl font-semibold leading-[1.08] ${
-            isLight ? 'text-black' : 'text-[#fadcd9]'
-          }`}>
-            Software that makes creation<br />
-            <span>accessible to anyone.</span>
-          </h1>
-
-          {/* Subtitle */}
-          <p className={`text-base sm:text-xl md:text-2xl font-normal tracking-tight max-w-3xl mx-auto mb-8 sm:mb-10 leading-snug px-2 ${
-            isLight ? 'text-gray-600' : 'text-[#ab8986]'
-          }`}>
-            Yemini is building accessible technology for builders everywhere — starting with a high-performance native developer platform across mobile, desktop, and AI.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center gap-3.5 sm:gap-4 mb-16 sm:mb-24 w-full sm:w-auto px-4">
-            <button
-              onClick={() => onNavigate('mobile')}
-              className={`w-full sm:w-auto px-7 py-3 rounded-full text-sm sm:text-base font-medium transition-all active:scale-95 flex items-center justify-center gap-2 ${
-                isLight 
-                  ? 'bg-black text-white hover:bg-gray-800 shadow-md hover:shadow-lg' 
-                  : 'bg-[#ba1724] text-white hover:bg-[#930015] hover:text-[#ffdad7] shadow-lg shadow-[#ba1724]/30'
-              }`}
+      <main className="relative pt-24 sm:pt-28 pb-24 flex flex-col gap-24 sm:gap-32 z-10">
+        {/* HERO SECTION - Immersive Video Banner matching Meta Glasses style */}
+        <section className="relative w-full max-w-[1440px] mx-auto px-4 sm:px-6">
+          <div className="relative w-full h-[82vh] sm:h-[88vh] rounded-3xl overflow-hidden shadow-2xl bg-black flex flex-col justify-between p-6 sm:p-12 md:p-16">
+            
+            {/* Background Video */}
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover opacity-85 pointer-events-none"
             >
-              <Download className="w-4 h-4" />
-              <span>Download Yemini Mobile</span>
-            </button>
-            <button
-              onClick={() => {
-                const el = document.getElementById('ecosystem');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className={`w-full sm:w-auto px-6 py-3 rounded-full text-sm sm:text-base font-medium transition-colors flex items-center justify-center gap-1 active:scale-95 ${
-                isLight 
-                  ? 'text-black hover:bg-gray-200' 
-                  : 'text-[#fadcd9] hover:bg-[#2c1b1a]'
-              }`}
-            >
-              <span>Explore Ecosystem</span>
-              <ChevronRight className={`w-4 h-4 ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`} />
-            </button>
-          </div>
+              <source src="https://assets.mixkit.co/videos/preview/mixkit-hands-typing-on-a-laptop-keyboard-42848-large.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
 
-          {/* Hero Mac Window Mockup */}
-          <div className={`w-full max-w-5xl mx-auto mac-window relative z-10 transform translate-y-2 hover:translate-y-0 transition-all duration-700 ease-out ${
-            isLight 
-              ? 'bg-white border border-black/10 shadow-2xl' 
-              : 'bg-black border border-[#43302f]/80 shadow-2xl'
-          }`}>
-            {/* Window Header */}
-            <div className={`mac-header flex items-center justify-between px-4 ${
-              isLight ? 'bg-[#f6f6f6] border-b border-[#e5e5e5]' : 'bg-[#271716] border-b border-[#43302f]'
-            }`}>
-              <div className="mac-dots flex items-center gap-2">
-                <div className="mac-dot close" />
-                <div className="mac-dot min" />
-                <div className="mac-dot max" />
-              </div>
-              <div className={`text-xs font-medium font-sans flex items-center gap-2 ${isLight ? 'text-gray-600' : 'text-[#ab8986]'}`}>
-                <span>workspace.yem — Yemini Core</span>
-                <StatusBadge status="available" size="sm" />
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handleCopyCode}
-                  className={`p-1 rounded transition-colors ${
-                    isLight ? 'text-gray-400 hover:text-black' : 'text-[#ab8986] hover:text-[#fadcd9]'
-                  }`}
-                  title="Copy code"
-                >
-                  {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-                </button>
-                <button
-                  onClick={handleRunCode}
-                  disabled={isRunningCode}
-                  className={`flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-medium transition-colors ${
-                    isLight ? 'bg-black text-white hover:bg-gray-800' : 'bg-[#ba1724] text-white hover:bg-[#930015]'
-                  }`}
-                >
-                  <Play className="w-3 h-3 fill-current" />
-                  <span>{isRunningCode ? 'Running...' : 'Run'}</span>
-                </button>
-              </div>
+            {/* Gradient Overlay for Text Readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/40 pointer-events-none" />
+
+            {/* Top Row: Top-Left Aligned Headline */}
+            <div className="relative z-10 flex justify-between items-start">
+              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter leading-none max-w-2xl drop-shadow-md">
+                Meet the all-new
+              </h1>
             </div>
 
-            {/* Window Body */}
-            <div className={`p-4 sm:p-8 text-left code-font min-h-[380px] sm:h-[450px] overflow-hidden flex flex-col md:flex-row ${
-              isLight ? 'bg-[#f9f9f9] text-[#1d1d1f]' : 'bg-black text-[#fadcd9]'
-            }`}>
-              {/* Left Explorer Sidebar */}
-              <div className={`w-48 border-r pr-4 mr-6 hidden md:block select-none ${
-                isLight ? 'border-gray-200' : 'border-[#43302f]'
-              }`}>
-                <div className={`text-xs font-bold uppercase tracking-wider mb-4 ${
-                  isLight ? 'text-gray-400' : 'text-[#ab8986]'
-                }`}>
-                  Explorer
-                </div>
-                <div className={`flex items-center gap-2 mb-2 text-xs ${
-                  isLight ? 'text-gray-600' : 'text-[#fadcd9]'
-                }`}>
-                  <span className="material-symbols-outlined text-sm text-gray-400">folder</span> src
-                </div>
-                <div className={`flex items-center gap-2 px-2 py-1 rounded ml-2 mb-1 text-xs font-semibold ${
-                  isLight 
-                    ? 'text-blue-600 bg-blue-50' 
-                    : 'text-[#ffb3ae] bg-[#2c1b1a]'
-                }`}>
-                  <span className={`material-symbols-outlined text-sm ${isLight ? 'text-blue-600' : 'text-[#ba1724]'}`}>
-                    description
-                  </span> 
-                  main.rs
-                </div>
-                <div className={`flex items-center gap-2 ml-2 mb-1 text-xs cursor-pointer ${
-                  isLight ? 'text-gray-500 hover:text-black' : 'text-[#ab8986] hover:text-[#fadcd9]'
-                }`}>
-                  <span className="material-symbols-outlined text-sm">description</span> lib.rs
-                </div>
-                <div className={`flex items-center gap-2 ml-2 text-xs cursor-pointer ${
-                  isLight ? 'text-gray-500 hover:text-black' : 'text-[#ab8986] hover:text-[#fadcd9]'
-                }`}>
-                  <span className="material-symbols-outlined text-sm">description</span> config.toml
+            {/* Bottom Row: Bottom-Left Subtitle & Buttons, Bottom-Right Headline & Play/Pause */}
+            <div className="relative z-10 flex flex-col md:flex-row justify-between items-end gap-6">
+              
+              {/* Bottom-Left: Subtitle & CTA */}
+              <div className="flex flex-col items-start gap-4 max-w-md">
+                <p className="text-white/90 text-sm sm:text-base md:text-lg font-normal tracking-tight drop-shadow">
+                  Bold developer tools. Signature performance. Powerful AI. Starting at $0.
+                </p>
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                  <button
+                    onClick={() => onNavigate('mobile')}
+                    className="px-6 py-3 rounded-full text-sm sm:text-base font-medium bg-[#0066cc] text-white hover:bg-[#0051a8] transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2"
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>Shop / Download</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      const el = document.getElementById('ecosystem');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="px-6 py-3 rounded-full text-sm sm:text-base font-medium bg-white/20 backdrop-blur-md text-white hover:bg-white/30 transition-all active:scale-95 border border-white/20"
+                  >
+                    Learn more
+                  </button>
                 </div>
               </div>
 
-              {/* Code Area */}
-              <div className="flex-1 overflow-x-auto">
-                <pre className="text-xs sm:text-sm leading-relaxed">
-                  <code>
-                    <span className={isLight ? 'text-gray-400 italic' : 'text-[#ab8986] italic'}>
-                      // Yemini Native Core - Multi-Platform Compiler
-                    </span>{'\n'}
-                    <span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>use</span> std::time::Instant;{'\n\n'}
-                    <span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>fn</span> <span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>compile_pipeline</span>(target: <span className={isLight ? 'text-green-600' : 'text-emerald-400'}>String</span>) -&gt; <span className={isLight ? 'text-green-600' : 'text-emerald-400'}>String</span> {'{\n'}
-                    {'    '}<span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>let</span> timer = Instant::now();{'\n'}
-                    {'    '}<span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>println!</span>(<span className={isLight ? 'text-orange-600' : 'text-amber-400'}>{'"[{}] Compiling for {} architecture...", "yemini-core", target'}</span>);{'\n'}
-                    {'    '}<span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>format!</span>(<span className={isLight ? 'text-orange-600' : 'text-amber-400'}>{'"Compiled in {:.2?} with 0 memory leaks", timer.elapsed()'}</span>);{'\n'}
-                    {'}'}{'\n\n'}
-                    <span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>fn</span> <span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>main</span>() {'{\n'}
-                    {'    '}<span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>let</span> targets = <span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>vec!</span>[<span className={isLight ? 'text-orange-600' : 'text-amber-400'}>{'"android-arm64", "macos-metal", "win-x64"'}</span>];{'\n'}
-                    {'    '}<span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>for</span> target <span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>in</span> targets {'{\n'}
-                    {'        '}<span className={isLight ? 'text-blue-600 font-bold' : 'text-[#ba1724] font-bold'}>let</span> result = <span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>compile_pipeline</span>(target);{'\n'}
-                    {'        '}<span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>println!</span>(<span className={isLight ? 'text-orange-600' : 'text-amber-400'}>{'"✔ Target: {} -> {}", target, result'}</span>);{'\n'}
-                    {'    }\n'}
-                    {'}'}
-                  </code>
-                </pre>
-
-                {/* Simulation Output Banner */}
-                {runOutput && (
-                  <div className={`mt-4 p-3 rounded-lg text-xs font-mono whitespace-pre-wrap animate-fadeIn ${
-                    isLight 
-                      ? 'bg-white border border-gray-200 text-emerald-600 shadow-sm' 
-                      : 'bg-[#180a09] border border-[#43302f] text-emerald-400'
-                  }`}>
-                    {runOutput}
-                  </div>
-                )}
+              {/* Bottom-Right: Headline & Play/Pause Button */}
+              <div className="flex items-end gap-4">
+                <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter leading-none drop-shadow-md">
+                  Yemini Platform
+                </h2>
+                
+                {/* Video Play/Pause Toggle Button */}
+                <button
+                  onClick={toggleVideoPlay}
+                  className="w-11 h-11 rounded-full bg-black/50 backdrop-blur-md border border-white/25 flex items-center justify-center text-white hover:bg-black/70 transition-all active:scale-95 shadow-lg mb-1"
+                  title={isPlaying ? "Pause video" : "Play video"}
+                  aria-label={isPlaying ? "Pause video" : "Play video"}
+                >
+                  {isPlaying ? (
+                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                      <rect x="6" y="4" width="4" height="16" rx="1" />
+                      <rect x="14" y="4" width="4" height="16" rx="1" />
+                    </svg>
+                  ) : (
+                    <Play className="w-4 h-4 fill-current ml-0.5" />
+                  )}
+                </button>
               </div>
+
             </div>
+
           </div>
         </section>
 
