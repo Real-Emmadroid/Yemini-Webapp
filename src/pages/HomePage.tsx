@@ -47,31 +47,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
       <main className="relative pt-28 sm:pt-32 pb-24 flex flex-col gap-24 sm:gap-32 z-10">
         {/* HERO SECTION */}
         <section className="relative flex flex-col items-center text-center px-4 sm:px-6 max-w-7xl mx-auto w-full">
-          {/* Hero Glow Accent */}
-          <div className="hero-glow" />
-
-          {/* Identity Eyebrow / Mission Line */}
-          <div className="inline-flex items-center gap-2 mb-4 animate-fadeIn">
-            <span className={`text-xs sm:text-sm font-mono uppercase tracking-widest px-3 py-1 rounded-full border ${
-              isLight 
-                ? 'bg-white/80 border-gray-300 text-gray-700 shadow-xs' 
-                : 'bg-[#271716]/80 border-[#43302f] text-[#ffb3ae]'
-            }`}>
-              STF Ecosystem • Sphere Tech Foundation
-            </span>
-          </div>
-
-          {/* Main Headline - Mission-first & Product-honest */}
-          <h1 className={`text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tighter mb-6 max-w-5xl font-semibold leading-[1.08] ${
-            isLight ? 'text-black' : 'text-[#fadcd9]'
-          }`}>
-            Software that makes creation<br />
-            <span className="text-gradient">accessible to anyone.</span>
-          </h1>
-
-          {/* Subtitle */}
-          <p className={`text-base sm:text-xl md:text-2xl font-normal tracking-tight max-w-3xl mx-auto mb-8 sm:mb-10 leading-snug px-2 ${
-            isLight ? 'text-gray-600' : 'text-[#ab8986]'
+          {/* Main Subtitle / Description Text */}
+          <p className={`w-full max-w-3xl mx-auto text-sm sm:text-base md:text-lg font-normal tracking-tight mb-8 sm:mb-10 leading-relaxed px-2 text-justify ${
+            isLight ? 'text-gray-700' : 'text-[#ab8986]'
           }`}>
             Yemini is building accessible technology for builders everywhere — starting with a high-performance native developer platform across mobile, desktop, and AI.
           </p>
