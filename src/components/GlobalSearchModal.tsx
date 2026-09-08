@@ -5,7 +5,7 @@ import { StatusBadge } from './StatusBadge';
 import { docArticles } from '../data/docsData';
 import { platformsData } from '../data/downloadsData';
 import { resourcesData } from '../data/resourcesData';
-import { MobileVisual, DesktopVisual, AiVisual, SuiteVisual } from './ProductVisuals';
+import { MobileVisual, DesktopVisual, AiVisual } from './ProductVisuals';
 
 interface GlobalSearchModalProps {
   isOpen: boolean;
@@ -21,16 +21,56 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
   const { theme } = useTheme();
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isMounted, setIsMounted] = useState(isOpen);
+  const [isVisible, setIsVisible] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const isLight = theme === 'light';
+
+  // Smooth slide-out from the right animation control
+  useEffect(() => {
+    if (isOpen) {
+      setIsMounted(true);
+      setQuery('');
+      setSelectedIndex(0);
+      // Double rAF ensures the browser paints initial translate-x-full before animating to translate-x-0
+      const frame1 = requestAnimationFrame(() => {
+        const frame2 = requestAnimationFrame(() => {
+          setIsVisible(true);
+          setTimeout(() => {
+            inputRef.current?.focus();
+          }, 120);
+        });
+        return () => cancelAnimationFrame(frame2);
+      });
+      document.body.style.overflow = 'hidden';
+      return () => {
+        cancelAnimationFrame(frame1);
+        document.body.style.overflow = '';
+      };
+    } else {
+      setIsVisible(false);
+      const timer = setTimeout(() => {
+        setIsMounted(false);
+      }, 300);
+      document.body.style.overflow = '';
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
+
+  const handleClose = () => {
+    setIsVisible(false);
+    setTimeout(() => {
+      onClose();
+    }, 300);
+  };
 
   // Search dataset
   const searchItems: (SearchResultItem & { status?: 'available' | 'in-development' })[] = [
     {
       id: 'prod-home',
       title: 'Yemini Ecosystem Overview',
-      description: 'Software that makes creation and technology accessible to anyone.',
+      description: 'Software that makes creation accessible to anyone.',
       category: 'Product',
       route: 'home'
     },
@@ -125,14 +165,6 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
       ).slice(0, 10);
 
   useEffect(() => {
-    if (isOpen) {
-      setQuery('');
-      setSelectedIndex(0);
-      setTimeout(() => inputRef.current?.focus(), 80);
-    }
-  }, [isOpen]);
-
-  useEffect(() => {
     setSelectedIndex(0);
   }, [query]);
 
@@ -148,39 +180,44 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
       if (filteredItems[selectedIndex]) {
         const item = filteredItems[selectedIndex];
         onNavigate(item.route, item.targetId);
-        onClose();
+        handleClose();
       }
     } else if (e.key === 'Escape') {
-      onClose();
+      e.preventDefault();
+      handleClose();
     }
   };
 
   const handleSelectProduct = (route: PageRoute) => {
     onNavigate(route);
-    onClose();
+    handleClose();
   };
 
-  if (!isOpen) return null;
+  if (!isMounted) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center md:justify-end pt-16 md:pt-20 px-4 md:px-8 lg:px-16 overflow-y-auto">
-      {/* Dimmed backdrop */}
+    <div className="fixed inset-0 z-50 overflow-hidden flex justify-end">
+      {/* Dimmed backdrop with smooth fade */}
       <div 
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
-        onClick={onClose}
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ease-out cursor-pointer ${
+          isVisible ? 'opacity-100' : 'opacity-0'
+        }`}
+        onClick={handleClose}
         aria-hidden="true"
       />
 
-      {/* Floating Card Modal Styled Exactly Like Meta's tyhyu.JPG */}
+      {/* Slide-out Panel from the Right Edge */}
       <div 
-        className={`relative w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden transition-all transform duration-200 z-10 my-4 ${
+        className={`relative w-full max-w-xl h-full shadow-2xl overflow-y-auto transition-transform duration-300 ease-out transform z-10 flex flex-col sm:rounded-l-3xl ${
+          isVisible ? 'translate-x-0' : 'translate-x-full'
+        } ${
           isLight 
-            ? 'bg-white text-gray-900 border border-gray-100 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.25)]' 
-            : 'bg-[#140808] text-[#fadcd9] border border-[#3d2423] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)]'
+            ? 'bg-white text-gray-900 border-l border-gray-200 shadow-[-25px_0_60px_rgba(0,0,0,0.15)]' 
+            : 'bg-[#140808] text-[#fadcd9] border-l border-[#3d2423] shadow-[-25px_0_60px_rgba(0,0,0,0.85)]'
         }`}
       >
-        <div className="p-6 sm:p-8">
-          {/* Top Bar: Title & Close Button (Matching tyhyu.JPG) */}
+        <div className="p-6 sm:p-8 flex-1 flex flex-col">
+          {/* Top Bar: Title & Close Button */}
           <div className="flex items-center justify-between mb-6">
             <h2 className={`text-2xl sm:text-3xl font-medium tracking-tight ${
               isLight ? 'text-gray-900' : 'text-white'
@@ -190,7 +227,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
 
             {/* Custom SVG Close Button */}
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className={`p-2 rounded-full transition-colors cursor-pointer ${
                 isLight 
                   ? 'hover:bg-gray-100 text-gray-700' 
@@ -205,7 +242,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
             </button>
           </div>
 
-          {/* Search Input Box (Matching rounded box with search icon in tyhyu.JPG) */}
+          {/* Search Input Box */}
           <div className={`relative flex items-center gap-3 px-4 py-3 rounded-2xl border transition-all ${
             isLight 
               ? 'bg-white border-gray-300 focus-within:border-black focus-within:ring-2 focus-within:ring-black/5' 
@@ -240,7 +277,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
             {query && (
               <button
                 onClick={() => setQuery('')}
-                className={`p-1 rounded-full text-xs font-semibold ${
+                className={`p-1 rounded-full text-xs font-semibold cursor-pointer ${
                   isLight ? 'text-gray-400 hover:text-black' : 'text-[#ab8986] hover:text-white'
                 }`}
                 aria-label="Clear query"
@@ -253,9 +290,9 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
             )}
           </div>
 
-          {/* Initial View (query is empty): Devices / Products Quick Grid (Exactly matching tyhyu.JPG) */}
+          {/* Initial View (query is empty): Devices / Products Quick Grid */}
           {query.trim() === '' ? (
-            <div className="mt-8 space-y-6">
+            <div className="mt-8 space-y-6 flex-1 flex flex-col justify-between">
               <div>
                 <h3 className={`text-xs font-bold uppercase tracking-wider mb-4 ${
                   isLight ? 'text-gray-500' : 'text-[#ab8986]'
@@ -345,7 +382,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
               </div>
 
               {/* Popular quick searches */}
-              <div>
+              <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800">
                 <h4 className={`text-xs font-semibold mb-2.5 ${isLight ? 'text-gray-400' : 'text-[#ab8986]'}`}>
                   Suggested Searches
                 </h4>
@@ -375,7 +412,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
             </div>
           ) : (
             /* Live Filtered Results List */
-            <div className="mt-4 max-h-[50vh] overflow-y-auto divide-y space-y-1">
+            <div className="mt-4 flex-1 overflow-y-auto divide-y space-y-1 pr-1">
               {filteredItems.length === 0 ? (
                 <div className={`py-12 text-center ${isLight ? 'text-gray-400' : 'text-zinc-500'}`}>
                   <p className="text-base font-medium">No results found for &ldquo;{query}&rdquo;</p>
@@ -391,7 +428,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
                       key={item.id}
                       onClick={() => {
                         onNavigate(item.route, item.targetId);
-                        onClose();
+                        handleClose();
                       }}
                       onMouseEnter={() => setSelectedIndex(index)}
                       className={`w-full flex items-center justify-between p-3.5 rounded-xl text-left transition-all cursor-pointer ${

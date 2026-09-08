@@ -1,6 +1,8 @@
 {
   "name": "Yemini",
-  "description": "Yemini is a technology company building software that makes creation and technology accessible to anyone, starting with high-performance developer tools across mobile, desktop, and AI.",
+  "description": "Software that makes creation\naccessible to anyone.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

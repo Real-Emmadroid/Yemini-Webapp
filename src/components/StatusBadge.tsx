@@ -18,10 +18,10 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   const isAvailable = status === 'available' || status === 'live';
 
   const dotColor = isAvailable 
-    ? 'bg-emerald-500 shadow-emerald-500/50' 
+    ? 'bg-emerald-500' 
     : isLight 
-      ? 'bg-amber-500 shadow-amber-500/40' 
-      : 'bg-[#ff9988] shadow-[#ff9988]/40';
+      ? 'bg-amber-500' 
+      : 'bg-[#ff9988]';
 
   const containerStyle = isAvailable
     ? isLight
@@ -39,9 +39,9 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full font-medium border font-mono tracking-tight select-none shadow-xs ${sizeClasses} ${containerStyle} ${className}`}
+      className={`inline-flex items-center gap-1.5 rounded-full font-medium border font-mono tracking-tight select-none ${sizeClasses} ${containerStyle} ${className}`}
     >
-      <span className={`w-1.5 h-1.5 rounded-full shrink-0 shadow-xs ${dotColor}`} />
+      <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${dotColor}`} />
       <span>{label}</span>
     </span>
   );
