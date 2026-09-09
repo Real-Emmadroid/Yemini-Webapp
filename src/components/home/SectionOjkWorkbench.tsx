@@ -393,7 +393,9 @@ export const SectionOjkWorkbench: React.FC<SectionOjkWorkbenchProps> = ({
                               <span className="text-xs font-bold text-gray-800 dark:text-gray-200">
                                 Privacy-First Plugin Shield
                               </span>
-                              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#580c14]/15 text-[#580c14] dark:text-[#ff8585] font-bold">
+                              <span className={`text-[10px] font-mono px-2 py-0.5 rounded bg-[#580c14]/15 font-bold ${
+                                isLight ? 'text-[#580c14]' : 'text-[#ff8585]'
+                              }`}>
                                 Zero Telemetry
                               </span>
                             </div>
@@ -530,7 +532,11 @@ export const SectionOjkWorkbench: React.FC<SectionOjkWorkbenchProps> = ({
                     e.preventDefault();
                     onNavigate('desktop');
                   }}
-                  className="text-[#580c14] dark:text-[#ff8585] underline decoration-[#580c14] dark:decoration-[#ff8585] underline-offset-2 font-medium hover:opacity-80 transition-opacity"
+                  className={`underline underline-offset-2 font-medium hover:opacity-80 transition-opacity ${
+                    isLight 
+                      ? 'text-[#580c14] decoration-[#580c14]' 
+                      : 'text-[#ff8585] decoration-[#ff8585]'
+                  }`}
                 >
                   pure native performance
                 </a>
@@ -589,7 +595,11 @@ export const SectionOjkWorkbench: React.FC<SectionOjkWorkbenchProps> = ({
                     e.preventDefault();
                     onNavigate('mobile');
                   }}
-                  className="text-[#580c14] dark:text-[#ff8585] underline decoration-[#580c14] dark:decoration-[#ff8585] underline-offset-2 font-medium hover:opacity-80 transition-opacity"
+                  className={`underline underline-offset-2 font-medium hover:opacity-80 transition-opacity ${
+                    isLight 
+                      ? 'text-[#580c14] decoration-[#580c14]' 
+                      : 'text-[#ff8585] decoration-[#ff8585]'
+                  }`}
                 >
                   without internet access
                 </a>
@@ -649,7 +659,11 @@ export const SectionOjkWorkbench: React.FC<SectionOjkWorkbenchProps> = ({
                     e.preventDefault();
                     onNavigate('resources');
                   }}
-                  className="text-[#580c14] dark:text-[#ff8585] underline decoration-[#580c14] dark:decoration-[#ff8585] underline-offset-2 font-medium hover:opacity-80 transition-opacity"
+                  className={`underline underline-offset-2 font-medium hover:opacity-80 transition-opacity ${
+                    isLight 
+                      ? 'text-[#580c14] decoration-[#580c14]' 
+                      : 'text-[#ff8585] decoration-[#ff8585]'
+                  }`}
                 >
                   without remote telemetry
                 </a>

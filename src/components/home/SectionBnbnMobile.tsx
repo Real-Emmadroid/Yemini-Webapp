@@ -25,7 +25,6 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
   const isLight = theme === 'light';
 
   // 4 Core Carousel Items
-  // Ready to replace background with any custom PNG or WebP image via `bgImage`
   const basePanels: CarouselPanel[] = [
     {
       id: 'panel-mobile',
@@ -33,7 +32,6 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
       title: 'Code from anywhere, no laptop needed.',
       targetId: 'downloads',
       route: 'download',
-      // bgImage: '/your-mobile-background.webp', // Replace with your PNG or WebP image
     },
     {
       id: 'panel-notepad',
@@ -41,7 +39,6 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
       title: 'Capture ideas the moment they strike.',
       targetId: 'companion-suite',
       route: 'notepadapp-privacy',
-      // bgImage: '/your-notepad-background.webp', // Replace with your PNG or WebP image
     },
     {
       id: 'panel-converter',
@@ -49,7 +46,6 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
       title: 'Transform media and files on-device.',
       targetId: 'companion-suite',
       route: 'converterapp-privacy',
-      // bgImage: '/your-converter-background.webp', // Replace with your PNG or WebP image
     },
     {
       id: 'panel-share',
@@ -57,73 +53,37 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
       title: 'Transfer gigabytes without the internet.',
       targetId: 'companion-suite',
       route: 'shareapp-privacy',
-      // bgImage: '/your-share-background.webp', // Replace with your PNG or WebP image
     },
   ];
 
-  const baseCount = basePanels.length; // 4
-  // Tripled buffer ensures a 100% seamless, continuous infinite loop without any visual reset or jump
-  const extendedPanels = [...basePanels, ...basePanels, ...basePanels];
+  // Render 4 panels + duplicates so desktop 2-card view always has smooth cards visible
+  const extendedPanels = [...basePanels, ...basePanels];
 
-  // Start at middle set (index = 4)
-  const [currentIndex, setCurrentIndex] = useState<number>(baseCount);
-  const [withTransition, setWithTransition] = useState<boolean>(true);
+  // Current index is 0..3
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isPaused, setIsPaused] = useState<boolean>(false);
-
-  // Re-enable transition smoothly after seamless snap
-  useEffect(() => {
-    if (!withTransition) {
-      const raf = requestAnimationFrame(() => {
-        const timer = setTimeout(() => {
-          setWithTransition(true);
-        }, 50);
-        return () => clearTimeout(timer);
-      });
-      return () => cancelAnimationFrame(raf);
-    }
-  }, [withTransition]);
 
   // Gentle, calm auto-scroll from right to left (moving one after the other)
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
-      setWithTransition(true);
-      setCurrentIndex((prev) => prev + 1);
+      setCurrentIndex((prev) => (prev + 1) % basePanels.length);
     }, 4600); // Calm 4.6s reading interval
 
     return () => clearInterval(interval);
-  }, [isPaused]);
-
-  // Seamless boundary wrap without jumping or rewinding
-  const handleTransitionEnd = () => {
-    if (currentIndex >= baseCount * 2) {
-      // Reached index 8 -> silently reset to 4 (same exact visual panel) with zero animation
-      setWithTransition(false);
-      setCurrentIndex((prev) => prev - baseCount);
-    } else if (currentIndex < baseCount) {
-      // Reached index < 4 -> silently wrap forward by 4 with zero animation
-      setWithTransition(false);
-      setCurrentIndex((prev) => prev + baseCount);
-    }
-  };
+  }, [isPaused, basePanels.length]);
 
   const prevSlide = () => {
-    setWithTransition(true);
-    setCurrentIndex((prev) => prev - 1);
+    setCurrentIndex((prev) => (prev - 1 + basePanels.length) % basePanels.length);
   };
 
   const nextSlide = () => {
-    setWithTransition(true);
-    setCurrentIndex((prev) => prev + 1);
+    setCurrentIndex((prev) => (prev + 1) % basePanels.length);
   };
 
   const goToDot = (index: number) => {
-    setWithTransition(true);
-    setCurrentIndex(baseCount + index);
+    setCurrentIndex(index);
   };
-
-  // Active dot indicator (0..3)
-  const activeDot = ((currentIndex % baseCount) + baseCount) % baseCount;
 
   const handleCardClick = (targetId: string, route?: PageRoute) => {
     const el = document.getElementById(targetId);
@@ -158,8 +118,10 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
           {/* LEFT COLUMN (left-aligned, not centered, ~40% desktop width) */}
           <div className="w-full min-[900px]:w-[40%] flex flex-col text-left shrink-0">
             
-            {/* Headline: ~44px desktop / ~28px mobile, deep wine (#580c14), left-aligned */}
-            <h2 className={`text-[28px] sm:text-[36px] min-[900px]:text-[44px] font-bold tracking-tight leading-[1.15] text-[#580c14] dark:text-[#ff9494]`}>
+            {/* Headline: ~44px desktop / ~28px mobile, deep wine (#580c14) in light mode, left-aligned */}
+            <h2 className={`text-[28px] sm:text-[36px] min-[900px]:text-[44px] font-bold tracking-tight leading-[1.15] ${
+              isLight ? 'text-[#580c14]' : 'text-white'
+            }`}>
               Build and write. Anywhere.
             </h2>
 
@@ -201,7 +163,11 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
                       const el = document.getElementById('offline');
                       if (el) el.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    className="text-[#580c14] dark:text-[#ff8585] underline decoration-[#580c14] dark:decoration-[#ff8585] underline-offset-2 font-medium hover:opacity-80 transition-opacity"
+                    className={`underline underline-offset-2 font-medium hover:opacity-80 transition-opacity ${
+                      isLight 
+                        ? 'text-[#580c14] decoration-[#580c14]' 
+                        : 'text-[#ff8585] decoration-[#ff8585]'
+                    }`}
                   >
                     on-device compilers
                   </a>{' '}
@@ -263,7 +229,11 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
                       const el = document.getElementById('companion-suite');
                       if (el) el.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    className="text-[#580c14] dark:text-[#ff8585] underline decoration-[#580c14] dark:decoration-[#ff8585] underline-offset-2 font-medium hover:opacity-80 transition-opacity"
+                    className={`underline underline-offset-2 font-medium hover:opacity-80 transition-opacity ${
+                      isLight 
+                        ? 'text-[#580c14] decoration-[#580c14]' 
+                        : 'text-[#ff8585] decoration-[#ff8585]'
+                    }`}
                   >
                     write freely
                   </a>
@@ -295,7 +265,6 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
 
           {/* RIGHT COLUMN (~60% desktop width):
               Two visual panels side by side in the viewport, sliding smoothly right-to-left
-              in a clean, seamless infinite loop without snapping back to index 0.
               Directly below: carousel control row (left arrow, 4 indicators, right arrow) */}
           <div 
             className="w-full min-[900px]:w-[60%] flex flex-col items-center overflow-hidden"
@@ -305,32 +274,13 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
             {/* Sliding Carousel Viewport */}
             <div className="w-full overflow-hidden py-1">
               <div 
-                onTransitionEnd={handleTransitionEnd}
-                className="flex gap-5"
+                className="bnbn-carousel-track"
                 style={{
-                  // Moves one panel after another smoothly from right to left
-                  // Desktop: step = calc(50% + 10px) (displays 2 cards side by side)
-                  // Mobile: step = calc(100% + 20px) (displays 1 card)
-                  transform: `translateX(calc(-${currentIndex} * (var(--slide-step, 50% + 10px))))`,
-                  transition: withTransition ? 'transform 1100ms cubic-bezier(0.2, 0.8, 0.2, 1)' : 'none',
-                }}
+                  '--current-idx': currentIndex,
+                } as React.CSSProperties}
               >
-                {/* CSS variable for slide step based on viewport breakpoint */}
-                <style>{`
-                  @media (max-width: 639px) {
-                    :root {
-                      --slide-step: 100% + 20px;
-                    }
-                  }
-                  @media (min-width: 640px) {
-                    :root {
-                      --slide-step: 50% + 10px;
-                    }
-                  }
-                `}</style>
-
                 {extendedPanels.map((panel, idx) => {
-                  const originalIndex = idx % baseCount;
+                  const originalIndex = idx % basePanels.length;
                   return (
                     <div
                       key={`${panel.id}-ext-${idx}`}
@@ -351,14 +301,20 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
                             loading="lazy"
                           />
                           {/* Gradient tint over custom image to keep text 1 and text 2 perfectly legible */}
-                          <div className="absolute inset-0 bg-gradient-to-b from-[#FBEEEF]/90 via-[#FBEEEF]/55 to-transparent dark:from-black/90 dark:via-black/55 dark:to-transparent z-[1] pointer-events-none" />
+                          <div className={`absolute inset-0 z-[1] pointer-events-none ${
+                            isLight 
+                              ? 'bg-gradient-to-b from-[#FBEEEF]/90 via-[#FBEEEF]/55 to-transparent' 
+                              : 'bg-gradient-to-b from-black/90 via-black/55 to-transparent'
+                          }`} />
                         </>
                       )}
 
                       {/* Text 1 and Text 2 (Always crisp on top) */}
                       <div className="relative z-10 text-left">
                         {/* Text 1: Tag/Category */}
-                        <span className="text-[11px] font-bold tracking-widest text-[#580c14] dark:text-[#ff8585] uppercase">
+                        <span className={`text-[11px] font-bold tracking-widest uppercase ${
+                          isLight ? 'text-[#580c14]' : 'text-[#ff8585]'
+                        }`}>
                           {panel.tag}
                         </span>
                         {/* Text 2: Bold Headline */}
@@ -401,15 +357,23 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
 
                           {originalIndex === 1 && (
                             /* PANEL 2: Notepad UI Card Mockup */
-                            <div className="w-full rounded-2xl bg-white dark:bg-[#120506] p-4 shadow-xl border border-gray-200 dark:border-[#381418]">
-                              <div className="flex items-center justify-between pb-2 border-b border-gray-100 dark:border-[#2a0e12]">
+                            <div className={`w-full rounded-2xl p-4 shadow-xl border ${
+                              isLight 
+                                ? 'bg-white border-gray-200' 
+                                : 'bg-[#120506] border-[#381418]'
+                            }`}>
+                              <div className={`flex items-center justify-between pb-2 border-b ${
+                                isLight ? 'border-gray-100' : 'border-[#2a0e12]'
+                              }`}>
                                 <div className="flex items-center gap-1.5">
                                   <span className="w-2.5 h-2.5 rounded-full bg-[#580c14]" />
-                                  <span className="text-xs font-bold text-gray-800 dark:text-gray-200">Architecture Specs</span>
+                                  <span className={`text-xs font-bold ${isLight ? 'text-gray-800' : 'text-gray-200'}`}>
+                                    Architecture Specs
+                                  </span>
                                 </div>
                                 <span className="text-[9px] font-mono text-gray-400">Saved</span>
                               </div>
-                              <div className="mt-3 space-y-2.5 text-xs text-gray-600 dark:text-gray-300">
+                              <div className={`mt-3 space-y-2.5 text-xs ${isLight ? 'text-gray-600' : 'text-gray-300'}`}>
                                 <div className="flex items-center gap-2">
                                   <span className="w-3.5 h-3.5 rounded border border-[#580c14] bg-[#580c14]/10 flex items-center justify-center text-[9px] text-[#580c14]">✓</span>
                                   <span className="text-[11px] leading-tight font-medium">Offline syntax tree engine</span>
@@ -419,13 +383,13 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
                                   <span className="text-[11px] leading-tight font-medium">Local AES-256 vault storage</span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                  <span className="w-3.5 h-3.5 rounded border border-gray-300 dark:border-gray-600" />
+                                  <span className={`w-3.5 h-3.5 rounded border ${isLight ? 'border-gray-300' : 'border-gray-600'}`} />
                                   <span className="text-[11px] leading-tight text-gray-400">Zero telemetry verification</span>
                                 </div>
                                 <div className="pt-2 space-y-1.5 opacity-60">
-                                  <div className="w-full h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full" />
-                                  <div className="w-4/5 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full" />
-                                  <div className="w-2/3 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full" />
+                                  <div className={`w-full h-1.5 rounded-full ${isLight ? 'bg-gray-200' : 'bg-gray-700'}`} />
+                                  <div className={`w-4/5 h-1.5 rounded-full ${isLight ? 'bg-gray-200' : 'bg-gray-700'}`} />
+                                  <div className={`w-2/3 h-1.5 rounded-full ${isLight ? 'bg-gray-200' : 'bg-gray-700'}`} />
                                 </div>
                               </div>
                             </div>
@@ -433,21 +397,43 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
 
                           {originalIndex === 2 && (
                             /* PANEL 3: Converter Tool Mockup */
-                            <div className="w-full rounded-2xl bg-white dark:bg-[#120506] p-4 shadow-xl border border-gray-200 dark:border-[#381418]">
-                              <div className="flex items-center justify-between pb-2 border-b border-gray-100 dark:border-[#2a0e12]">
-                                <span className="text-xs font-bold text-gray-800 dark:text-gray-200">On-Device Pipeline</span>
+                            <div className={`w-full rounded-2xl p-4 shadow-xl border ${
+                              isLight 
+                                ? 'bg-white border-gray-200' 
+                                : 'bg-[#120506] border-[#381418]'
+                            }`}>
+                              <div className={`flex items-center justify-between pb-2 border-b ${
+                                isLight ? 'border-gray-100' : 'border-[#2a0e12]'
+                              }`}>
+                                <span className={`text-xs font-bold ${isLight ? 'text-gray-800' : 'text-gray-200'}`}>
+                                  On-Device Pipeline
+                                </span>
                                 <span className="text-[9px] font-mono text-emerald-500">100% Local</span>
                               </div>
                               <div className="mt-3 space-y-2">
-                                <div className="p-2 rounded-lg bg-gray-50 dark:bg-black/40 border border-gray-100 dark:border-[#2a0e12] flex items-center justify-between text-[11px]">
+                                <div className={`p-2 rounded-lg border flex items-center justify-between text-[11px] ${
+                                  isLight 
+                                    ? 'bg-gray-50 border-gray-100' 
+                                    : 'bg-black/40 border-[#2a0e12]'
+                                }`}>
                                   <span className="font-mono text-gray-500">source.pdf</span>
-                                  <span className="text-[#580c14] dark:text-[#ff8585] font-bold">→ markdown</span>
+                                  <span className={`font-bold ${isLight ? 'text-[#580c14]' : 'text-[#ff8585]'}`}>
+                                    → markdown
+                                  </span>
                                 </div>
-                                <div className="p-2 rounded-lg bg-gray-50 dark:bg-black/40 border border-gray-100 dark:border-[#2a0e12] flex items-center justify-between text-[11px]">
+                                <div className={`p-2 rounded-lg border flex items-center justify-between text-[11px] ${
+                                  isLight 
+                                    ? 'bg-gray-50 border-gray-100' 
+                                    : 'bg-black/40 border-[#2a0e12]'
+                                }`}>
                                   <span className="font-mono text-gray-500">audio.wav</span>
-                                  <span className="text-[#580c14] dark:text-[#ff8585] font-bold">→ text (whisper)</span>
+                                  <span className={`font-bold ${isLight ? 'text-[#580c14]' : 'text-[#ff8585]'}`}>
+                                    → text (whisper)
+                                  </span>
                                 </div>
-                                <div className="w-full bg-gray-200 dark:bg-gray-800 h-1.5 rounded-full overflow-hidden mt-2">
+                                <div className={`w-full h-1.5 rounded-full overflow-hidden mt-2 ${
+                                  isLight ? 'bg-gray-200' : 'bg-gray-800'
+                                }`}>
                                   <div className="bg-[#580c14] h-full w-4/5 rounded-full" />
                                 </div>
                               </div>
@@ -456,13 +442,25 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
 
                           {originalIndex === 3 && (
                             /* PANEL 4: P2P Share Radar Mockup */
-                            <div className="w-full rounded-2xl bg-white dark:bg-[#120506] p-4 shadow-xl border border-gray-200 dark:border-[#381418]">
-                              <div className="flex items-center justify-between pb-2 border-b border-gray-100 dark:border-[#2a0e12]">
-                                <span className="text-xs font-bold text-gray-800 dark:text-gray-200">Peer Discovery</span>
+                            <div className={`w-full rounded-2xl p-4 shadow-xl border ${
+                              isLight 
+                                ? 'bg-white border-gray-200' 
+                                : 'bg-[#120506] border-[#381418]'
+                            }`}>
+                              <div className={`flex items-center justify-between pb-2 border-b ${
+                                isLight ? 'border-gray-100' : 'border-[#2a0e12]'
+                              }`}>
+                                <span className={`text-xs font-bold ${isLight ? 'text-gray-800' : 'text-gray-200'}`}>
+                                  Peer Discovery
+                                </span>
                                 <span className="text-[9px] font-mono text-emerald-500">Direct Wi-Fi</span>
                               </div>
                               <div className="mt-3 flex items-center justify-around py-3">
-                                <div className="w-10 h-10 rounded-full bg-[#580c14]/15 border border-[#580c14] flex items-center justify-center text-[10px] font-bold text-[#580c14] dark:text-[#ff8585]">
+                                <div className={`w-10 h-10 rounded-full border flex items-center justify-center text-[10px] font-bold ${
+                                  isLight 
+                                    ? 'bg-[#580c14]/15 border-[#580c14] text-[#580c14]' 
+                                    : 'bg-[#580c14]/25 border-[#ff8585] text-[#ff8585]'
+                                }`}>
                                   YOU
                                 </div>
                                 <div className="h-0.5 w-16 bg-gradient-to-r from-[#580c14] to-emerald-500 animate-pulse" />
@@ -494,8 +492,8 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
                     ? 'bg-white border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-gray-300' 
                     : 'bg-[#150708] border-[#381618] text-[#fadcd9] hover:bg-[#250d0f]'
                 }`}
-                title="Previous image"
-                aria-label="Previous image"
+                title="Previous panel"
+                aria-label="Previous panel"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="15 18 9 12 15 6" />
@@ -509,9 +507,9 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
                     key={p.id}
                     onClick={() => goToDot(idx)}
                     className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                      activeDot === idx 
-                        ? 'w-6 bg-[#580c14] dark:bg-[#ff8585]' 
-                        : 'w-2.5 bg-gray-300 dark:bg-[#431418] hover:bg-gray-400'
+                      currentIndex === idx 
+                        ? (isLight ? 'w-6 bg-[#580c14]' : 'w-6 bg-[#ff8585]')
+                        : (isLight ? 'w-2.5 bg-gray-300 hover:bg-gray-400' : 'w-2.5 bg-[#431418] hover:bg-[#682026]')
                     }`}
                     aria-label={`Select ${p.tag} panel`}
                   />
@@ -526,8 +524,8 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
                     ? 'bg-white border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-gray-300' 
                     : 'bg-[#150708] border-[#381618] text-[#fadcd9] hover:bg-[#250d0f]'
                 }`}
-                title="Next image"
-                aria-label="Next image"
+                title="Next panel"
+                aria-label="Next panel"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="9 18 15 12 9 6" />

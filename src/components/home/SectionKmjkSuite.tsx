@@ -28,10 +28,12 @@ export const SectionKmjkSuite: React.FC<SectionKmjkSuiteProps> = ({ onNavigate, 
       <div className="max-w-6xl mx-auto">
         
         {/* Centered Section Headline above two-column layout:
-            ~44px desktop / ~28px mobile, deep wine (#580c14), centered:
+            ~44px desktop / ~28px mobile, deep wine (#580c14) in light mode, centered:
             "Share, convert, write. Instantly." */}
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-[28px] sm:text-[36px] md:text-[44px] font-bold tracking-tight leading-[1.15] text-[#580c14] dark:text-[#ff9494]">
+          <h2 className={`text-[28px] sm:text-[36px] md:text-[44px] font-bold tracking-tight leading-[1.15] ${
+            isLight ? 'text-[#580c14]' : 'text-[#ff9494]'
+          }`}>
             Share, convert, write. Instantly.
           </h2>
         </div>
@@ -85,8 +87,8 @@ export const SectionKmjkSuite: React.FC<SectionKmjkSuiteProps> = ({ onNavigate, 
                     <div className={`p-4 rounded-2xl shadow-xl border backdrop-blur-md max-w-[240px] sm:max-w-[270px] transform translate-y-1 transition-transform ${
                       isLight ? 'bg-white/90 border-gray-200/80 text-gray-800' : 'bg-[#18080a]/90 border-[#381618] text-gray-200'
                     }`}>
-                      <div className="flex items-center gap-2.5 pb-2 border-b border-gray-100 dark:border-[#2a0e12]">
-                        <div className="w-7 h-7 rounded-lg bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs">
+                      <div className={`flex items-center gap-2.5 pb-2 border-b ${isLight ? 'border-gray-100' : 'border-[#2a0e12]'}`}>
+                        <div className="w-7 h-7 rounded-lg bg-emerald-500/15 text-emerald-600 flex items-center justify-center font-bold text-xs">
                           ✓
                         </div>
                         <div>
@@ -97,18 +99,20 @@ export const SectionKmjkSuite: React.FC<SectionKmjkSuiteProps> = ({ onNavigate, 
 
                       {/* Transfer / Conversion Progress Bar */}
                       <div className="mt-2.5 space-y-1">
-                        <div className="flex justify-between text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                        <div className="flex justify-between text-[10px] font-mono text-gray-500">
                           <span>Converted on-device</span>
                           <span className="text-emerald-500 font-bold">100%</span>
                         </div>
-                        <div className="w-full bg-gray-100 dark:bg-gray-800 h-1.5 rounded-full overflow-hidden">
+                        <div className={`w-full h-1.5 rounded-full overflow-hidden ${isLight ? 'bg-gray-100' : 'bg-gray-800'}`}>
                           <div className="bg-emerald-500 h-full w-full rounded-full" />
                         </div>
                       </div>
                     </div>
 
                     {/* Subtle P2P Radar / Direct Sync Indicator */}
-                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 dark:bg-white/5 backdrop-blur-md text-[11px] font-mono text-[#580c14] dark:text-[#ff8585]">
+                    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md text-[11px] font-mono ${
+                      isLight ? 'bg-black/5 text-[#580c14]' : 'bg-white/5 text-[#ff8585]'
+                    }`}>
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
                       <span>Direct P2P • 120 MB/s</span>
                     </div>
@@ -126,12 +130,12 @@ export const SectionKmjkSuite: React.FC<SectionKmjkSuiteProps> = ({ onNavigate, 
                   : 'bg-[#18080a] border-[#381618] text-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]'
               }`}>
                 {/* Bold short label: "Shared today" */}
-                <h3 className="text-base sm:text-lg font-bold tracking-tight text-gray-900 dark:text-white leading-tight">
+                <h3 className={`text-base sm:text-lg font-bold tracking-tight leading-tight ${isLight ? 'text-gray-900' : 'text-white'}`}>
                   Shared today
                 </h3>
 
                 {/* Smaller grey meta line: "3 files" */}
-                <p className="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 font-mono mt-0.5">
+                <p className={`text-[11px] sm:text-xs font-mono mt-0.5 ${isLight ? 'text-gray-500' : 'text-gray-400'}`}>
                   3 files
                 </p>
 
@@ -144,12 +148,14 @@ export const SectionKmjkSuite: React.FC<SectionKmjkSuiteProps> = ({ onNavigate, 
                       ? 'bg-gray-50 border-gray-200/80 text-gray-800' 
                       : 'bg-[#120506] border-[#2f1013] text-gray-200'
                   }`}>
-                    <div className="w-6 h-6 rounded-md bg-[#580c14]/10 dark:bg-[#580c14]/30 text-[#580c14] dark:text-[#ff8585] flex items-center justify-center font-bold text-[9px] font-mono">
+                    <div className={`w-6 h-6 rounded-md flex items-center justify-center font-bold text-[9px] font-mono ${
+                      isLight ? 'bg-[#580c14]/10 text-[#580c14]' : 'bg-[#580c14]/30 text-[#ff8585]'
+                    }`}>
                       PDF
                     </div>
                     <div className="mt-2 space-y-1">
-                      <div className="w-full h-1 bg-gray-300 dark:bg-gray-700 rounded-full" />
-                      <div className="w-3/4 h-1 bg-gray-200 dark:bg-gray-800 rounded-full" />
+                      <div className={`w-full h-1 rounded-full ${isLight ? 'bg-gray-300' : 'bg-gray-700'}`} />
+                      <div className={`w-3/4 h-1 rounded-full ${isLight ? 'bg-gray-200' : 'bg-gray-800'}`} />
                     </div>
                     <span className="text-[9px] font-mono text-gray-400 mt-2">
                       2.4 MB
@@ -189,7 +195,6 @@ export const SectionKmjkSuite: React.FC<SectionKmjkSuiteProps> = ({ onNavigate, 
           </div>
 
           {/* RIGHT — A vertical list of exactly 3 feature rows:
-              Same structure as Section 2's blocks:
               Row 1: icon badge + bold name on one line
               Row 2: one-line grey description with an inline link
               Row 3: "Get it for free" pill + "Explore [Product] ›" link
@@ -231,7 +236,11 @@ export const SectionKmjkSuite: React.FC<SectionKmjkSuiteProps> = ({ onNavigate, 
                     e.preventDefault();
                     onNavigate('notepadapp-privacy');
                   }}
-                  className="text-[#580c14] dark:text-[#ff8585] underline decoration-[#580c14] dark:decoration-[#ff8585] underline-offset-2 font-medium hover:opacity-80 transition-opacity"
+                  className={`underline underline-offset-2 font-medium hover:opacity-80 transition-opacity ${
+                    isLight 
+                      ? 'text-[#580c14] decoration-[#580c14]' 
+                      : 'text-[#ff8585] decoration-[#ff8585]'
+                  }`}
                 >
                   encrypted on-device storage
                 </a>
@@ -292,7 +301,11 @@ export const SectionKmjkSuite: React.FC<SectionKmjkSuiteProps> = ({ onNavigate, 
                     e.preventDefault();
                     onNavigate('converterapp-privacy');
                   }}
-                  className="text-[#580c14] dark:text-[#ff8585] underline decoration-[#580c14] dark:decoration-[#ff8585] underline-offset-2 font-medium hover:opacity-80 transition-opacity"
+                  className={`underline underline-offset-2 font-medium hover:opacity-80 transition-opacity ${
+                    isLight 
+                      ? 'text-[#580c14] decoration-[#580c14]' 
+                      : 'text-[#ff8585] decoration-[#ff8585]'
+                  }`}
                 >
                   on-device
                 </a>
@@ -354,7 +367,11 @@ export const SectionKmjkSuite: React.FC<SectionKmjkSuiteProps> = ({ onNavigate, 
                     e.preventDefault();
                     onNavigate('shareapp-privacy');
                   }}
-                  className="text-[#580c14] dark:text-[#ff8585] underline decoration-[#580c14] dark:decoration-[#ff8585] underline-offset-2 font-medium hover:opacity-80 transition-opacity"
+                  className={`underline underline-offset-2 font-medium hover:opacity-80 transition-opacity ${
+                    isLight 
+                      ? 'text-[#580c14] decoration-[#580c14]' 
+                      : 'text-[#ff8585] decoration-[#ff8585]'
+                  }`}
                 >
                   direct P2P Wi-Fi
                 </a>{' '}
