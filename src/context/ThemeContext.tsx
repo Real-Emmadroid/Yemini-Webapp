@@ -13,12 +13,13 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setThemeState] = useState<ThemeMode>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('yemini_theme') as ThemeMode | null;
+      const saved = localStorage.getItem('yemini_theme_mode') as ThemeMode | null;
       if (saved === 'light' || saved === 'dark') {
         return saved;
       }
     }
-    return 'dark';
+    // Default to clean light mode matching the Yemini showcase design
+    return 'light';
   });
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (theme === 'light') {
       root.classList.remove('dark');
       root.classList.add('light');
-      document.body.style.backgroundColor = '#f5f5f7';
+      document.body.style.backgroundColor = '#ffffff';
       document.body.style.color = '#1d1d1f';
     } else {
       root.classList.remove('light');
@@ -34,6 +35,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       document.body.style.backgroundColor = '#000000';
       document.body.style.color = '#fadcd9';
     }
+    localStorage.setItem('yemini_theme_mode', theme);
     localStorage.setItem('yemini_theme', theme);
   }, [theme]);
 

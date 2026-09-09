@@ -24,33 +24,9 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
   const { theme } = useTheme();
   const isLight = theme === 'light';
 
-  // ROW 1: Flagship Yemini Products (in exact requested order)
+  // ROW 1: Flagship Yemini Products (Matching swsd.JPG)
   // Ready for PNG/WebP replacement at any time via `logoImg: '/path/to/logo.png'`
   const row1Products: MarqueeProduct[] = [
-    {
-      id: 'yemini-mobile',
-      name: 'Yemini Mobile',
-      targetId: 'mobile-intelligence',
-      route: 'mobile',
-      // logoImg: '/yeminilogo.png', // Uncomment or replace with your official logo PNG / WebP
-      svgIcon: (
-        <svg
-          className="w-7 h-7 text-[#580c14] dark:text-[#ff8585] shrink-0"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <rect x="5" y="2" width="14" height="20" rx="3" />
-          <path d="M12 18h.01" />
-          <path d="m9 9 2 2-2 2" />
-          <path d="m13 13 2-2-2-2" />
-        </svg>
-      ),
-    },
     {
       id: 'yemini-notepad',
       name: 'Yemini Notepad',
@@ -58,7 +34,7 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
       route: 'notepadapp-privacy',
       svgIcon: (
         <svg
-          className="w-7 h-7 text-[#580c14] dark:text-[#ff8585] shrink-0"
+          className="w-7 h-7 shrink-0"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -81,7 +57,7 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
       route: 'shareapp-privacy',
       svgIcon: (
         <svg
-          className="w-7 h-7 text-[#580c14] dark:text-[#ff8585] shrink-0"
+          className="w-7 h-7 shrink-0"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -105,7 +81,7 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
       route: 'converterapp-privacy',
       svgIcon: (
         <svg
-          className="w-7 h-7 text-[#580c14] dark:text-[#ff8585] shrink-0"
+          className="w-7 h-7 shrink-0"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -128,7 +104,7 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
       route: 'desktop',
       svgIcon: (
         <svg
-          className="w-7 h-7 text-[#580c14] dark:text-[#ff8585] shrink-0"
+          className="w-7 h-7 shrink-0"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -151,7 +127,7 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
       route: 'ai',
       svgIcon: (
         <svg
-          className="w-7 h-7 text-[#580c14] dark:text-[#ff8585] shrink-0"
+          className="w-7 h-7 shrink-0"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -161,23 +137,17 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
           aria-hidden="true"
         >
           <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-          <circle cx="12" cy="12" r="4" />
         </svg>
       ),
     },
-  ];
-
-  // ROW 2: Companion Ecosystem Capabilities & Developer Tools
-  // Also moving right-to-left in infinite loop, ready for PNG/WebP custom logos
-  const row2Products: MarqueeProduct[] = [
     {
-      id: 'yemini-docs',
-      name: 'Docs & Specs',
-      targetId: 'companion-suite',
-      route: 'notepadapp-privacy',
+      id: 'yemini-mobile',
+      name: 'Yemini Mobile',
+      targetId: 'mobile-intelligence',
+      route: 'mobile',
       svgIcon: (
         <svg
-          className="w-7 h-7 text-[#580c14] dark:text-[#ff8585] shrink-0"
+          className="w-7 h-7 shrink-0"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -186,20 +156,88 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
           strokeLinejoin="round"
           aria-hidden="true"
         >
-          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
-          <path d="M6 6h10" />
-          <path d="M6 10h10" />
+          <rect x="5" y="2" width="14" height="20" rx="3" />
+          <path d="M12 18h.01" />
+          <path d="m9 9 2 2-2 2" />
+          <path d="m13 13 2-2-2-2" />
         </svg>
       ),
     },
     {
-      id: 'yemini-data',
-      name: 'Data & Sheets',
-      targetId: 'desktop-workbench',
-      route: 'desktop',
+      id: 'yemini-editor',
+      name: 'Yemini Editor',
+      targetId: 'mobile-intelligence',
+      route: 'editorapp-privacy',
       svgIcon: (
         <svg
-          className="w-7 h-7 text-[#580c14] dark:text-[#ff8585] shrink-0"
+          className="w-7 h-7 shrink-0"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <polyline points="16 18 22 12 16 6" />
+          <polyline points="8 6 2 12 8 18" />
+        </svg>
+      ),
+    },
+  ];
+
+  // ROW 2: Ecosystem, Architecture & Companion Tools (Matching swsd.JPG)
+  const row2Products: MarqueeProduct[] = [
+    {
+      id: 'yemini-stf',
+      name: 'STF Sovereign',
+      targetId: 'mission-impact',
+      route: 'about',
+      svgIcon: (
+        <svg
+          className="w-7 h-7 shrink-0"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      ),
+    },
+    {
+      id: 'yemini-docs',
+      name: 'Docs & Specs',
+      targetId: 'desktop-workbench',
+      route: 'docs',
+      svgIcon: (
+        <svg
+          className="w-7 h-7 shrink-0"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>
+      ),
+    },
+    {
+      id: 'yemini-data-sheets',
+      name: 'Data & Sheets',
+      targetId: 'desktop-workbench',
+      route: 'resources',
+      svgIcon: (
+        <svg
+          className="w-7 h-7 shrink-0"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -209,21 +247,21 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
           aria-hidden="true"
         >
           <rect x="3" y="3" width="18" height="18" rx="2" />
-          <path d="M3 9h18" />
-          <path d="M3 15h18" />
-          <path d="M9 3v18" />
-          <path d="M15 3v18" />
+          <line x1="3" y1="9" x2="21" y2="9" />
+          <line x1="3" y1="15" x2="21" y2="15" />
+          <line x1="9" y1="3" x2="9" y2="21" />
+          <line x1="15" y1="3" x2="15" y2="21" />
         </svg>
       ),
     },
     {
-      id: 'yemini-terminal',
+      id: 'yemini-terminal-shell',
       name: 'Terminal Shell',
       targetId: 'mobile-intelligence',
       route: 'mobile',
       svgIcon: (
         <svg
-          className="w-7 h-7 text-[#580c14] dark:text-[#ff8585] shrink-0"
+          className="w-7 h-7 shrink-0"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -244,7 +282,7 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
       route: 'mobile',
       svgIcon: (
         <svg
-          className="w-7 h-7 text-[#580c14] dark:text-[#ff8585] shrink-0"
+          className="w-7 h-7 shrink-0"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -264,7 +302,7 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
       route: 'shareapp-privacy',
       svgIcon: (
         <svg
-          className="w-7 h-7 text-[#580c14] dark:text-[#ff8585] shrink-0"
+          className="w-7 h-7 shrink-0"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -281,13 +319,13 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
       ),
     },
     {
-      id: 'yemini-stf',
-      name: 'STF Sovereign',
-      targetId: 'mission-impact',
-      route: 'about',
+      id: 'yemini-offline-core',
+      name: 'Offline Core',
+      targetId: 'offline',
+      route: 'security',
       svgIcon: (
         <svg
-          className="w-7 h-7 text-[#580c14] dark:text-[#ff8585] shrink-0"
+          className="w-7 h-7 shrink-0"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -296,8 +334,13 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
           strokeLinejoin="round"
           aria-hidden="true"
         >
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-          <path d="m9 12 2 2 4-4" />
+          <path d="M1 1l22 22" />
+          <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55" />
+          <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39" />
+          <path d="M10.71 5.05A16 16 0 0 1 22.56 9" />
+          <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88" />
+          <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+          <line x1="12" y1="20" x2="12.01" y2="20" />
         </svg>
       ),
     },
@@ -312,6 +355,12 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
     }
   };
 
+  /* Exact Specification for Tiles (Matching swsd.JPG):
+     - Size: 110px × 110px desktop, 90px × 90px mobile
+     - LIGHT MODE: Crisp white background (bg-white), 1px solid #E6E2E3 border, text #1d1d1f, icon in #580c14
+     - DARK MODE: Deep dark container matching swsd.JPG (dark:bg-[#121214] / dark:bg-black/90, dark:border-white/10), text white, icon in coral/wine #ff7b72
+     - Border radius: rounded-[18px]
+     - Flex column, centered content: icon on top, product name in 12-13px font below */
   const renderTile = (item: MarqueeProduct, keySuffix: string) => (
     <a
       key={`${item.id}-${keySuffix}`}
@@ -320,12 +369,18 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
         e.preventDefault();
         handleTileClick(item.targetId, item.route);
       }}
-      className="w-[90px] h-[90px] md:w-[110px] md:h-[110px] shrink-0 bg-white dark:bg-[#160708] border border-[#E6E2E3] dark:border-[#381618] rounded-[16px] flex flex-col items-center justify-center p-2 text-center shadow-xs hover:border-[#580c14] hover:shadow-md transition-all active:scale-95 group focus:outline-none focus:ring-2 focus:ring-[#580c14] cursor-pointer"
+      className={`w-[90px] h-[90px] md:w-[110px] md:h-[110px] shrink-0 rounded-[18px] flex flex-col items-center justify-center p-2 text-center transition-all active:scale-95 group focus:outline-none focus:ring-2 focus:ring-[#580c14] cursor-pointer select-none border ${
+        isLight
+          ? 'bg-white border-[#E6E2E3] text-[#1d1d1f] shadow-xs hover:border-[#580c14] hover:shadow-md'
+          : 'bg-[#121214] border-white/10 text-white shadow-md hover:border-[#ff7b72] hover:shadow-black/70'
+      }`}
       title={item.name}
       aria-label={`View details for ${item.name}`}
     >
       {/* Icon/Logo container at ~28px on top */}
-      <div className="w-7 h-7 flex items-center justify-center mb-2 transition-transform duration-200 group-hover:scale-110 shrink-0">
+      <div className={`w-7 h-7 flex items-center justify-center mb-2 transition-transform duration-200 group-hover:scale-110 shrink-0 ${
+        isLight ? 'text-[#580c14]' : 'text-[#ff7b72]'
+      }`}>
         {item.logoImg ? (
           <img
             src={item.logoImg}
@@ -339,7 +394,11 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
       </div>
 
       {/* Product name label below in 12-13px medium-weight text, centered */}
-      <span className="text-[12px] md:text-[13px] font-medium leading-tight text-center text-[#1d1d1f] dark:text-[#fadcd9] group-hover:text-[#580c14] dark:group-hover:text-[#ff8585] transition-colors line-clamp-2 px-1">
+      <span className={`text-[12px] md:text-[13px] font-medium leading-tight text-center transition-colors line-clamp-2 px-1 ${
+        isLight
+          ? 'text-[#1d1d1f] group-hover:text-[#580c14]'
+          : 'text-white group-hover:text-[#ff7b72]'
+      }`}>
         {item.name}
       </span>
     </a>
@@ -424,11 +483,11 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
           Take control of your code, workflows, and dependencies with 100% on-device execution.
         </p>
 
-        {/* Primary Action Buttons matching jjj.JPG */}
+        {/* Primary Action Buttons matching jjj.JPG & swsd.JPG */}
         <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <button
             onClick={() => onNavigate('download')}
-            className="px-6 sm:px-8 py-3 rounded-full text-sm sm:text-base font-semibold bg-[#580c14] hover:bg-[#43080e] text-white shadow-lg transition-all active:scale-95 cursor-pointer"
+            className="px-6 sm:px-8 py-3 rounded-full text-sm sm:base font-semibold bg-[#580c14] hover:bg-[#43080e] text-white shadow-lg transition-all active:scale-95 cursor-pointer"
           >
             Download Yemini
           </button>
@@ -444,11 +503,13 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
           </button>
         </div>
 
-        {/* TWO-ROW CENTERED ICON MARQUEE (matching jjj.JPG)
+        {/* TWO-ROW CENTERED ICON MARQUEE (matching jjj.JPG & swsd.JPG)
             - Sits ~56px below buttons (mt-14)
             - Not too wide: centered with ~30% whitespace on each side (max-w-[760px] mx-auto)
             - CSS mask-image linear-gradient (transparent 0, black 40px, black calc(100% - 40px), transparent 100%)
             - Two stacked rows, both moving right to left in a seamless infinite loop
+            - In Light Mode: crisp white tiles with deep wine icons
+            - In Dark Mode: sleek dark containers (#121214) with coral/wine icons as in swsd.JPG
             - Hover or focus pauses the animation
             - Easily swap any icon with official PNG or WebP logos via logoImg */}
         <div className="w-full max-w-[760px] mx-auto mt-14 space-y-4">
@@ -495,66 +556,77 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
 
         </div>
 
-        {/* Bottom Social Proof & Trust Bar matching jjj.JPG */}
-        <div className={`mt-16 sm:mt-20 pt-8 sm:pt-10 w-full border-t flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 text-xs sm:text-sm ${
-          isLight ? 'border-gray-200 text-gray-600' : 'border-[#2d1416] text-[#ab8986]'
+        {/* BOTTOM SOCIAL PROOF, TRUST & RATINGS BAR (Exact replica of swsd.JPG) */}
+        <div className={`mt-16 sm:mt-20 pt-8 sm:pt-10 w-full border-t flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 ${
+          isLight ? 'border-gray-200 text-gray-700' : 'border-white/10 text-gray-300'
         }`}>
-          {/* Left: Avatars + Community Proof */}
+          {/* LEFT: 3 Overlapping Burgundy Badges (DEV, STF, YEM) + Trusted by 100,000+ creators */}
           <div className="flex items-center gap-3">
-            <div className="flex -space-x-2 overflow-hidden">
-              <div className="inline-block h-8 w-8 rounded-full ring-2 ring-white bg-[#580c14] text-white flex items-center justify-center text-[10px] font-bold">
+            <div className="flex -space-x-2 overflow-hidden shrink-0">
+              <div className="w-8 h-8 rounded-full bg-[#580c14] border-2 border-white dark:border-black flex items-center justify-center text-[10px] font-bold text-white tracking-wider">
                 DEV
               </div>
-              <div className="inline-block h-8 w-8 rounded-full ring-2 ring-white bg-[#7a131e] text-white flex items-center justify-center text-[10px] font-bold">
+              <div className="w-8 h-8 rounded-full bg-[#7a131e] border-2 border-white dark:border-black flex items-center justify-center text-[10px] font-bold text-white tracking-wider">
                 STF
               </div>
-              <div className="inline-block h-8 w-8 rounded-full ring-2 ring-white bg-[#35060b] text-white flex items-center justify-center text-[10px] font-bold">
+              <div className="w-8 h-8 rounded-full bg-[#3d060b] border-2 border-white dark:border-black flex items-center justify-center text-[10px] font-bold text-white tracking-wider">
                 YEM
               </div>
             </div>
             <div className="text-left">
-              <p className={`font-semibold ${isLight ? 'text-gray-900' : 'text-white'}`}>
+              <p className={`text-xs sm:text-sm font-bold leading-tight ${isLight ? 'text-gray-900' : 'text-white'}`}>
                 Trusted by 100,000+ creators
               </p>
-              <p className="text-xs">Worldwide across 140+ countries</p>
+              <p className="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400">
+                Worldwide across 140+ countries
+              </p>
             </div>
           </div>
 
-          {/* Middle: Rating */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#580c14]/10 text-[#580c14]">
-              <svg className="w-5 h-5 text-[#580c14]" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
+          {/* CENTER: Red Star Rating (★★★★★ 4.9 / 5) + Android production release */}
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-red-500/10 dark:bg-red-500/20 flex items-center justify-center text-red-600 dark:text-red-400 text-base shrink-0">
+              ★
             </div>
             <div className="text-left">
-              <div className="flex items-center gap-1 text-[#ba1724]">
-                <span>★★★★★</span>
-                <span className={`font-bold ml-1 ${isLight ? 'text-gray-900' : 'text-white'}`}>4.9 / 5</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-red-500 text-xs tracking-tighter">★★★★★</span>
+                <span className={`text-xs sm:text-sm font-bold ${isLight ? 'text-gray-900' : 'text-white'}`}>
+                  4.9 / 5
+                </span>
               </div>
-              <p className="text-xs">Android production release</p>
+              <p className="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400">
+                Android production release
+              </p>
             </div>
           </div>
 
-          {/* Right: Technical Credentials */}
-          <div className="flex flex-wrap items-center justify-center lg:justify-end gap-2 text-xs font-mono">
-            <span className={`px-2.5 py-1 rounded-md border ${
-              isLight ? 'bg-gray-100 border-gray-300 text-gray-800' : 'bg-[#18090a] border-[#381a1c] text-[#fadcd9]'
+          {/* RIGHT: 3 Pill Badges (100% Offline, Sub-100MB RAM, ARM64 Native) */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 font-mono text-[11px] sm:text-xs">
+            <span className={`px-3 py-1.5 rounded-md border ${
+              isLight 
+                ? 'bg-gray-50 border-gray-200 text-gray-700' 
+                : 'bg-white/5 border-white/15 text-gray-300'
             }`}>
               100% Offline
             </span>
-            <span className={`px-2.5 py-1 rounded-md border ${
-              isLight ? 'bg-gray-100 border-gray-300 text-gray-800' : 'bg-[#18090a] border-[#381a1c] text-[#fadcd9]'
+            <span className={`px-3 py-1.5 rounded-md border ${
+              isLight 
+                ? 'bg-gray-50 border-gray-200 text-gray-700' 
+                : 'bg-white/5 border-white/15 text-gray-300'
             }`}>
               Sub-100MB RAM
             </span>
-            <span className={`px-2.5 py-1 rounded-md border ${
-              isLight ? 'bg-gray-100 border-gray-300 text-gray-800' : 'bg-[#18090a] border-[#381a1c] text-[#fadcd9]'
+            <span className={`px-3 py-1.5 rounded-md border ${
+              isLight 
+                ? 'bg-gray-50 border-gray-200 text-gray-700' 
+                : 'bg-white/5 border-white/15 text-gray-300'
             }`}>
               ARM64 Native
             </span>
           </div>
         </div>
+
       </div>
     </section>
   );
