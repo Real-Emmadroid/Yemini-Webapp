@@ -2,9 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { PageRoute } from '../types';
 import { useTheme } from '../context/ThemeContext';
 import { StatusBadge } from '../components/StatusBadge';
-import { 
-  CheckCircle2, ArrowRight, Download
-} from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
+import { SectionJjjGrid } from '../components/home/SectionJjjGrid';
+import { SectionBnbnMobile } from '../components/home/SectionBnbnMobile';
+import { SectionKmjkSuite } from '../components/home/SectionKmjkSuite';
+import { SectionOjkWorkbench } from '../components/home/SectionOjkWorkbench';
+import { SectionLokokImpact } from '../components/home/SectionLokokImpact';
 
 interface HomePageProps {
   onNavigate: (route: PageRoute) => void;
@@ -106,7 +109,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               {/* Primary Explore Yemini Button (Deep Wine #580c14) */}
               <button
                 onClick={() => {
-                  const el = document.getElementById('ecosystem');
+                  const el = document.getElementById('ecosystem-intro');
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
                   else onNavigate('mobile');
                 }}
@@ -118,7 +121,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               {/* Secondary Learn More Button (Light Rounded Pill) */}
               <button
                 onClick={() => {
-                  const el = document.getElementById('ecosystem');
+                  const el = document.getElementById('ecosystem-intro');
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
                 }}
                 className="px-5 sm:px-7 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm md:text-base font-medium bg-[#ede5e0] hover:bg-white text-black shadow-lg transition-all active:scale-95 whitespace-nowrap shrink-0 text-center cursor-pointer"
@@ -166,193 +169,26 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      <main className="relative pb-24 flex flex-col gap-24 sm:gap-32 z-10">
-        {/* ECOSYSTEM SECTION */}
-        <section className="px-4 sm:px-6 max-w-7xl mx-auto w-full pt-16 sm:pt-24" id="ecosystem">
-          <div className="text-center mb-12 sm:mb-20">
-            <h2 className={`text-3xl sm:text-5xl md:text-6xl tracking-tighter font-semibold mb-4 ${
-              isLight ? 'text-black' : 'text-[#fadcd9]'
-            }`}>
-              The Yemini Platform.
-            </h2>
-            <p className={`text-lg sm:text-xl md:text-2xl tracking-tight max-w-3xl mx-auto ${
-              isLight ? 'text-gray-600' : 'text-[#ab8986]'
-            }`}>
-              Transparent development status across mobile, desktop, and intelligent agents.
-            </p>
-          </div>
+      {/* MAIN HOMEPAGE FLOW */}
+      <main className="relative flex flex-col z-10">
+        
+        {/* SECTION 1: jjj.jpg is first (A better developer experience starts with freedom and sovereignty + app grid + social proof) */}
+        <SectionJjjGrid onNavigate={onNavigate} />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Mobile Feature Card - AVAILABLE NOW */}
-            <div className={`glass-card rounded-3xl p-8 sm:p-10 flex flex-col justify-between overflow-hidden relative group h-[540px] sm:h-[600px] ${
-              isLight 
-                ? 'bg-white/70 border border-gray-200/80 shadow-md hover:shadow-elevated' 
-                : 'bg-black/60 border border-[#43302f]/80'
-            }`}>
-              <div className="relative z-10 w-full md:w-3/4">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className={`text-xs font-bold tracking-widest uppercase font-mono ${
-                    isLight ? 'text-gray-500' : 'text-[#ab8986]'
-                  }`}>
-                    Yemini Mobile
-                  </span>
-                  <StatusBadge status="available" size="sm" />
-                </div>
+        {/* SECTION 2: bnbn.jpg is second (Code and compile. Everywhere. + Mobile/AI split + phone slider) */}
+        <SectionBnbnMobile onNavigate={onNavigate} />
 
-                <h3 className={`text-2xl sm:text-3xl font-semibold tracking-tight mb-4 ${
-                  isLight ? 'text-black' : 'text-[#fadcd9]'
-                }`}>
-                  Pro power. Pocket size.
-                </h3>
-                <p className={`text-sm sm:text-base mb-8 leading-relaxed ${
-                  isLight ? 'text-gray-600' : 'text-[#ab8986]'
-                }`}>
-                  Full on-device compilation for Python, C/C++, Rust, and Node.js. No cloud required. Complete with an integrated Linux terminal and touch accessory toolbar.
-                </p>
+        {/* SECTION 3: kmjk.jpg is third (Store, convert, transfer. Privately. + Notepad/Converter/Share + workspace card) */}
+        <SectionKmjkSuite onNavigate={onNavigate} />
 
-                <div className="flex flex-wrap items-center gap-3">
-                  <button
-                    onClick={() => onNavigate('mobile')}
-                    className={`font-semibold flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-sm transition-all shadow-sm ${
-                      isLight 
-                        ? 'bg-black text-white hover:bg-gray-800' 
-                        : 'bg-[#580c14] text-white hover:bg-[#43080e]'
-                    }`}
-                  >
-                    <Download className="w-4 h-4" />
-                    <span>Download APK (v1.2.0)</span>
-                  </button>
+        {/* SECTION 4: ojk.jpg is fourth (Desktop IDE + toolchains + interactive spreadsheet/benchmark inspector) */}
+        <SectionOjkWorkbench onNavigate={onNavigate} />
 
-                  <button
-                    onClick={() => onNavigate('mobile')}
-                    className={`font-medium flex items-center gap-1 text-sm ${
-                      isLight 
-                        ? 'text-[#580c14] hover:underline' 
-                        : 'text-[#ffb3ae] hover:underline'
-                    }`}
-                  >
-                    <span>View features</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
+        {/* SECTION 5: lokok.jpg is fifth (Video player with floating press cards + Software for a freer world foundation) */}
+        <SectionLokokImpact onNavigate={onNavigate} />
 
-              {/* Abstract Phone Mockup */}
-              <div className={`absolute -bottom-16 -right-16 sm:-bottom-20 sm:-right-20 w-[300px] sm:w-[350px] h-[480px] sm:h-[550px] rounded-[40px] shadow-2xl flex flex-col overflow-hidden rotate-[-5deg] transform group-hover:rotate-0 transition-transform duration-500 ${
-                isLight 
-                  ? 'bg-white border-8 border-gray-100 shadow-2xl' 
-                  : 'bg-[#180a09] border-8 border-[#2c1b1a]'
-              }`}>
-                <div className="h-6 w-full flex justify-center pt-2">
-                  <div className={`w-20 h-3.5 rounded-full ${isLight ? 'bg-gray-200' : 'bg-[#43302f]'}`} />
-                </div>
-                <div className={`flex-1 m-2 rounded-[24px] p-4 pt-6 shadow-inner code-font text-[10px] sm:text-[11px] overflow-hidden ${
-                  isLight 
-                    ? 'bg-gray-50 border border-gray-100 text-gray-800' 
-                    : 'bg-[#271716] border border-[#43302f] text-[#fadcd9]'
-                }`}>
-                  <pre>
-                    <code>
-                      <span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>import</span> math{'\n'}
-                      <span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>def</span> <span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>compute_orbit</span>(radius):{'\n'}
-                      {'    '}<span className={isLight ? 'text-gray-400 italic' : 'text-[#ab8986] italic'}># Local orbital calculations</span>{'\n'}
-                      {'    '}speed = math.sqrt(<span className={isLight ? 'text-orange-600' : 'text-amber-400'}>398600</span> / radius){'\n'}
-                      {'    '}<span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>print</span>(<span className={isLight ? 'text-orange-600' : 'text-amber-400'}>{`f"Velocity: {speed:.2f} km/s"`}</span>){'\n'}
-                      {'    '}<span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>return</span> speed{'\n\n'}
-                      <span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>compute_orbit</span>(<span className={isLight ? 'text-orange-600' : 'text-amber-400'}>6771.0</span>)
-                    </code>
-                  </pre>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Desktop & AI Features - IN DEVELOPMENT */}
-            <div className="flex flex-col gap-8">
-              {/* Desktop Feature */}
-              <div className={`glass-card rounded-3xl p-8 sm:p-10 flex-1 relative overflow-hidden group flex flex-col justify-between ${
-                isLight 
-                  ? 'bg-white/70 border border-gray-200/80 shadow-md hover:shadow-elevated' 
-                  : 'bg-black/60 border border-[#43302f]/80'
-              }`}>
-                <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className={`text-xs font-bold tracking-widest uppercase font-mono ${
-                      isLight ? 'text-gray-500' : 'text-[#ab8986]'
-                    }`}>
-                      Yemini Desktop
-                    </span>
-                    <StatusBadge status="in-development" size="sm" />
-                  </div>
-                  <h3 className={`text-2xl sm:text-3xl font-semibold tracking-tight mb-4 ${
-                    isLight ? 'text-black' : 'text-[#fadcd9]'
-                  }`}>
-                    A serious IDE for serious work.
-                  </h3>
-                  <p className={`text-sm sm:text-base mb-6 leading-relaxed ${
-                    isLight ? 'text-gray-600' : 'text-[#ab8986]'
-                  }`}>
-                    GPU-accelerated text rendering. Sub-100MB RAM footprint. Designed for macOS, Windows, and Linux without Electron bloat.
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-between pt-2">
-                  <button
-                    onClick={() => onNavigate('desktop')}
-                    className={`font-semibold flex items-center gap-1.5 text-sm ${
-                      isLight 
-                        ? 'text-gray-900 hover:text-black' 
-                        : 'text-[#fadcd9] hover:text-white'
-                    }`}
-                  >
-                    <span>Join Desktop Waitlist</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                  <span className={`text-xs font-mono ${isLight ? 'text-gray-400' : 'text-zinc-500'}`}>
-                    Private Preview Q4 2026
-                  </span>
-                </div>
-              </div>
-
-              {/* AI Feature */}
-              <div className={`rounded-3xl p-8 sm:p-10 flex-1 relative overflow-hidden group flex flex-col justify-between shadow-xl border ${
-                isLight 
-                  ? 'bg-[#18181b] border-zinc-700 text-white' 
-                  : 'bg-black border-[#43302f]/80 text-white'
-              }`}>
-                <div className="relative z-10">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-xs font-bold tracking-widest text-zinc-400 uppercase font-mono">
-                      Yemini Intelligence
-                    </span>
-                    <StatusBadge status="in-development" size="sm" />
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-4 text-white">
-                    Your AI coding partner.
-                  </h3>
-                  <p className="text-sm sm:text-base text-zinc-300 mb-6 leading-relaxed">
-                    Understands your codebase locally through an AST graph. Proposes verified line-by-line diffs. Zero training on user source code.
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-between pt-2 relative z-10">
-                  <button
-                    onClick={() => onNavigate('ai')}
-                    className="text-white hover:text-zinc-200 font-semibold flex items-center gap-1 text-sm group"
-                  >
-                    <span>Join AI Early Access</span>
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </button>
-                  <span className="text-xs font-mono text-zinc-400">
-                    Developer Beta
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* OFFLINE-FIRST SECTION */}
-        <section className="px-4 sm:px-6 max-w-7xl mx-auto w-full pt-12 sm:pt-20" id="offline">
+        {/* SECTION 6: OFFLINE-FIRST COMPILER SIMULATOR */}
+        <section className="px-4 sm:px-6 max-w-7xl mx-auto w-full py-16 sm:py-24" id="offline">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
             <div className="flex-1 lg:pr-10">
               <h2 className={`text-3xl sm:text-5xl lg:text-6xl tracking-tighter font-semibold mb-6 leading-tight ${
@@ -451,8 +287,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
           </div>
         </section>
 
-        {/* DOWNLOADS / GET ACCESS SECTION */}
-        <section className="px-4 sm:px-6 max-w-7xl mx-auto w-full pt-12 sm:pt-20" id="downloads">
+        {/* SECTION 7: PLATFORM DOWNLOADS */}
+        <section className="px-4 sm:px-6 max-w-7xl mx-auto w-full pb-20 pt-4" id="downloads">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className={`text-3xl sm:text-5xl tracking-tighter font-semibold mb-4 ${
               isLight ? 'text-black' : 'text-[#fadcd9]'
@@ -483,9 +319,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               <p className={`text-xs mb-6 ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`}>Signed APK Release v1.2.0</p>
               <button
                 onClick={() => onNavigate('download')}
-                className={`w-full py-2.5 rounded-full text-sm font-medium transition-colors mt-auto shadow-md ${
+                className={`w-full py-2.5 rounded-full text-sm font-semibold transition-colors mt-auto shadow-md ${
                   isLight 
-                    ? 'bg-black text-white hover:bg-gray-800' 
+                    ? 'bg-[#580c14] text-white hover:bg-[#43080e]' 
                     : 'bg-[#580c14] text-white hover:bg-[#43080e]'
                 }`}
               >
@@ -578,6 +414,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             </div>
           </div>
         </section>
+
       </main>
     </div>
   );
