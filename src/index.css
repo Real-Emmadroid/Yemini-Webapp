@@ -40,7 +40,8 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Instant theme switching without transition delay */
+    transition: none !important;
   }
 
   code, pre, kbd {
@@ -258,4 +259,31 @@ html.light ::-webkit-scrollbar-thumb:hover {
   .bnbn-carousel-track {
     transform: translateX(calc(-1 * var(--current-idx, 0) * (50% + 0.625rem)));
   }
+}
+
+/* Continuous infinite partner logos marquee */
+@keyframes partnerMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.partner-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: partnerMarquee 36s linear infinite;
+  will-change: transform;
+}
+
+.partner-marquee-wrapper:hover .partner-marquee-track,
+.partner-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.partner-mask {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }

@@ -2,12 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { PageRoute } from '../types';
 import { useTheme } from '../context/ThemeContext';
 import { StatusBadge } from '../components/StatusBadge';
-import { CheckCircle2 } from 'lucide-react';
 import { SectionJjjGrid } from '../components/home/SectionJjjGrid';
 import { SectionBnbnMobile } from '../components/home/SectionBnbnMobile';
 import { SectionKmjkSuite } from '../components/home/SectionKmjkSuite';
 import { SectionOjkWorkbench } from '../components/home/SectionOjkWorkbench';
 import { SectionLokokImpact } from '../components/home/SectionLokokImpact';
+import { SectionPartnerships } from '../components/home/SectionPartnerships';
 
 interface HomePageProps {
   onNavigate: (route: PageRoute) => void;
@@ -17,7 +17,6 @@ const SWITCHING_WORDS = ['Everyone', 'Developers', 'Creators', 'Writers', 'Stude
 
 export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   const { theme } = useTheme();
-  const [networkMode, setNetworkMode] = useState<'online' | 'offline'>('offline');
   const [isPlaying, setIsPlaying] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -187,105 +186,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         {/* SECTION 5: lokok.jpg is fifth (Video player with floating press cards + Software for a freer world foundation) */}
         <SectionLokokImpact onNavigate={onNavigate} />
 
-        {/* SECTION 6: OFFLINE-FIRST COMPILER SIMULATOR */}
-        <section className="px-4 sm:px-6 max-w-7xl mx-auto w-full py-16 sm:py-24" id="offline">
-          <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
-            <div className="flex-1 lg:pr-10">
-              <h2 className={`text-3xl sm:text-5xl lg:text-6xl tracking-tighter font-semibold mb-6 leading-tight ${
-                isLight ? 'text-black' : 'text-[#fadcd9]'
-              }`}>
-                Zero server dependency.
-              </h2>
-              <p className={`text-base sm:text-xl tracking-tight mb-8 leading-relaxed ${
-                isLight ? 'text-gray-600' : 'text-[#ab8986]'
-              }`}>
-                Yemini is designed around an offline-first experience. Install the toolchains you need, cache your dependencies, and build anywhere without a connection.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-                <div className={`border-t pt-4 ${isLight ? 'border-gray-200' : 'border-[#43302f]'}`}>
-                  <div className={`font-semibold mb-1 text-base ${isLight ? 'text-black' : 'text-[#fadcd9]'}`}>Native Execution</div>
-                  <div className={`text-xs sm:text-sm ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`}>Run code directly on device CPU.</div>
-                </div>
-                <div className={`border-t pt-4 ${isLight ? 'border-gray-200' : 'border-[#43302f]'}`}>
-                  <div className={`font-semibold mb-1 text-base ${isLight ? 'text-black' : 'text-[#fadcd9]'}`}>Local Compilers</div>
-                  <div className={`text-xs sm:text-sm ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`}>Clang, Rustc, Python built-in.</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Offline Network Simulator Card */}
-            <div className="flex-1 w-full">
-              <div className={`glass-card rounded-3xl p-6 sm:p-8 shadow-xl ${
-                isLight 
-                  ? 'bg-white/70 border border-gray-200 shadow-elevated' 
-                  : 'bg-black/60 border border-[#43302f]'
-              }`}>
-                <div className={`flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6 pb-6 border-b ${
-                  isLight ? 'border-gray-100' : 'border-[#43302f]'
-                }`}>
-                  <div>
-                    <div className={`text-sm font-medium ${isLight ? 'text-black' : 'text-[#fadcd9]'}`}>Network Simulator</div>
-                    <div className={`text-xs ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`}>Test local execution state</div>
-                  </div>
-                  <div className={`rounded-full p-1 flex text-xs font-medium w-max ${
-                    isLight ? 'bg-gray-100' : 'bg-[#2c1b1a]'
-                  }`}>
-                    <button
-                      onClick={() => setNetworkMode('online')}
-                      className={`px-4 py-1.5 rounded-full transition-colors ${
-                        networkMode === 'online' 
-                          ? (isLight ? 'bg-white shadow-xs text-black' : 'bg-[#372624] text-[#fadcd9] shadow-xs')
-                          : (isLight ? 'text-gray-500 hover:text-black' : 'text-[#ab8986] hover:text-[#fadcd9]')
-                      }`}
-                    >
-                      Online
-                    </button>
-                    <button
-                      onClick={() => setNetworkMode('offline')}
-                      className={`px-4 py-1.5 rounded-full transition-colors ${
-                        networkMode === 'offline' 
-                          ? (isLight ? 'bg-white shadow-xs text-black font-semibold' : 'bg-[#580c14] text-white shadow-xs')
-                          : (isLight ? 'text-gray-500 hover:text-black' : 'text-[#ab8986] hover:text-[#fadcd9]')
-                      }`}
-                    >
-                      Offline
-                    </button>
-                  </div>
-                </div>
-
-                <div className={`rounded-xl p-5 code-font text-xs sm:text-sm mb-4 border ${
-                  isLight 
-                    ? 'bg-gray-50 border-gray-100 text-gray-800' 
-                    : 'bg-black border-[#43302f] text-[#fadcd9]'
-                }`}>
-                  <pre>
-                    <code>
-                      <span className={isLight ? 'text-gray-400 italic' : 'text-[#ab8986] italic'}>// 100% Offline Capable</span>{'\n'}
-                      <span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>#include</span> <span className={isLight ? 'text-green-600' : 'text-emerald-400'}>&lt;iostream&gt;</span>{'\n'}
-                      <span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>int</span> <span className={isLight ? 'text-purple-600' : 'text-[#92ccff]'}>main</span>() {'{\n'}
-                      {'    '}<span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>std</span>::<span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>cout</span> &lt;&lt; <span className={isLight ? 'text-orange-600' : 'text-amber-400'}>&quot;Running on local toolchain.&quot;</span>;{'\n'}
-                      {'    '}<span className={isLight ? 'text-[#580c14] font-bold' : 'text-[#ba1724] font-bold'}>return</span> <span className={isLight ? 'text-orange-600' : 'text-amber-400'}>0</span>;{'\n'}
-                      {'}'}
-                    </code>
-                  </pre>
-                </div>
-
-                <div className={`flex items-center gap-2 text-xs font-medium px-3 py-2 rounded-lg w-max border ${
-                  isLight 
-                    ? 'text-green-600 bg-green-50 border-green-200' 
-                    : 'text-emerald-400 bg-emerald-950/40 border-emerald-900/60'
-                }`}>
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>
-                    {networkMode === 'offline' 
-                      ? 'Execution successful: 0ms ping (Offline on-device toolchain)' 
-                      : 'Execution successful: Local compiler active'}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* SECTION 6: MOVING SLIDE OF PARTNERSHIP (Auto-moving partner logos, pauses on hover, no arrows/dots) */}
+        <SectionPartnerships />
 
         {/* SECTION 7: PLATFORM DOWNLOADS */}
         <section className="px-4 sm:px-6 max-w-7xl mx-auto w-full pb-20 pt-4" id="downloads">

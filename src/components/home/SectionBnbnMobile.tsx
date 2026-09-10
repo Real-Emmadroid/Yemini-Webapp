@@ -156,21 +156,16 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
                 {/* Row 2: one line of muted-grey description with one inline underlined wine-colored link on a keyword */}
                 <p className={`text-sm sm:text-[15px] leading-relaxed ${isLight ? 'text-gray-600' : 'text-[#ab8986]'}`}>
                   Code on the go with{' '}
-                  <a 
-                    href="#offline"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const el = document.getElementById('offline');
-                      if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className={`underline underline-offset-2 font-medium hover:opacity-80 transition-opacity ${
+                  <button 
+                    onClick={() => onNavigate('mobile')}
+                    className={`underline underline-offset-2 font-medium hover:opacity-80 transition-opacity cursor-pointer ${
                       isLight 
                         ? 'text-[#580c14] decoration-[#580c14]' 
                         : 'text-[#ff8585] decoration-[#ff8585]'
                     }`}
                   >
                     on-device compilers
-                  </a>{' '}
+                  </button>{' '}
                   for Python, Rust, C/C++, and Node.js.
                 </p>
 
@@ -222,21 +217,20 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
                 {/* Row 2: one line of muted-grey description with one inline underlined wine-colored link on a keyword */}
                 <p className={`text-sm sm:text-[15px] leading-relaxed ${isLight ? 'text-gray-600' : 'text-[#ab8986]'}`}>
                   Jot ideas and{' '}
-                  <a 
-                    href="#companion-suite"
-                    onClick={(e) => {
-                      e.preventDefault();
+                  <button 
+                    onClick={() => {
                       const el = document.getElementById('companion-suite');
                       if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      else onNavigate('notepadapp-privacy');
                     }}
-                    className={`underline underline-offset-2 font-medium hover:opacity-80 transition-opacity ${
+                    className={`underline underline-offset-2 font-medium hover:opacity-80 transition-opacity cursor-pointer ${
                       isLight 
                         ? 'text-[#580c14] decoration-[#580c14]' 
                         : 'text-[#ff8585] decoration-[#ff8585]'
                     }`}
                   >
                     write freely
-                  </a>
+                  </button>
                   , the moment they happen.
                 </p>
 

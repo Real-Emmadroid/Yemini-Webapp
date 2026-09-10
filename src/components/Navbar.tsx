@@ -5,6 +5,8 @@ import { StatusBadge } from './StatusBadge';
 import headerLogoImg from '../assets/headerlogo.png';
 import headerDarkImg from '../assets/headerdark.png';
 import { MobileVisual, DesktopVisual, AiVisual } from './ProductVisuals';
+import { NavProductsMegaMenu } from './NavProductsMegaMenu';
+import { MobileProductsNav } from './MobileProductsNav';
 
 interface NavbarProps {
   currentRoute: PageRoute;
@@ -277,239 +279,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => setProductsMegaMenuOpen(false)}
           />
 
-          {/* Mega Menu White Container */}
-          <div className={`w-full border-b transition-colors shadow-2xl ${
-            isLight 
-              ? 'bg-white text-gray-900 border-gray-200' 
-              : 'bg-[#120606] text-[#fadcd9] border-[#372624]'
-          }`}>
-            <div className="max-w-7xl mx-auto px-8 sm:px-12 py-10">
-              <div className="grid grid-cols-12 gap-8 lg:gap-12">
-                
-                {/* Column 1: Explore (Meta style from ooo.JPG) */}
-                <div className="col-span-3 space-y-3">
-                  <div className={`text-xs font-semibold uppercase tracking-wider mb-4 ${
-                    isLight ? 'text-gray-400' : 'text-[#ab8986]'
-                  }`}>
-                    Explore
-                  </div>
-                  <ul className="space-y-2.5 text-sm">
-                    <li>
-                      <button
-                        onClick={() => handleLinkClick('mobile')}
-                        className={`transition-colors text-left cursor-pointer ${
-                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
-                        }`}
-                      >
-                        Yemini Mobile IDE
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => handleLinkClick('desktop')}
-                        className={`transition-colors text-left cursor-pointer ${
-                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
-                        }`}
-                      >
-                        Yemini Desktop IDE
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => handleLinkClick('ai')}
-                        className={`transition-colors text-left cursor-pointer ${
-                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
-                        }`}
-                      >
-                        Yemini Intelligence
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => handleSectionJump('offline')}
-                        className={`transition-colors text-left cursor-pointer ${
-                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
-                        }`}
-                      >
-                        On-Device Toolchains
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => handleSectionJump('offline')}
-                        className={`transition-colors text-left cursor-pointer ${
-                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
-                        }`}
-                      >
-                        Offline Architecture
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => handleLinkClick('docs')}
-                        className={`transition-colors text-left cursor-pointer ${
-                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
-                        }`}
-                      >
-                        Compare Toolchains
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-
-                {/* Column 2: Products (Replaces Shop - as requested!) */}
-                <div className="col-span-3 space-y-3">
-                  <div className={`text-xs font-semibold uppercase tracking-wider mb-4 ${
-                    isLight ? 'text-gray-400' : 'text-[#ab8986]'
-                  }`}>
-                    Products
-                  </div>
-                  <ul className="space-y-2.5 text-sm">
-                    <li>
-                      <button
-                        onClick={() => handleLinkClick('download')}
-                        className={`transition-colors text-left font-medium cursor-pointer ${
-                          isLight ? 'hover:text-[#580c14] text-black' : 'hover:text-[#ff8585] text-white'
-                        }`}
-                      >
-                        All Products &amp; Releases
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => handleLinkClick('download')}
-                        className={`transition-colors text-left cursor-pointer ${
-                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
-                        }`}
-                      >
-                        Android APK (v1.2.0)
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => handleLinkClick('desktop')}
-                        className={`transition-colors text-left cursor-pointer ${
-                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
-                        }`}
-                      >
-                        Desktop Private Waitlist
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => handleLinkClick('ai')}
-                        className={`transition-colors text-left cursor-pointer ${
-                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
-                        }`}
-                      >
-                        AI Early Access
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => handleLinkClick('notepadapp-privacy')}
-                        className={`transition-colors text-left cursor-pointer ${
-                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
-                        }`}
-                      >
-                        Yemini Notepad
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => handleLinkClick('converterapp-privacy')}
-                        className={`transition-colors text-left cursor-pointer ${
-                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
-                        }`}
-                      >
-                        Yemini Converter
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => handleLinkClick('shareapp-privacy')}
-                        className={`transition-colors text-left cursor-pointer ${
-                          isLight ? 'hover:text-[#580c14] text-gray-800' : 'hover:text-[#ff8585] text-[#fadcd9]'
-                        }`}
-                      >
-                        Yemini Share
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-
-                {/* Right Columns: Featured Visual Product Cards (Matching the glasses in ooo.JPG) */}
-                <div className="col-span-6 grid grid-cols-3 gap-4">
-                  {/* Featured Product 1: Yemini Mobile */}
-                  <button
-                    onClick={() => handleLinkClick('mobile')}
-                    className={`group flex flex-col items-center text-center p-3 rounded-2xl transition-all cursor-pointer ${
-                      isLight ? 'hover:bg-gray-50' : 'hover:bg-[#200c0b]'
-                    }`}
-                  >
-                    <div className="w-full h-32 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
-                      <MobileVisual size="md" />
-                    </div>
-                    <span className={`text-sm font-semibold tracking-tight ${
-                      isLight ? 'text-gray-900' : 'text-white'
-                    }`}>
-                      Yemini Mobile
-                    </span>
-                    <span className={`text-[11px] mt-1 ${
-                      isLight ? 'text-gray-500' : 'text-[#ab8986]'
-                    }`}>
-                      Android v1.2.0
-                    </span>
-                  </button>
-
-                  {/* Featured Product 2: Yemini Desktop */}
-                  <button
-                    onClick={() => handleLinkClick('desktop')}
-                    className={`group flex flex-col items-center text-center p-3 rounded-2xl transition-all cursor-pointer ${
-                      isLight ? 'hover:bg-gray-50' : 'hover:bg-[#200c0b]'
-                    }`}
-                  >
-                    <div className="w-full h-32 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
-                      <DesktopVisual size="md" />
-                    </div>
-                    <span className={`text-sm font-semibold tracking-tight ${
-                      isLight ? 'text-gray-900' : 'text-white'
-                    }`}>
-                      Yemini Desktop
-                    </span>
-                    <span className={`text-[11px] mt-1 ${
-                      isLight ? 'text-gray-500' : 'text-[#ab8986]'
-                    }`}>
-                      macOS &amp; Windows
-                    </span>
-                  </button>
-
-                  {/* Featured Product 3: Yemini Intelligence */}
-                  <button
-                    onClick={() => handleLinkClick('ai')}
-                    className={`group flex flex-col items-center text-center p-3 rounded-2xl transition-all cursor-pointer ${
-                      isLight ? 'hover:bg-gray-50' : 'hover:bg-[#200c0b]'
-                    }`}
-                  >
-                    <div className="w-full h-32 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
-                      <AiVisual size="md" />
-                    </div>
-                    <span className={`text-sm font-semibold tracking-tight ${
-                      isLight ? 'text-gray-900' : 'text-white'
-                    }`}>
-                      Yemini Intelligence
-                    </span>
-                    <span className={`text-[11px] mt-1 ${
-                      isLight ? 'text-gray-500' : 'text-[#ab8986]'
-                    }`}>
-                      AST Partner
-                    </span>
-                  </button>
-                </div>
-
-              </div>
-            </div>
-          </div>
+          {/* Desktop Products Mega Menu with Proton-style QR code & downloads */}
+          <NavProductsMegaMenu
+            isLight={isLight}
+            onNavigate={handleLinkClick}
+            onClose={() => setProductsMegaMenuOpen(false)}
+          />
         </div>
       )}
 
@@ -582,36 +357,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </svg>
                 </button>
 
-                {/* Expanded mobile products list */}
+                {/* Expanded mobile products list with nested accordion & distribution suite matching ikikijj.JPG */}
                 {mobileProductsOpen && (
-                  <div className={`pl-4 py-2 space-y-2 border-b ${isLight ? 'border-gray-100' : 'border-[#271716]'}`}>
-                    <button
-                      onClick={() => handleLinkClick('mobile')}
-                      className="w-full text-left py-2 text-base font-normal flex items-center justify-between"
-                    >
-                      <span>Yemini Mobile (Android)</span>
-                      <StatusBadge status="available" size="sm" />
-                    </button>
-                    <button
-                      onClick={() => handleLinkClick('desktop')}
-                      className="w-full text-left py-2 text-base font-normal flex items-center justify-between"
-                    >
-                      <span>Yemini Desktop IDE</span>
-                      <StatusBadge status="in-development" size="sm" />
-                    </button>
-                    <button
-                      onClick={() => handleLinkClick('ai')}
-                      className="w-full text-left py-2 text-base font-normal flex items-center justify-between"
-                    >
-                      <span>Yemini Intelligence</span>
-                      <StatusBadge status="in-development" size="sm" />
-                    </button>
-                    <button
-                      onClick={() => handleLinkClick('download')}
-                      className="w-full text-left py-2 text-base font-normal"
-                    >
-                      <span>Download Center</span>
-                    </button>
+                  <div className={`py-2 border-b ${isLight ? 'border-gray-100' : 'border-[#271716]'}`}>
+                    <MobileProductsNav
+                      isLight={isLight}
+                      onNavigate={handleLinkClick}
+                      onCloseMenu={() => setMobileMenuOpen(false)}
+                    />
                   </div>
                 )}
               </div>
