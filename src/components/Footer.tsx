@@ -14,7 +14,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const handleCopyEmail = () => {
-    navigator.clipboard?.writeText('support@yemini.dev');
+    navigator.clipboard?.writeText('yeminisupport@gmail.com');
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2000);
   };
@@ -131,13 +131,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   ? 'border-gray-200 hover:border-black bg-white text-gray-700 shadow-xs'
                   : 'border-[#38201f] hover:border-[#ff8585] bg-[#180908] text-[#fadcd9]'
               }`}
-              title="Copy developer email"
+              title="Copy developer support email"
             >
               <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect width="20" height="16" x="2" y="4" rx="2" />
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
               </svg>
-              <span>{copiedEmail ? 'Copied!' : 'support@yemini.dev'}</span>
+              <span>{copiedEmail ? 'Copied!' : 'yeminisupport@gmail.com'}</span>
             </button>
           </div>
         </div>
@@ -491,6 +491,17 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button
+                  id="footer-link-delete-account"
+                  onClick={() => onNavigate('delete-account')}
+                  className={`text-left font-medium transition-colors cursor-pointer text-[#ba1724] dark:text-[#ff8585] ${
+                    isLight ? 'hover:underline' : 'hover:underline'
+                  }`}
+                >
+                  Account Deletion Request
+                </button>
+              </li>
+              <li>
+                <button
                   id="footer-link-editor-privacy"
                   onClick={() => onNavigate('editorapp-privacy')}
                   className={`text-left transition-colors cursor-pointer ${
@@ -591,6 +602,16 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               }`}
             >
               Terms of Use
+            </button>
+            <span className={isLight ? 'text-gray-300' : 'text-[#38201f]'}>•</span>
+            <button
+              id="subfooter-delete-account"
+              onClick={() => onNavigate('delete-account')}
+              className={`transition-colors cursor-pointer font-medium text-[#ba1724] dark:text-[#ff8585] ${
+                isLight ? 'hover:underline' : 'hover:underline'
+              }`}
+            >
+              Delete Account
             </button>
             <span className={isLight ? 'text-gray-300' : 'text-[#38201f]'}>•</span>
             <button

@@ -17,6 +17,7 @@ import { AboutPage } from './pages/AboutPage';
 import { SecurityPage } from './pages/SecurityPage';
 import { ContactPage } from './pages/ContactPage';
 import { LegalPage } from './pages/LegalPage';
+import { DeleteAccountPage } from './pages/DeleteAccountPage';
 import { EditorAppPrivacyPage } from './pages/EditorAppPrivacyPage';
 import { NotepadAppPrivacyPage } from './pages/NotepadAppPrivacyPage';
 import { ConverterAppPrivacyPage } from './pages/ConverterAppPrivacyPage';
@@ -32,20 +33,36 @@ function AppContent() {
   // Sync hash and pathname routing
   useEffect(() => {
     const handleLocationChange = () => {
-      const hash = window.location.hash.replace('#/', '').replace('#', '') as PageRoute;
-      const pathname = window.location.pathname.replace(/^\//, '') as PageRoute;
+      const hash = window.location.hash.replace('#/', '').replace('#', '').toLowerCase();
+      const pathname = window.location.pathname.replace(/^\//, '').toLowerCase();
       
       const validRoutes: PageRoute[] = [
         'home', 'mobile', 'desktop', 'ai', 
         'download', 'docs', 'resources', 'about', 'security', 
         'contact', 'privacy', 'terms', 'cookies', 'acceptable-use', 'licenses',
+        'delete-account', 'account-deletion',
         'editorapp-privacy', 'notepadapp-privacy', 'converterapp-privacy', 'shareapp-privacy', 'app-privacy', 'mobile-privacy'
       ];
 
-      if (hash && validRoutes.includes(hash)) {
-        setCurrentRoute(hash);
-      } else if (pathname && validRoutes.includes(pathname)) {
-        setCurrentRoute(pathname);
+      // Handle common aliases for account deletion
+      if (
+        hash === 'delete-account' ||
+        hash === 'account-deletion' ||
+        hash === 'deleteaccount' ||
+        hash === 'accountdeletion' ||
+        pathname === 'delete-account' ||
+        pathname === 'account-deletion' ||
+        pathname === 'deleteaccount' ||
+        pathname === 'accountdeletion'
+      ) {
+        setCurrentRoute('delete-account');
+        return;
+      }
+
+      if (hash && validRoutes.includes(hash as PageRoute)) {
+        setCurrentRoute(hash as PageRoute);
+      } else if (pathname && validRoutes.includes(pathname as PageRoute)) {
+        setCurrentRoute(pathname as PageRoute);
       }
     };
 
@@ -172,6 +189,10 @@ function AppContent() {
 
         {currentRoute === 'contact' && (
           <ContactPage onNavigate={navigateTo} />
+        )}
+
+        {(currentRoute === 'delete-account' || currentRoute === 'account-deletion') && (
+          <DeleteAccountPage onNavigate={navigateTo} />
         )}
 
         {(currentRoute === 'privacy' || 

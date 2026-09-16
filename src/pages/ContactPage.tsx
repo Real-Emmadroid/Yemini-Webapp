@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { PageRoute } from '../types';
 import { 
-  Mail, MessageSquare, Send, CheckCircle2, 
-  HelpCircle, ShieldAlert, Sparkles, Building, Globe 
+  Mail, Send, CheckCircle2
 } from 'lucide-react';
 
 interface ContactPageProps {
@@ -56,12 +55,27 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
           <div className="space-y-3 text-xs">
             <div className="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-1">
               <span className="font-semibold text-zinc-200 block">General &amp; Community Support</span>
-              <span className="font-mono text-zinc-400 block">support@yemini.dev</span>
+              <a 
+                href="mailto:yeminisupport@gmail.com"
+                className="font-mono text-zinc-400 hover:text-[#ff8585] transition-colors block"
+              >
+                yeminisupport@gmail.com
+              </a>
             </div>
 
             <div className="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-1">
               <span className="font-semibold text-zinc-200 block">Security &amp; Vulnerability Disclosure</span>
               <span className="font-mono text-emerald-400 block">security@spheretech.org</span>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-1">
+              <span className="font-semibold text-zinc-200 block">Account Deletion Inquiries</span>
+              <button
+                onClick={() => onNavigate('delete-account')}
+                className="font-mono text-[#ff8585] hover:underline cursor-pointer block text-left"
+              >
+                Account Deletion Request Guide →
+              </button>
             </div>
 
             <div className="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-1">
@@ -87,7 +101,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                   setSubmitted(false);
                   setMessage('');
                 }}
-                className="mt-4 px-5 py-2 rounded-xl bg-zinc-800 text-white text-xs font-semibold hover:bg-zinc-700"
+                className="mt-4 px-5 py-2 rounded-xl bg-zinc-800 text-white text-xs font-semibold hover:bg-zinc-700 cursor-pointer"
               >
                 Send Another Message
               </button>
@@ -102,7 +116,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                       type="button"
                       key={cat}
                       onClick={() => setCategory(cat)}
-                      className={`px-3 py-2 rounded-xl text-xs capitalize transition-colors font-medium ${
+                      className={`px-3 py-2 rounded-xl text-xs capitalize transition-colors font-medium cursor-pointer ${
                         category === cat
                           ? 'bg-[#5b0000] text-white border border-[#ff6767]'
                           : 'bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white'
@@ -153,7 +167,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
 
               <button
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-[#5b0000] to-[#ff4d4d] hover:brightness-110 text-white font-semibold text-sm shadow-md transition-all active:scale-95"
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-[#5b0000] to-[#ff4d4d] hover:brightness-110 text-white font-semibold text-sm shadow-md transition-all active:scale-95 cursor-pointer"
               >
                 <Send className="w-4 h-4" />
                 <span>Submit Inquiry</span>

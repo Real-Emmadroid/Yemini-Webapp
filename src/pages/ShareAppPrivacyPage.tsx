@@ -212,7 +212,7 @@ export const ShareAppPrivacyPage: React.FC = () => {
           <div className="p-4 bg-zinc-900/90 border border-zinc-800 space-y-1 font-mono text-xs sm:text-sm text-zinc-300">
             <p><strong>Organization:</strong> STF Ecosystem (Sphere Tech Foundation)</p>
             <p><strong>Privacy Inquiries:</strong> <a href="mailto:privacy@spheretech.org" className="text-[#ff8585] hover:underline">privacy@spheretech.org</a></p>
-            <p><strong>Developer Support:</strong> <a href="mailto:support@yemini.dev" className="text-[#ff8585] hover:underline">support@yemini.dev</a></p>
+            <p><strong>Developer Support:</strong> <a href="mailto:yeminisupport@gmail.com" className="text-[#ff8585] hover:underline">yeminisupport@gmail.com</a></p>
             <p><strong>Official Portal:</strong> <a href="https://spheretech.org" target="_blank" rel="noopener noreferrer" className="text-[#ff8585] hover:underline">spheretech.org</a></p>
           </div>
         </section>

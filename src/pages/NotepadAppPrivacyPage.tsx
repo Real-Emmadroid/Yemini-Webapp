@@ -109,7 +109,7 @@ export const NotepadAppPrivacyPage: React.FC = () => {
             <li><strong>Export Your Data:</strong> You can export your notes at any time to standard open formats (Plain Text .txt, Markdown .md, JSON, or audio files).</li>
             <li><strong>Selective Sync:</strong> You can choose which specific note categories or folders are synced to the cloud.</li>
             <li><strong>Local Data Deletion:</strong> Deleting a note in the app removes it immediately from your device. You can also clear all local data via Android App Settings.</li>
-            <li><strong>Cloud Backup &amp; Account Deletion:</strong> You can delete all cloud backups and delete your Yemini Account permanently from within the app settings or by contacting our privacy team. Deletion immediately purges all synced data from our servers.</li>
+            <li><strong>Cloud Backup &amp; Account Deletion:</strong> You can delete all cloud backups and delete your Yemini Account permanently from within the app settings or by contacting our support team at <a href="mailto:yeminisupport@gmail.com" className="text-[#ff8585] underline font-mono">yeminisupport@gmail.com</a> (see our <a href="#/delete-account" className="text-[#ff8585] underline">Account Deletion Request page</a>). Deletion immediately purges all synced data from our servers.</li>
           </ul>
         </section>
 
@@ -216,7 +216,7 @@ export const NotepadAppPrivacyPage: React.FC = () => {
           <div className="p-4 bg-zinc-900/90 border border-zinc-800 space-y-1 font-mono text-xs sm:text-sm text-zinc-300">
             <p><strong>Organization:</strong> STF Ecosystem (Sphere Tech Foundation)</p>
             <p><strong>Privacy Inquiries:</strong> <a href="mailto:privacy@spheretech.org" className="text-[#ff8585] hover:underline">privacy@spheretech.org</a></p>
-            <p><strong>Developer Support:</strong> <a href="mailto:support@yemini.dev" className="text-[#ff8585] hover:underline">support@yemini.dev</a></p>
+            <p><strong>Developer Support:</strong> <a href="mailto:yeminisupport@gmail.com" className="text-[#ff8585] hover:underline">yeminisupport@gmail.com</a></p>
             <p><strong>Official Portal:</strong> <a href="https://spheretech.org" target="_blank" rel="noopener noreferrer" className="text-[#ff8585] hover:underline">spheretech.org</a></p>
           </div>
         </section>

@@ -14,6 +14,8 @@ export type PageRoute =
   | 'cookies'
   | 'acceptable-use'
   | 'licenses'
+  | 'delete-account'
+  | 'account-deletion'
   | 'editorapp-privacy'
   | 'notepadapp-privacy'
   | 'converterapp-privacy'

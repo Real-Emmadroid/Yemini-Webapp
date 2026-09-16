@@ -16,7 +16,7 @@ interface ThemeWaveOverlayProps {
 
 /**
  * Natural physical carpet-fold ripple easing curve.
- * Steady, majestic rolling propagation across the entire page.
+ * Steady, gradual rolling propagation across the entire page.
  */
 function easeCarpetFold(t: number): number {
   if (t < 0.12) {
@@ -42,16 +42,14 @@ function getRoughnessDelta(theta: number, r: number): number {
 }
 
 /**
- * Single Colorless, Invisible Wave — The Webapp Body Itself Makes the Wave
+ * Single Colorless, Invisible Wave — Gentle, Subtle Surface Ripple
  *
- * - 100% Colorless & Invisible Medium: ZERO overlay colors, ZERO tints, ZERO gray bands,
- *   ZERO backdrop-filter brightness or contrast modifications.
- * - The wave is made exclusively by the physical 3D undulation of the webapp's own body:
- *   Cards, preview windows, navbar, buttons, headings, and sections physically lift off the
- *   page surface in 3D, tilt forward and backward along the wave propagation front, and settle
- *   smoothly back into resting position.
- * - Organic Rough Curve: Follows an undulating, non-circular rough fold path.
- * - Slower, gradual pace (~2.4 seconds) rolling steadily across the webapp down to the footer.
+ * - Completely colorless & invisible: Zero paint overlays, zero tints, zero color shifts.
+ * - No dynamic 3D tilt: Zero rotation, zero rotate3d, zero perspective tipping.
+ * - Gentle, subtle motion: The webapp body elements smoothly lift by only ~4.5px
+ *   along a smooth bell-curve and settle softly back to rest, eliminating all aggressive shaking.
+ * - Organic rough wave curve: Undulates naturally along non-circular wrinkles.
+ * - Steady, gradual pace (~2.4 seconds) rolling smoothly across the webapp down to the footer.
  */
 export const ThemeWaveOverlay: React.FC<ThemeWaveOverlayProps> = ({ wave, onComplete }) => {
   const [activeWave, setActiveWave] = useState<WaveAnimationData | null>(null);
@@ -61,7 +59,7 @@ export const ThemeWaveOverlay: React.FC<ThemeWaveOverlayProps> = ({ wave, onComp
 
     setActiveWave(wave);
 
-    const DURATION = 2400; // 2.4s: majestic, deliberate, physical carpet fold propagation
+    const DURATION = 2400; // 2.4s: steady, gentle, gradual propagation
     const effectiveMaxRadius = wave.maxRadius * 1.24; // Ensure rough peaks clear edges
     const startTime = performance.now();
     let animationFrameId: number;
@@ -70,7 +68,7 @@ export const ThemeWaveOverlay: React.FC<ThemeWaveOverlayProps> = ({ wave, onComp
     const selector = 'nav, footer, .glass-card, .mac-window, h1, h2, h3, button, a.inline-flex, section > div, .relative.z-10';
     const rawElements = Array.from(document.querySelectorAll<HTMLElement>(selector));
 
-    // Keep top-level visual items so nested children don't double-transform
+    // Filter to top-level visual items so nested children don't double-transform
     const bodyElements = rawElements.filter((el, idx) => {
       return !rawElements.some((other, otherIdx) => otherIdx !== idx && other.contains(el));
     });
@@ -94,7 +92,7 @@ export const ThemeWaveOverlay: React.FC<ThemeWaveOverlayProps> = ({ wave, onComp
       const progress = easeCarpetFold(t);
       const currentRadius = effectiveMaxRadius * progress;
 
-      // Smooth opacity/intensity envelope over the animation duration
+      // Smooth intensity envelope over the animation duration
       let intensity = 1;
       if (t < 0.08) {
         intensity = t / 0.08;
@@ -103,9 +101,9 @@ export const ThemeWaveOverlay: React.FC<ThemeWaveOverlayProps> = ({ wave, onComp
       }
 
       const { x, y } = wave;
-      const foldSpan = 160; // Physical width of the carpet fold influence zone (px)
+      const foldSpan = 160; // Gentle physical span of the carpet fold wave (px)
 
-      // PHYSICAL BODY WAVE: The webapp body elements physically lift, tilt, and ripple in 3D
+      // GENTLE SURFACE RIPPLE: Webapp elements softly lift and glide back without shaking or 3D tilt
       bodyElements.forEach((el) => {
         const rect = el.getBoundingClientRect();
         // Skip elements completely outside viewport
@@ -130,25 +128,16 @@ export const ThemeWaveOverlay: React.FC<ThemeWaveOverlayProps> = ({ wave, onComp
         const diff = roughFoldRadius - d;
 
         if (Math.abs(diff) < foldSpan) {
-          // Element is riding the carpet fold!
-          const u = diff / foldSpan; // -1 (leading edge) -> 0 (crest) -> 1 (trailing edge)
+          // Element is riding the gentle wave
+          const u = diff / foldSpan; // -1 (leading) -> 0 (crest) -> 1 (trailing)
           
-          // Bell-shaped elevation curve
+          // Pure smooth bell-shaped elevation (0 at bounds, 1 at crest)
           const h = Math.pow(Math.cos(u * Math.PI * 0.5), 2) * intensity;
 
-          // 1. Physical 3D lift: rises up and toward the viewer
-          const liftY = -22 * h;
-          const liftZ = 38 * h;
+          // Gentle, subtle vertical lift: strictly 4.5px maximum, zero tilt, zero shake
+          const liftY = -4.5 * h;
 
-          // 2. Physical 3D tilt: rotates around the axis perpendicular to wave propagation
-          const tiltAngle = -Math.sin(u * Math.PI) * 7.5 * intensity;
-          const rotX = -Math.sin(theta);
-          const rotY = Math.cos(theta);
-
-          // 3. Subtle physical expansion at the crest
-          const scale = 1 + 0.032 * h;
-
-          el.style.transform = `perspective(1000px) translate3d(0, ${liftY.toFixed(1)}px, ${liftZ.toFixed(1)}px) rotate3d(${rotX.toFixed(3)}, ${rotY.toFixed(3)}, 0, ${tiltAngle.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+          el.style.transform = `translate3d(0, ${liftY.toFixed(2)}px, 0)`;
           el.style.willChange = 'transform';
           transformedElements.add(el);
         } else if (transformedElements.has(el)) {
@@ -178,7 +167,7 @@ export const ThemeWaveOverlay: React.FC<ThemeWaveOverlayProps> = ({ wave, onComp
 
   if (!activeWave) return null;
 
-  // 100% Colorless & Invisible Overlay — no paint, no fills, no color modification
+  // 100% Colorless & Invisible Overlay — no paint, no colors, no visual obstruction
   return null;
 };
 

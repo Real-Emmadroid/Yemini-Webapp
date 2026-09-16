@@ -96,7 +96,7 @@ export const EditorAppPrivacyPage: React.FC = () => {
           <ul className="list-disc pl-6 space-y-2 text-zinc-300">
             <li><strong>Encrypted in Transit &amp; at Rest:</strong> All project files saved to Yemini Cloud are encrypted in transit using TLS 1.3 and encrypted at rest using AES-256 standards.</li>
             <li><strong>Selective Sync:</strong> You maintain full control over which projects are saved locally on-device versus synchronized with the cloud.</li>
-            <li><strong>Data Deletion &amp; Purge:</strong> You may at any time delete individual cloud projects or request complete deletion of all cloud-stored workspaces through the in-app account settings.</li>
+            <li><strong>Data Deletion &amp; Purge:</strong> You may at any time delete individual cloud projects or request complete deletion of all cloud-stored workspaces through the in-app account settings or our official Account Deletion Request page.</li>
           </ul>
         </section>
 
@@ -263,8 +263,8 @@ export const EditorAppPrivacyPage: React.FC = () => {
             You have the right to access, export, or delete your personal data at any time:
           </p>
           <ul className="list-disc pl-6 space-y-1.5 text-zinc-300">
-            <li><strong>Local Data:</strong> You can delete local projects, cached packages, and app data by clearing the app storage within Android Settings.</li>
-            <li><strong>Cloud Data &amp; Account Deletion:</strong> You can delete individual Yemini Cloud projects or submit an immediate account deletion request directly from the app&apos;s Account Settings screen, or by emailing our privacy team. Upon deletion, all associated cloud projects, tokens, and profile data will be permanently purged from our servers.</li>
+            <li><strong>Local Data:</strong> You can delete local projects, cached packages, and app data by clearing the app storage within Android Settings or directly inside the editor.</li>
+            <li><strong>Cloud Data &amp; Account Deletion:</strong> You can delete individual Yemini Cloud projects or submit an immediate account deletion request directly from the app&apos;s Account Settings screen, or by emailing our support team at <a href="mailto:yeminisupport@gmail.com" className="text-[#ff8585] underline font-mono">yeminisupport@gmail.com</a>. You can also view our dedicated <a href="#/delete-account" className="text-[#ff8585] underline">Account Deletion Request page</a>. Upon deletion, all associated cloud projects, tokens, and profile data will be permanently purged from our servers.</li>
           </ul>
         </section>
 
@@ -309,7 +309,7 @@ export const EditorAppPrivacyPage: React.FC = () => {
           <div className="p-4 bg-zinc-900/90 border border-zinc-800 space-y-1 font-mono text-xs sm:text-sm text-zinc-300">
             <p><strong>Organization:</strong> STF Ecosystem (Sphere Tech Foundation)</p>
             <p><strong>Privacy Inquiries:</strong> <a href="mailto:privacy@spheretech.org" className="text-[#ff8585] hover:underline">privacy@spheretech.org</a></p>
-            <p><strong>Developer Support:</strong> <a href="mailto:support@yemini.dev" className="text-[#ff8585] hover:underline">support@yemini.dev</a></p>
+            <p><strong>Developer Support:</strong> <a href="mailto:yeminisupport@gmail.com" className="text-[#ff8585] hover:underline">yeminisupport@gmail.com</a></p>
             <p><strong>Official Portal:</strong> <a href="https://spheretech.org" target="_blank" rel="noopener noreferrer" className="text-[#ff8585] hover:underline">spheretech.org</a></p>
           </div>
         </section>

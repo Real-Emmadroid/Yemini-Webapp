@@ -42,7 +42,7 @@ export const legalDocuments: Record<string, LegalDocument> = {
       {
         title: '5. Contact and Inquiries',
         paragraphs: [
-          'For any inquiries regarding data protection and privacy practices at STF Ecosystem, contact us at privacy@spheretech.org.'
+          'For any inquiries regarding data protection and privacy practices at STF Ecosystem, or general developer support, contact us at yeminisupport@gmail.com or privacy@spheretech.org.'
         ]
       }
     ]
@@ -74,7 +74,7 @@ export const legalDocuments: Record<string, LegalDocument> = {
       {
         title: '4. Disclaimer of Warranty',
         paragraphs: [
-          'Yemini is provided on an "as is" and "as available" basis without warranties of any kind, whether express or implied. STF Ecosystem does not warrant that the software will be completely error-free or uninterrupted.'
+          'Yemini is provided on an "as is" and "as available" basis without warranties of any kind, whether express or implied. STF Ecosystem does not warrant that the software will be completely error-free or uninterrupted. For inquiries, reach out to yeminisupport@gmail.com.'
         ]
       }
     ]
