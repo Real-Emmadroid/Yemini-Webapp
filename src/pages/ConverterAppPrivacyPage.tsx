@@ -1,16 +1,30 @@
 import React from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 export const ConverterAppPrivacyPage: React.FC = () => {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
+
   return (
-    <div className="min-h-screen bg-[#070709] text-zinc-300 py-10 px-4 sm:px-8 lg:px-12 font-sans selection:bg-[#5b0000] selection:text-[#ff8585]">
+    <div className={`min-h-screen py-10 px-4 sm:px-8 lg:px-12 font-sans transition-colors ${
+      isLight ? 'bg-white text-zinc-800' : 'bg-[#070709] text-zinc-300'
+    }`}>
       <article className="max-w-4xl mx-auto space-y-10 text-sm sm:text-base leading-relaxed">
         
         {/* Document Header */}
-        <header className="space-y-4 pb-8 border-b border-zinc-800/80">
-          <div className="inline-block px-3 py-1 bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#ff8585]">
+        <header className={`space-y-4 pb-8 border-b ${
+          isLight ? 'border-zinc-200' : 'border-zinc-800/80'
+        }`}>
+          <div className={`inline-block px-3 py-1 text-xs font-mono border ${
+            isLight
+              ? 'bg-zinc-100 border-zinc-200 text-[#ba1724]'
+              : 'bg-zinc-900 border-zinc-800 text-[#ff8585]'
+          }`}>
             Official Privacy Policy • Android Application
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className={`text-3xl sm:text-4xl font-extrabold tracking-tight ${
+            isLight ? 'text-zinc-900' : 'text-white'
+          }`}>
             Privacy Policy for Yemini Converter
           </h1>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono text-zinc-500">
@@ -24,21 +38,25 @@ export const ConverterAppPrivacyPage: React.FC = () => {
 
         {/* Introduction */}
         <section className="space-y-4">
-          <p className="text-zinc-200 text-base sm:text-lg">
+          <p className={`text-base sm:text-lg ${isLight ? 'text-zinc-900' : 'text-zinc-200'}`}>
             This Privacy Policy describes how <strong>Yemini Converter</strong> (&ldquo;the App,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;), provided by <strong>STF Ecosystem (Sphere Tech Foundation)</strong>, handles information when you use our Android application.
           </p>
         </section>
 
         {/* Section 1: Summary */}
         <section className="space-y-4">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${isLight ? 'text-zinc-900' : 'text-white'}`}>
             1. Summary
           </h2>
-          <div className="p-4 sm:p-5 bg-zinc-900/90 border border-zinc-800 space-y-2">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">
+          <div className={`p-4 sm:p-5 border space-y-2 ${
+            isLight ? 'bg-zinc-50 border-zinc-200' : 'bg-zinc-900/90 border-zinc-800'
+          }`}>
+            <h3 className={`text-sm font-bold uppercase tracking-wider font-mono ${
+              isLight ? 'text-zinc-900' : 'text-white'
+            }`}>
               On-Device Offline Processing
             </h3>
-            <p className="text-zinc-300 text-sm leading-relaxed">
+            <p className={`text-sm leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
               Yemini Converter is designed to work <strong>fully offline</strong>. In its current version, <strong>all file conversions (images, audio, and documents) happen entirely on your device</strong>. We do not collect, transmit, or store your files, and we do not require an account to use the App.
             </p>
           </div>
@@ -46,13 +64,13 @@ export const ConverterAppPrivacyPage: React.FC = () => {
 
         {/* Section 2: Information We Do Not Collect */}
         <section className="space-y-3">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${isLight ? 'text-zinc-900' : 'text-white'}`}>
             2. Information We Do Not Collect
           </h2>
           <p>
             We do not collect the following:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-zinc-300">
+          <ul className="list-disc pl-6 space-y-2">
             <li><strong>File Content:</strong> The content of any files you convert (images, audio, PDFs, documents, archives).</li>
             <li><strong>File Metadata:</strong> File names, metadata, or folder locations on your device.</li>
             <li><strong>Personal Identifiers:</strong> Your name, email address, or phone number.</li>
@@ -63,13 +81,13 @@ export const ConverterAppPrivacyPage: React.FC = () => {
 
         {/* Section 3: How the App Accesses Your Files */}
         <section className="space-y-3">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${isLight ? 'text-zinc-900' : 'text-white'}`}>
             3. How the App Accesses Your Files
           </h2>
           <p>
             To convert a file, the App needs to read the file you select and write the converted output back to your device storage. This is done using Android&apos;s built-in file access system (<strong>Storage Access Framework / Scoped Storage</strong>), which means:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-zinc-300">
+          <ul className="list-disc pl-6 space-y-2">
             <li><strong>Explicit Selection:</strong> You choose which files the App can access, one at a time, through the native Android system file picker.</li>
             <li><strong>Scoped Boundaries:</strong> The App does not have broad access to your entire device storage.</li>
             <li><strong>Local Destination:</strong> Converted files are saved locally to a folder on your device that you control.</li>
@@ -79,13 +97,13 @@ export const ConverterAppPrivacyPage: React.FC = () => {
 
         {/* Section 4: Permissions */}
         <section className="space-y-3">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${isLight ? 'text-zinc-900' : 'text-white'}`}>
             4. Permissions
           </h2>
           <p>
             The App may request the following permissions:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-zinc-300">
+          <ul className="list-disc pl-6 space-y-2">
             <li><strong>Storage / File Access (READ_EXTERNAL_STORAGE / Storage Access Framework):</strong> Required to let you pick files to convert and save the converted output to your chosen directory.</li>
             <li><strong>Notifications (POST_NOTIFICATIONS):</strong> Optional; used strictly to inform you when a background file conversion batch is complete.</li>
           </ul>
@@ -96,20 +114,20 @@ export const ConverterAppPrivacyPage: React.FC = () => {
 
         {/* Section 5: Third-Party Services */}
         <section className="space-y-3">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${isLight ? 'text-zinc-900' : 'text-white'}`}>
             5. Third-Party Services
           </h2>
           <p>
             The current version of Yemini Converter does not integrate with third-party analytics, advertising, or tracking services.
           </p>
-          <p className="text-xs text-zinc-400 font-mono">
+          <p className="text-xs text-zinc-500 font-mono">
             Note: If this changes in future releases (such as adding non-intrusive ads, anonymous crash reporting, or telemetry), this section will be immediately updated to identify each provider and link to its respective privacy policy.
           </p>
         </section>
 
         {/* Section 6: Children's Privacy */}
         <section className="space-y-3">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${isLight ? 'text-zinc-900' : 'text-white'}`}>
             6. Children&apos;s Privacy
           </h2>
           <p>
@@ -119,13 +137,13 @@ export const ConverterAppPrivacyPage: React.FC = () => {
 
         {/* Section 7: Future Features: Sign-In and Cloud Backup */}
         <section className="space-y-3">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${isLight ? 'text-zinc-900' : 'text-white'}`}>
             7. Future Features: Sign-In &amp; Cloud Backup
           </h2>
           <p>
             We may introduce optional account sign-in and cloud backup features in a future update. <strong>If and when these features are added, this Privacy Policy will be updated before the update is released</strong>, and will include details such as:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-zinc-300">
+          <ul className="list-disc pl-6 space-y-2">
             <li>What account information is collected (e.g., email address, authentication provider tokens).</li>
             <li>What file or conversion history data, if any, is backed up to the cloud.</li>
             <li>Which third-party services are used for authentication and storage (e.g., Firebase, Google Sign-In, or similar cloud providers).</li>
@@ -139,7 +157,7 @@ export const ConverterAppPrivacyPage: React.FC = () => {
 
         {/* Section 8: Data Security */}
         <section className="space-y-3">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${isLight ? 'text-zinc-900' : 'text-white'}`}>
             8. Data Security
           </h2>
           <p>
@@ -149,7 +167,7 @@ export const ConverterAppPrivacyPage: React.FC = () => {
 
         {/* Section 9: Your Choices */}
         <section className="space-y-3">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${isLight ? 'text-zinc-900' : 'text-white'}`}>
             9. Your Choices
           </h2>
           <p>
@@ -159,7 +177,7 @@ export const ConverterAppPrivacyPage: React.FC = () => {
 
         {/* Section 10: Changes to This Policy */}
         <section className="space-y-3">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${isLight ? 'text-zinc-900' : 'text-white'}`}>
             10. Changes to This Privacy Policy
           </h2>
           <p>
@@ -168,25 +186,30 @@ export const ConverterAppPrivacyPage: React.FC = () => {
         </section>
 
         {/* Section 11: Contact Us */}
-        <section className="space-y-3 pt-6 border-t border-zinc-800/80">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+        <section className={`space-y-3 pt-6 border-t ${
+          isLight ? 'border-zinc-200' : 'border-zinc-800/80'
+        }`}>
+          <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${isLight ? 'text-zinc-900' : 'text-white'}`}>
             11. Contact Us
           </h2>
           <p>
             If you have questions or feedback regarding this Privacy Policy or Yemini Converter, please contact us at:
           </p>
-          <div className="p-4 bg-zinc-900/90 border border-zinc-800 space-y-1 font-mono text-xs sm:text-sm text-zinc-300">
+          <div className={`p-4 border space-y-1 font-mono text-xs sm:text-sm ${
+            isLight ? 'bg-zinc-50 border-zinc-200 text-zinc-700' : 'bg-zinc-900/90 border-zinc-800 text-zinc-300'
+          }`}>
             <p><strong>Organization:</strong> STF Ecosystem (Sphere Tech Foundation)</p>
-            <p><strong>Privacy Inquiries:</strong> <a href="mailto:privacy@spheretech.org" className="text-[#ff8585] hover:underline">privacy@spheretech.org</a></p>
-            <p><strong>Developer Support:</strong> <a href="mailto:yeminisupport@gmail.com" className="text-[#ff8585] hover:underline">yeminisupport@gmail.com</a></p>
-            <p><strong>Official Portal:</strong> <a href="https://spheretech.org" target="_blank" rel="noopener noreferrer" className="text-[#ff8585] hover:underline">spheretech.org</a></p>
+            <p><strong>Support &amp; Privacy:</strong> <a href="mailto:yeminisupport@gmail.com" className="text-[#ba1724] dark:text-[#ff8585] hover:underline">yeminisupport@gmail.com</a></p>
+            <p><strong>Official Parental Portal:</strong> <a href="https://stfweb3ecosystem.com/" target="_blank" rel="noopener noreferrer" className="text-[#ba1724] dark:text-[#ff8585] hover:underline">stfweb3ecosystem.com</a></p>
           </div>
         </section>
 
         {/* Footer Notice */}
-        <footer className="pt-8 pb-12 border-t border-zinc-800/60 text-xs font-mono text-zinc-500 text-center space-y-2">
+        <footer className={`pt-8 pb-12 border-t text-xs font-mono text-center space-y-2 ${
+          isLight ? 'border-zinc-200 text-zinc-500' : 'border-zinc-800/60 text-zinc-500'
+        }`}>
           <p>© 2026 STF Ecosystem (Sphere Tech Foundation). All rights reserved.</p>
-          <p className="text-zinc-600 italic max-w-2xl mx-auto">
+          <p className="italic max-w-2xl mx-auto">
             Yemini Converter • Standalone In-App Privacy Document
           </p>
         </footer>

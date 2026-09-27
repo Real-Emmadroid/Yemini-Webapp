@@ -42,7 +42,7 @@ export const legalDocuments: Record<string, LegalDocument> = {
       {
         title: '5. Contact and Inquiries',
         paragraphs: [
-          'For any inquiries regarding data protection and privacy practices at STF Ecosystem, or general developer support, contact us at yeminisupport@gmail.com or privacy@spheretech.org.'
+          'For any inquiries regarding data protection and privacy practices at STF Ecosystem, or general developer support, contact us at yeminisupport@gmail.com.'
         ]
       }
     ]
@@ -62,7 +62,7 @@ export const legalDocuments: Record<string, LegalDocument> = {
       {
         title: '2. Software License & Permitted Use',
         paragraphs: [
-          'Yemini is provided by Sphere Tech Foundation (STF Ecosystem). You are granted a non-exclusive, worldwide, royalty-free license to use Yemini for commercial, open source, educational, and personal software development.'
+          'Yemini is provided by Sphere Tech Foundation (STF Ecosystem). You are granted a non-exclusive, worldwide, royalty-free license to use Yemini for commercial, open source, educational, and personal software development. Parental company portal: https://stfweb3ecosystem.com/.'
         ]
       },
       {
@@ -88,13 +88,13 @@ export const legalDocuments: Record<string, LegalDocument> = {
       {
         title: '1. Essential Cookies Only',
         paragraphs: [
-          'The official Yemini website does not deploy third-party advertising cookies, ad trackers, or behavioural profiling scripts. We use strictly necessary client storage to remember your theme preference (Dark/OLED) and active documentation search filters.'
+          'The official Yemini website does not deploy third-party advertising cookies, ad trackers, or behavioural profiling scripts. We use strictly necessary client storage to remember your theme preference and active documentation search filters.'
         ]
       },
       {
         title: '2. Managing Your Preferences',
         paragraphs: [
-          'You may clear your browser local storage and cache at any time via your browser settings. Clearing storage will reset your local UI preferences back to the default dark aesthetic.'
+          'You may clear your browser local storage and cache at any time via your browser settings. Clearing storage will reset your local UI preferences back to the default aesthetic.'
         ]
       }
     ]
