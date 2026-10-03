@@ -399,7 +399,7 @@ Thank you.`;
             This page is referenced from the Yemini Google Play Store listing, as required by
             Google Play&apos;s account deletion policy.
           </p>
-          <p>© 2026 STF Ecosystem (Sphere Tech Foundation). All rights reserved.</p>
+          <p>© 2026 Yemini. All rights reserved.</p>
         </footer>
       </article>
     </div>

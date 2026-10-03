@@ -15,13 +15,8 @@ export const ShareAppPrivacyPage: React.FC = () => {
         <header className={`space-y-4 pb-8 border-b ${
           isLight ? 'border-zinc-200' : 'border-zinc-800/80'
         }`}>
-          <div className={`inline-block px-3 py-1 text-xs font-mono border ${
-            isLight
-              ? 'bg-zinc-100 border-zinc-200 text-[#ba1724]'
-              : 'bg-zinc-900 border-zinc-800 text-[#ff8585]'
-          }`}>
-            Official Privacy Policy • Android Application
-          </div>
+          {/* Preserved clearance space */}
+          <div className="h-6" aria-hidden="true" />
           <h1 className={`text-3xl sm:text-4xl font-extrabold tracking-tight ${
             isLight ? 'text-zinc-900' : 'text-white'
           }`}>
@@ -250,7 +245,7 @@ export const ShareAppPrivacyPage: React.FC = () => {
         <footer className={`pt-8 pb-12 border-t text-xs font-mono text-center space-y-2 ${
           isLight ? 'border-zinc-200 text-zinc-500' : 'border-zinc-800/60 text-zinc-500'
         }`}>
-          <p>© 2026 STF Ecosystem (Sphere Tech Foundation). All rights reserved.</p>
+          <p>© 2026 Yemini. All rights reserved.</p>
           <p className="italic max-w-2xl mx-auto">
             Yemini Share • Standalone In-App Privacy Document
           </p>

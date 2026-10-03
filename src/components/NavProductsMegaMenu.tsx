@@ -24,7 +24,7 @@ export interface ProductProfile {
   mobileApps: DownloadOption[];
   desktopApps: DownloadOption[];
   webApp: DownloadOption[];
-  clientAddon: DownloadOption[];
+  clientAddon?: DownloadOption[];
 }
 
 export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
@@ -37,14 +37,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
     qrCodeUrl: 'https://yemini.org/download',
     qrCaption: 'Scan to get the mobile app',
     mobileApps: [
-      {
-        id: 'all-android-apk',
-        name: 'Android',
-        badge: 'APK v1.2.0',
-        subtext: 'Direct Signed Package (48.4 MB)',
-        platformIcon: 'android',
-        actionType: 'download-apk',
-      },
       {
         id: 'all-android-play',
         name: 'Google Play',
@@ -83,15 +75,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
         actionType: 'open-waitlist',
         platformId: 'windows',
       },
-      {
-        id: 'all-linux',
-        name: 'Linux',
-        badge: 'Waitlist',
-        subtext: '.deb, .rpm, Flathub & Arch',
-        platformIcon: 'linux',
-        actionType: 'open-waitlist',
-        platformId: 'linux',
-      },
     ],
     webApp: [
       {
@@ -100,17 +83,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
         badge: 'Online',
         subtext: 'Browser IDE & Documentation',
         platformIcon: 'web',
-        actionType: 'navigate',
-        route: 'docs',
-      },
-    ],
-    clientAddon: [
-      {
-        id: 'all-bridge',
-        name: 'Bridge',
-        badge: 'v1.2 CLI',
-        subtext: 'Local Compiler Toolchain Daemon',
-        platformIcon: 'bridge',
         actionType: 'navigate',
         route: 'docs',
       },
@@ -171,15 +143,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
         actionType: 'open-waitlist',
         platformId: 'windows',
       },
-      {
-        id: 'android-sync-linux',
-        name: 'Linux Sync',
-        badge: 'Companion',
-        subtext: 'Local Workspace Mirror',
-        platformIcon: 'linux',
-        actionType: 'open-waitlist',
-        platformId: 'linux',
-      },
     ],
     webApp: [
       {
@@ -190,17 +153,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
         platformIcon: 'web',
         actionType: 'navigate',
         route: 'download',
-      },
-    ],
-    clientAddon: [
-      {
-        id: 'android-adb-bridge',
-        name: 'Bridge',
-        badge: 'CLI Tool',
-        subtext: 'Zero-latency Device Terminal',
-        platformIcon: 'bridge',
-        actionType: 'navigate',
-        route: 'docs',
       },
     ],
   },
@@ -249,15 +201,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
         actionType: 'open-waitlist',
         platformId: 'windows',
       },
-      {
-        id: 'desktop-linux',
-        name: 'Linux',
-        badge: 'Request Access',
-        subtext: '.deb, .rpm, Arch AUR & AppImage',
-        platformIcon: 'linux',
-        actionType: 'open-waitlist',
-        platformId: 'linux',
-      },
     ],
     webApp: [
       {
@@ -268,17 +211,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
         platformIcon: 'web',
         actionType: 'navigate',
         route: 'desktop',
-      },
-    ],
-    clientAddon: [
-      {
-        id: 'desktop-lsp-bridge',
-        name: 'Bridge',
-        badge: 'LSP Daemon',
-        subtext: 'Native Language Server Protocol',
-        platformIcon: 'bridge',
-        actionType: 'navigate',
-        route: 'docs',
       },
     ],
   },
@@ -328,15 +260,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
         actionType: 'open-waitlist',
         platformId: 'windows',
       },
-      {
-        id: 'ai-linux-cuda',
-        name: 'Linux ROCm/CUDA',
-        badge: 'Waitlist',
-        subtext: 'Headless Dedicated Acceleration',
-        platformIcon: 'linux',
-        actionType: 'open-waitlist',
-        platformId: 'linux',
-      },
     ],
     webApp: [
       {
@@ -349,17 +272,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
         route: 'ai',
       },
     ],
-    clientAddon: [
-      {
-        id: 'ai-copilot-bridge',
-        name: 'Bridge',
-        badge: 'AST Copilot',
-        subtext: 'Zero Telemetry Local Assistant',
-        platformIcon: 'bridge',
-        actionType: 'navigate',
-        route: 'docs',
-      },
-    ],
   },
   'notepad': {
     id: 'notepad',
@@ -370,14 +282,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
     qrCodeUrl: 'https://yemini.org/download#notepad',
     qrCaption: 'Scan to get Notepad on phone',
     mobileApps: [
-      {
-        id: 'notepad-apk',
-        name: 'Android APK',
-        badge: 'v1.1.0',
-        subtext: 'Encrypted AES-256 Offline Vault',
-        platformIcon: 'android',
-        actionType: 'download-apk',
-      },
       {
         id: 'notepad-play',
         name: 'Google Play Store',
@@ -416,15 +320,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
         actionType: 'open-waitlist',
         platformId: 'windows',
       },
-      {
-        id: 'notepad-linux',
-        name: 'Linux Notes',
-        badge: 'Waitlist',
-        subtext: 'GTK4 & Flatpak Package',
-        platformIcon: 'linux',
-        actionType: 'open-waitlist',
-        platformId: 'linux',
-      },
     ],
     webApp: [
       {
@@ -437,17 +332,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
         route: 'notepadapp-privacy',
       },
     ],
-    clientAddon: [
-      {
-        id: 'notepad-sync-bridge',
-        name: 'Bridge',
-        badge: 'E2EE Sync',
-        subtext: 'End-to-End Encrypted LAN Relay',
-        platformIcon: 'bridge',
-        actionType: 'navigate',
-        route: 'docs',
-      },
-    ],
   },
   'converter': {
     id: 'converter',
@@ -458,14 +342,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
     qrCodeUrl: 'https://yemini.org/download#converter',
     qrCaption: 'Scan to get Converter on phone',
     mobileApps: [
-      {
-        id: 'converter-apk',
-        name: 'Android APK',
-        badge: 'v1.0.4',
-        subtext: 'On-device Media & PDF Engine',
-        platformIcon: 'android',
-        actionType: 'download-apk',
-      },
       {
         id: 'converter-play',
         name: 'Google Play Store',
@@ -504,15 +380,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
         actionType: 'open-waitlist',
         platformId: 'windows',
       },
-      {
-        id: 'converter-linux',
-        name: 'Linux CLI Converter',
-        badge: 'Waitlist',
-        subtext: 'Headless FFmpeg Batch Engine',
-        platformIcon: 'linux',
-        actionType: 'open-waitlist',
-        platformId: 'linux',
-      },
     ],
     webApp: [
       {
@@ -525,17 +392,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
         route: 'converterapp-privacy',
       },
     ],
-    clientAddon: [
-      {
-        id: 'converter-pipeline-bridge',
-        name: 'Bridge',
-        badge: 'CLI Daemon',
-        subtext: 'High-Throughput Batch Transcoder',
-        platformIcon: 'bridge',
-        actionType: 'navigate',
-        route: 'docs',
-      },
-    ],
   },
   'share': {
     id: 'share',
@@ -546,14 +402,6 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
     qrCodeUrl: 'https://yemini.org/download#share',
     qrCaption: 'Scan to pair & beam files',
     mobileApps: [
-      {
-        id: 'share-apk',
-        name: 'Android APK',
-        badge: 'v1.0.2',
-        subtext: 'Direct Wi-Fi Beam (Up to 120 MB/s)',
-        platformIcon: 'android',
-        actionType: 'download-apk',
-      },
       {
         id: 'share-play',
         name: 'Google Play Store',
@@ -592,36 +440,16 @@ export const PRODUCT_PROFILES: Record<string, ProductProfile> = {
         actionType: 'open-waitlist',
         platformId: 'windows',
       },
-      {
-        id: 'share-linux',
-        name: 'Linux Daemon',
-        badge: 'Waitlist',
-        subtext: 'Avahi & mDNS Network Listener',
-        platformIcon: 'linux',
-        actionType: 'open-waitlist',
-        platformId: 'linux',
-      },
     ],
     webApp: [
       {
         id: 'share-webapp',
         name: 'Web app',
-        badge: 'Zero Install',
-        subtext: 'Browser Drop-to-Share WebRTC',
+        badge: 'WebRTC Peer',
+        subtext: 'In-Browser Local Transfer',
         platformIcon: 'web',
         actionType: 'navigate',
         route: 'shareapp-privacy',
-      },
-    ],
-    clientAddon: [
-      {
-        id: 'share-discovery-bridge',
-        name: 'Bridge',
-        badge: 'mDNS Daemon',
-        subtext: 'LAN Hotspot Discovery Bridge',
-        platformIcon: 'bridge',
-        actionType: 'navigate',
-        route: 'docs',
       },
     ],
   },
@@ -906,7 +734,7 @@ export const NavProductsMegaMenu: React.FC<NavProductsMegaMenuProps> = ({
               </div>
             </div>
 
-            {/* RIGHT AREA: Proton-Style Downloads Canvas (QR Code + Mobile apps + Desktop apps + Web app) */}
+            {/* RIGHT AREA: Downloads Canvas (QR Code + Mobile apps + Desktop apps + Web app) */}
             <div className="col-span-12 md:col-span-9 lg:col-span-9">
               <div className={`p-6 sm:p-7 rounded-3xl transition-colors border ${
                 isLight 
@@ -921,13 +749,17 @@ export const NavProductsMegaMenu: React.FC<NavProductsMegaMenuProps> = ({
                     
                     {/* The White/Glass QR Card with subtle drop shadow */}
                     <div 
-                      onClick={() => handleActionClick(currentProfile.mobileApps[0])}
+                      onClick={() => {
+                        if (currentProfile.mobileApps && currentProfile.mobileApps.length > 0) {
+                          handleActionClick(currentProfile.mobileApps[0]);
+                        }
+                      }}
                       className={`p-4 sm:p-5 rounded-2xl flex flex-col items-center justify-center transition-all cursor-pointer shadow-xs border hover:shadow-md active:scale-98 ${
                         isLight 
                           ? 'bg-white border-gray-200/80' 
                           : 'bg-[#0a0203] border-[#381618]'
                       }`}
-                      title="Click to download APK package"
+                      title={currentProfile.qrCaption}
                     >
                       {/* Styled QR Code */}
                       <StyledQrCode productId={currentProfile.id} isLight={isLight} />
@@ -960,15 +792,6 @@ export const NavProductsMegaMenu: React.FC<NavProductsMegaMenuProps> = ({
                     }`}>
                       {currentProfile.qrCaption}
                     </p>
-
-                    <button
-                      onClick={() => handleActionClick(currentProfile.mobileApps[0])}
-                      className={`mt-2 text-[11px] font-mono underline hover:opacity-80 transition-opacity cursor-pointer ${
-                        isLight ? 'text-[#580c14]' : 'text-[#ff8585]'
-                      }`}
-                    >
-                      Or download .apk directly
-                    </button>
                   </div>
 
                   {/* SUB-COLUMN 2: Mobile apps */}
@@ -1077,7 +900,7 @@ export const NavProductsMegaMenu: React.FC<NavProductsMegaMenuProps> = ({
                     </div>
                   </div>
 
-                  {/* SUB-COLUMN 4: Web app & Desktop client add-on (Bridge) */}
+                  {/* SUB-COLUMN 4: Web app */}
                   <div className="sm:col-span-2 lg:col-span-2 space-y-5">
                     
                     {/* Web app */}
@@ -1089,46 +912,6 @@ export const NavProductsMegaMenu: React.FC<NavProductsMegaMenuProps> = ({
                       </div>
 
                       {currentProfile.webApp.map((item) => (
-                        <button
-                          key={item.id}
-                          onClick={() => handleActionClick(item)}
-                          className={`w-full text-left p-2.5 rounded-xl transition-all flex items-start gap-2.5 group cursor-pointer border ${
-                            isLight 
-                              ? 'bg-white hover:bg-gray-50 border-gray-200/70 hover:border-gray-300 shadow-2xs' 
-                              : 'bg-[#0f0405] hover:bg-[#1a0709] border-[#381618] hover:border-[#541e22]'
-                          }`}
-                        >
-                          <div className={`mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center shrink-0 ${
-                            isLight ? 'bg-gray-100 text-gray-800' : 'bg-white/10 text-white'
-                          }`}>
-                            <PlatformGlyph icon={item.platformIcon} isLight={isLight} />
-                          </div>
-
-                          <div className="min-w-0 flex-1">
-                            <span className={`text-xs font-semibold tracking-tight group-hover:underline block ${
-                              isLight ? 'text-gray-900' : 'text-white'
-                            }`}>
-                              {item.name}
-                            </span>
-                            <p className={`text-[10px] truncate mt-0.5 ${
-                              isLight ? 'text-gray-500' : 'text-gray-400'
-                            }`}>
-                              {item.subtext}
-                            </p>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-
-                    {/* Desktop client add-on (Bridge) */}
-                    <div className="space-y-2">
-                      <div className={`text-xs font-semibold tracking-tight ${
-                        isLight ? 'text-gray-700' : 'text-gray-300'
-                      }`}>
-                        Desktop client add-on
-                      </div>
-
-                      {currentProfile.clientAddon.map((item) => (
                         <button
                           key={item.id}
                           onClick={() => handleActionClick(item)}
@@ -1194,7 +977,7 @@ export const NavProductsMegaMenu: React.FC<NavProductsMegaMenuProps> = ({
             <div className={`p-3 rounded-xl text-xs font-mono text-left space-y-1 border ${
               isLight ? 'bg-gray-50 border-gray-200 text-gray-700' : 'bg-black/50 border-[#381618] text-gray-300'
             }`}>
-              <p className="text-emerald-500">✔ Signed by: Sphere Tech Foundation</p>
+              <p className="text-emerald-500">✔ Signed by: Yemini</p>
               <p>✔ Architecture: Universal ARM64 / x86_64</p>
               <p>✔ Checksum SHA-256: Verified</p>
             </div>

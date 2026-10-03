@@ -56,27 +56,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               >
                 Software that makes creation accessible to anyone.
               </p>
-              <p
-                className={`text-xs mt-0.5 ${
-                  isLight ? 'text-gray-500' : 'text-[#8f6e6b]'
-                }`}
-              >
-                An engineering initiative by{' '}
-                <a
-                  href="https://stfweb3ecosystem.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`font-semibold hover:underline inline-flex items-center gap-0.5 ${
-                    isLight ? 'text-gray-800 hover:text-black' : 'text-[#fadcd9] hover:text-white'
-                  }`}
-                >
-                  STF Ecosystem (Sphere Tech Foundation)
-                  <svg className="w-2.5 h-2.5 opacity-60 ml-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
-                </a>
-                .
-              </p>
             </div>
           </div>
 
@@ -267,7 +246,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li>
                 <button
                   id="footer-link-notepad"
-                  onClick={() => onNavigate('notepadapp-privacy')}
+                  onClick={() => onNavigate('download')}
                   className={`text-left transition-colors cursor-pointer ${
                     isLight ? 'hover:text-black' : 'hover:text-white'
                   }`}
@@ -278,7 +257,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li>
                 <button
                   id="footer-link-converter"
-                  onClick={() => onNavigate('converterapp-privacy')}
+                  onClick={() => onNavigate('download')}
                   className={`text-left transition-colors cursor-pointer ${
                     isLight ? 'hover:text-black' : 'hover:text-white'
                   }`}
@@ -289,7 +268,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li>
                 <button
                   id="footer-link-share"
-                  onClick={() => onNavigate('shareapp-privacy')}
+                  onClick={() => onNavigate('download')}
                   className={`text-left transition-colors cursor-pointer ${
                     isLight ? 'hover:text-black' : 'hover:text-white'
                   }`}
@@ -579,50 +558,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   Account Deletion Request
                 </button>
               </li>
-              <li>
-                <button
-                  id="footer-link-editor-privacy"
-                  onClick={() => onNavigate('editorapp-privacy')}
-                  className={`text-left transition-colors cursor-pointer ${
-                    isLight ? 'hover:text-black' : 'hover:text-white'
-                  }`}
-                >
-                  Code Editor Privacy Policy
-                </button>
-              </li>
-              <li>
-                <button
-                  id="footer-link-notepad-privacy"
-                  onClick={() => onNavigate('notepadapp-privacy')}
-                  className={`text-left transition-colors cursor-pointer ${
-                    isLight ? 'hover:text-black' : 'hover:text-white'
-                  }`}
-                >
-                  Notepad Privacy Policy
-                </button>
-              </li>
-              <li>
-                <button
-                  id="footer-link-converter-privacy"
-                  onClick={() => onNavigate('converterapp-privacy')}
-                  className={`text-left transition-colors cursor-pointer ${
-                    isLight ? 'hover:text-black' : 'hover:text-white'
-                  }`}
-                >
-                  Converter Privacy Policy
-                </button>
-              </li>
-              <li>
-                <button
-                  id="footer-link-share-privacy"
-                  onClick={() => onNavigate('shareapp-privacy')}
-                  className={`text-left transition-colors cursor-pointer ${
-                    isLight ? 'hover:text-black' : 'hover:text-white'
-                  }`}
-                >
-                  Share Privacy Policy
-                </button>
-              </li>
             </ul>
           </div>
 
@@ -656,11 +591,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </div>
 
             <p className="text-[11px]">
-              © 2026 STF Ecosystem (Sphere Tech Foundation). All rights reserved.
+              © 2026 Yemini. All rights reserved.
             </p>
           </div>
 
-          {/* Legal Navigation Pills / Links */}
+          {/* Legal Navigation Links */}
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[11px]">
             <button
               id="subfooter-privacy"
