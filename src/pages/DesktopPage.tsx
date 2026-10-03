@@ -30,18 +30,18 @@ export const DesktopPage: React.FC<DesktopPageProps> = ({ onNavigate }) => {
     <div className="pt-24 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-24">
       {/* Desktop Hero */}
       <div className="text-center max-w-4xl mx-auto space-y-6">
-        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
+        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-mono text-zinc-700 dark:text-zinc-300">
           <YeminiSymbol size="xs" />
           <span>macOS • Windows • Linux</span>
           <StatusBadge status="in-development" size="sm" />
         </div>
 
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight">
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-zinc-900 dark:text-white tracking-tight leading-tight">
           A serious IDE <br />
           <span className="text-yemini-gradient">for serious work.</span>
         </h1>
 
-        <p className="text-lg sm:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-lg sm:text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto leading-relaxed">
           {desktopData.fullDescription}
         </p>
 
@@ -54,14 +54,14 @@ export const DesktopPage: React.FC<DesktopPageProps> = ({ onNavigate }) => {
             </div>
           ) : (
             <form onSubmit={handleWaitlistSubmit} className="space-y-2.5">
-              <div className="flex items-center gap-2 bg-[#0e0e13] border border-zinc-800 p-2 rounded-2xl shadow-xl">
+              <div className="flex items-center gap-2 bg-zinc-50 dark:bg-[#0e0e13] border border-zinc-200 dark:border-zinc-800 p-2 rounded-2xl shadow-xl">
                 <input
                   type="email"
                   value={waitlistEmail}
                   onChange={(e) => setWaitlistEmail(e.target.value)}
                   placeholder="Enter email for private preview..."
                   required
-                  className="flex-1 bg-transparent px-3 text-sm text-white placeholder-zinc-500 focus:outline-none"
+                  className="flex-1 bg-transparent px-3 text-sm text-zinc-900 dark:text-white placeholder-zinc-500 focus:outline-none"
                 />
                 <button
                   type="submit"
@@ -115,44 +115,44 @@ export const DesktopPage: React.FC<DesktopPageProps> = ({ onNavigate }) => {
       {/* Deep-Dive Grid */}
       <div className="space-y-12">
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#ff8585]">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#ba1724] dark:text-[#ff8585]">
             Architectural Highlights
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white tracking-tight">
             Engineered for high throughput.
           </h2>
-          <p className="text-zinc-400 text-sm">
+          <p className="text-zinc-600 dark:text-zinc-400 text-sm">
             Everything you need for enterprise software development without the typical IDE bloat.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-2xl bg-[#09090d] border border-zinc-800 space-y-3">
-            <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-[#ff8585] w-fit">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#09090d] border border-zinc-200 dark:border-zinc-800 space-y-3">
+            <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-[#ba1724] dark:text-[#ff8585] w-fit">
               <Zap className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-bold text-white">GPU-Accelerated Rendering</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+            <h3 className="text-lg font-bold text-zinc-900 dark:text-white">GPU-Accelerated Rendering</h3>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
               Metal on macOS, DirectX 12 on Windows, and Vulkan on Linux ensure locked 120 FPS scrolling even in 100,000+ line files.
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-[#09090d] border border-zinc-800 space-y-3">
-            <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-[#ff8585] w-fit">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#09090d] border border-zinc-200 dark:border-zinc-800 space-y-3">
+            <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-[#ba1724] dark:text-[#ff8585] w-fit">
               <Layers className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-bold text-white">Multi-Pane Workspaces</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+            <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Multi-Pane Workspaces</h3>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
               Drag tabs anywhere to split editors horizontally or vertically, dock multiple terminal instances, and inspect live memory state.
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-[#09090d] border border-zinc-800 space-y-3">
-            <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-[#ff8585] w-fit">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#09090d] border border-zinc-200 dark:border-zinc-800 space-y-3">
+            <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-[#ba1724] dark:text-[#ff8585] w-fit">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-bold text-white">Verified First-Party Toolchains</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+            <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Verified First-Party Toolchains</h3>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
               Language Server Protocol (LSP) servers and Debug Adapter Protocol (DAP) run in isolated workers with zero untrusted dependencies.
             </p>
           </div>
@@ -160,16 +160,16 @@ export const DesktopPage: React.FC<DesktopPageProps> = ({ onNavigate }) => {
       </div>
 
       {/* Technical Specifications */}
-      <div className="p-8 sm:p-12 rounded-3xl bg-[#09090d] border border-zinc-800 space-y-8">
+      <div className="p-8 sm:p-12 rounded-3xl bg-white dark:bg-[#09090d] border border-zinc-200 dark:border-zinc-800 space-y-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <h3 className="text-2xl font-bold text-white">Desktop System Specifications</h3>
+          <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">Desktop System Specifications</h3>
           <StatusBadge status="in-development" size="md" />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-sm">
           {desktopData.specs.map((spec, i) => (
-            <div key={i} className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80">
+            <div key={i} className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800/80">
               <span className="text-xs font-mono text-zinc-500 block">{spec.label}</span>
-              <span className="font-semibold text-zinc-200 mt-1 block">{spec.value}</span>
+              <span className="font-semibold text-zinc-800 dark:text-zinc-200 mt-1 block">{spec.value}</span>
             </div>
           ))}
         </div>
@@ -177,8 +177,8 @@ export const DesktopPage: React.FC<DesktopPageProps> = ({ onNavigate }) => {
 
       {/* Bottom Cross-Platform CTA */}
       <div className="text-center space-y-6 pt-4">
-        <h3 className="text-2xl sm:text-3xl font-bold text-white">Need an environment today?</h3>
-        <p className="text-sm text-zinc-400 max-w-xl mx-auto">
+        <h3 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-white">Need an environment today?</h3>
+        <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto">
           Yemini Mobile is available now with full local toolchains, terminal, and touch-optimized ergonomics.
         </p>
         <button

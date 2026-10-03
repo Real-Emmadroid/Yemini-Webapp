@@ -29,18 +29,18 @@ export const AiPage: React.FC<AiPageProps> = ({ onNavigate }) => {
     <div className="pt-24 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-24">
       {/* AI Hero */}
       <div className="text-center max-w-4xl mx-auto space-y-6">
-        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
+        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-mono text-zinc-700 dark:text-zinc-300">
           <YeminiSymbol size="xs" />
           <span>Yemini Intelligence</span>
           <StatusBadge status="in-development" size="sm" />
         </div>
 
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight">
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-zinc-900 dark:text-white tracking-tight leading-tight">
           Meet the AI <br />
           <span className="text-yemini-gradient">built for your code.</span>
         </h1>
 
-        <p className="text-lg sm:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-lg sm:text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto leading-relaxed">
           {aiData.fullDescription}
         </p>
 
@@ -52,14 +52,14 @@ export const AiPage: React.FC<AiPageProps> = ({ onNavigate }) => {
               <span>You&apos;re on the Yemini Intelligence developer waitlist!</span>
             </div>
           ) : (
-            <form onSubmit={handleWaitlistSubmit} className="flex items-center gap-2 bg-[#0e0e13] border border-zinc-800 p-2 rounded-2xl shadow-xl">
+            <form onSubmit={handleWaitlistSubmit} className="flex items-center gap-2 bg-zinc-50 dark:bg-[#0e0e13] border border-zinc-200 dark:border-zinc-800 p-2 rounded-2xl shadow-xl">
               <input
                 type="email"
                 value={waitlistEmail}
                 onChange={(e) => setWaitlistEmail(e.target.value)}
                 placeholder="Enter work email for early access..."
                 required
-                className="flex-1 bg-transparent px-3 text-sm text-white placeholder-zinc-500 focus:outline-none"
+                className="flex-1 bg-transparent px-3 text-sm text-zinc-900 dark:text-white placeholder-zinc-500 focus:outline-none"
               />
               <button
                 type="submit"
@@ -79,10 +79,10 @@ export const AiPage: React.FC<AiPageProps> = ({ onNavigate }) => {
       {/* Interactive Agent Simulator */}
       <div className="space-y-6">
         <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#ff8585]">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#ba1724] dark:text-[#ff8585]">
             Live Interactive Concept
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white">
+          <h2 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-white">
             See the multi-turn agent loop in action
           </h2>
         </div>
@@ -92,41 +92,41 @@ export const AiPage: React.FC<AiPageProps> = ({ onNavigate }) => {
       {/* Core Principles Grid */}
       <div className="space-y-12">
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#ff8585]">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#ba1724] dark:text-[#ff8585]">
             Engineering Guardrails
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white tracking-tight">
             How Yemini AI handles your codebase.
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-2xl bg-[#09090d] border border-zinc-800 space-y-3">
-            <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-[#ff8585] w-fit">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#09090d] border border-zinc-200 dark:border-zinc-800 space-y-3">
+            <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-[#ba1724] dark:text-[#ff8585] w-fit">
               <FileCode className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-bold text-white">Full AST Graph</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+            <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Full AST Graph</h3>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
               Builds a structural semantic graph of your types, classes, and exported symbols to ensure zero hallucinated API calls.
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-[#09090d] border border-zinc-800 space-y-3">
-            <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-[#ff8585] w-fit">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#09090d] border border-zinc-200 dark:border-zinc-800 space-y-3">
+            <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-[#ba1724] dark:text-[#ff8585] w-fit">
               <Lock className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-bold text-white">Zero Training Policy</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+            <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Zero Training Policy</h3>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
               Your source code is never used to train public models. Code context is processed transiently and discarded immediately.
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-[#09090d] border border-zinc-800 space-y-3">
-            <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-[#ff8585] w-fit">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#09090d] border border-zinc-200 dark:border-zinc-800 space-y-3">
+            <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-[#ba1724] dark:text-[#ff8585] w-fit">
               <Terminal className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-bold text-white">Human in the Loop</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+            <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Human in the Loop</h3>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
               No code is written or terminal command executed without displaying an explicit colored diff for your confirmation.
             </p>
           </div>

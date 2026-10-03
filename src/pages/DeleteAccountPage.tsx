@@ -288,7 +288,7 @@ Thank you.`;
               <p>
                 <strong>Subject:</strong> Account Deletion Request
               </p>
-              <div className="pt-2 text-zinc-400">
+              <div className="pt-2 text-zinc-600 dark:text-zinc-400">
                 <p>Hello Yemini Support Team,</p>
                 <p className="mt-1">
                   I am requesting the permanent deletion of my Yemini account and all associated cloud data.
