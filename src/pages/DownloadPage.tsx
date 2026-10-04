@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import { PageRoute } from '../types';
 import { changelogData } from '../data/downloadsData';
 import { useTheme } from '../context/ThemeContext';
+import mobileIcon from '../assets/apps/yemini-mobile.png';
+import notepadIcon from '../assets/apps/yemini-notepad.png';
+import converterIcon from '../assets/apps/yemini-converter.png';
+import dbmsIcon from '../assets/apps/yemini-dbms.png';
 
 interface DownloadPageProps {
   onNavigate: (route: PageRoute) => void;
 }
 
-type ProductCategory = 'all' | 'mobile' | 'vault' | 'media' | 'p2p' | 'desktop';
+type ProductCategory = 'all' | 'mobile' | 'vault' | 'media' | 'p2p' | 'devtools' | 'creative' | 'desktop';
 
 interface AppShowcaseItem {
   id: string;
@@ -26,10 +30,15 @@ interface AppShowcaseItem {
     sha256: string;
   };
   webRoute?: PageRoute;
+  privacyRoute?: PageRoute;
   waitlistPlatform?: string;
   platforms: Array<'android' | 'apple' | 'windows' | 'web'>;
   iconBg: string;
   iconSvg: React.ReactNode;
+  /** Real app icon; when set it replaces the glyph tile. */
+  iconImg?: string;
+  /** True when the icon artwork already fills its own rounded square. */
+  iconImgFill?: boolean;
 }
 
 export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
@@ -92,6 +101,7 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
         sha256: '9f83ab45c1d89e0234a6789bfe123456789abcdef0123456789abcdef0123456',
       },
       platforms: ['android', 'apple'],
+      iconImg: mobileIcon,
       iconBg: isLight ? 'bg-[#580c14] text-white' : 'bg-[#ba1724] text-white',
       iconSvg: (
         <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
@@ -112,6 +122,8 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
       playStoreUrl: 'https://play.google.com/store/apps/details?id=io.yemini.notepad',
       webRoute: 'notepadapp-privacy',
       platforms: ['android', 'web', 'apple', 'windows'],
+      iconImg: notepadIcon,
+      iconImgFill: true,
       iconBg: isLight ? 'bg-[#7e1822] text-white' : 'bg-[#e0313f] text-white',
       iconSvg: (
         <svg viewBox="0 0 24 24" className="w-6 h-6 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -133,6 +145,8 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
       playStoreUrl: 'https://play.google.com/store/apps/details?id=io.yemini.converter',
       webRoute: 'converterapp-privacy',
       platforms: ['android', 'web', 'apple', 'windows'],
+      iconImg: converterIcon,
+      iconImgFill: true,
       iconBg: isLight ? 'bg-[#981b25] text-white' : 'bg-[#ff5c5c] text-white',
       iconSvg: (
         <svg viewBox="0 0 24 24" className="w-6 h-6 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -165,6 +179,72 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
           <circle cx="18" cy="19" r="3" />
           <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
           <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+        </svg>
+      ),
+    },
+    {
+      id: 'yemini-api-tester',
+      name: 'Yemini API Tester',
+      category: 'devtools',
+      categoryLabel: 'On-Device API Client',
+      version: 'v1.0.0',
+      statusBadge: 'Official Store',
+      tagline: 'Test any API. Straight from your phone.',
+      description: 'Build and run REST requests and WebSocket sessions with live JSON highlighting, response timings, request history, and collections. Import from Postman or cURL. Everything stays on your device.',
+      highlights: ['REST & WebSocket Clients', 'Postman & cURL Import', 'History & Collections, Stored Locally'],
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.yemini.apitester',
+      privacyRoute: 'apitesterapp-privacy',
+      platforms: ['android'],
+      iconBg: isLight ? 'bg-[#580c14] text-white' : 'bg-[#ba1724] text-white',
+      iconSvg: (
+        <svg viewBox="0 0 24 24" className="w-6 h-6 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1" />
+          <path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1" />
+        </svg>
+      ),
+    },
+    {
+      id: 'yemini-dbms',
+      name: 'Yemini DBMS',
+      category: 'devtools',
+      categoryLabel: 'Mobile SQL Client',
+      version: 'v1.0.0',
+      statusBadge: 'Official Store',
+      tagline: 'Your databases, one secure tap away.',
+      description: 'Connect to PostgreSQL, MySQL, SQL Server, and SQLite with a syntax-highlighted SQL editor, schema browser, and visual table designer. Credentials are encrypted with the Android Keystore.',
+      highlights: ['PostgreSQL, MySQL, SQL Server & SQLite', 'SSH Tunnels & Biometric Lock', 'Encrypted Credential Storage'],
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.yemini.dbadmin',
+      privacyRoute: 'dbmsapp-privacy',
+      platforms: ['android'],
+      iconImg: dbmsIcon,
+      iconBg: isLight ? 'bg-[#580c14] text-white' : 'bg-[#ba1724] text-white',
+      iconSvg: (
+        <svg viewBox="0 0 24 24" className="w-6 h-6 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <ellipse cx="12" cy="5" rx="9" ry="3" />
+          <path d="M3 5v14a9 3 0 0 0 18 0V5" />
+          <path d="M3 12a9 3 0 0 0 18 0" />
+        </svg>
+      ),
+    },
+    {
+      id: 'yemini-image-editor',
+      name: 'Yemini Image Editor',
+      category: 'creative',
+      categoryLabel: 'On-Device Photo Studio',
+      version: 'v1.0.0',
+      statusBadge: 'Official Store',
+      tagline: 'A darkroom for your photos, offline.',
+      description: 'Professional color grading, retouching, subject cut-outs, collages, and templates. Photos and videos are edited on your device and never uploaded.',
+      highlights: ['Color Grading & Presets', 'Face Retouch & Subject Cut-Out', 'Collages & Shared Templates'],
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.yemini.imageeditor',
+      privacyRoute: 'imageeditorapp-privacy',
+      platforms: ['android'],
+      iconBg: isLight ? 'bg-[#580c14] text-white' : 'bg-[#ba1724] text-white',
+      iconSvg: (
+        <svg viewBox="0 0 24 24" className="w-6 h-6 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect width="18" height="18" x="3" y="3" rx="2" />
+          <circle cx="9" cy="9" r="2" />
+          <path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21" />
         </svg>
       ),
     },
@@ -287,6 +367,8 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
               { id: 'vault', label: 'Encrypted Vault' },
               { id: 'media', label: 'Local Media' },
               { id: 'p2p', label: 'P2P Sharing' },
+              { id: 'devtools', label: 'Dev Tools' },
+              { id: 'creative', label: 'Image Studio' },
               { id: 'desktop', label: 'Desktop & AI' },
             ].map((tab) => {
               const isSelected = activeCategory === tab.id;
@@ -325,9 +407,17 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
               {/* Card Header: Icon, Category & Status */}
               <div>
                 <div className="flex items-center justify-between gap-3 mb-5">
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-xs shrink-0 ${item.iconBg}`}>
-                    {item.iconSvg}
-                  </div>
+                  {item.iconImg ? (
+                    <div className={`w-12 h-12 rounded-2xl overflow-hidden flex items-center justify-center shadow-xs shrink-0 ${
+                      item.iconImgFill ? '' : 'bg-white border border-gray-200 dark:border-white/10'
+                    }`}>
+                      <img src={item.iconImg} alt={`${item.name} icon`} className="w-full h-full object-contain" />
+                    </div>
+                  ) : (
+                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-xs shrink-0 ${item.iconBg}`}>
+                      {item.iconSvg}
+                    </div>
+                  )}
 
                   <span className={`text-[10px] font-mono px-2.5 py-1 rounded-full font-medium border ${
                     isLight 
@@ -437,6 +527,23 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
                       <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                     </svg>
                     <span>Launch Web Application</span>
+                  </button>
+                )}
+
+                {/* Privacy Policy Button */}
+                {item.privacyRoute && (
+                  <button
+                    onClick={() => onNavigate(item.privacyRoute!)}
+                    className={`w-full py-2.5 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 border transition-all cursor-pointer ${
+                      isLight
+                        ? 'bg-gray-50 hover:bg-gray-100 text-gray-800 border-gray-200'
+                        : 'bg-white/5 hover:bg-white/10 text-white border-white/10'
+                    }`}
+                  >
+                    <svg className="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    <span>Read Privacy Policy</span>
                   </button>
                 )}
 

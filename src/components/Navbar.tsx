@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { PageRoute } from '../types';
 import { useTheme } from '../context/ThemeContext';
 import { StatusBadge } from './StatusBadge';
-import headerLogoImg from '../assets/headerlogo.png';
-import headerDarkImg from '../assets/headerdark.png';
+import logoDarkModeImg from '../assets/yeminilogodark.png';
+import logoLightModeImg from '../assets/yeminilogolight.png';
 import { MobileVisual, DesktopVisual, AiVisual } from './ProductVisuals';
 import { NavProductsMegaMenu } from './NavProductsMegaMenu';
 import { MobileProductsNav } from './MobileProductsNav';
@@ -95,7 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               aria-label="Yemini Home"
             >
               <img
-                src={isLight ? headerDarkImg : headerLogoImg}
+                src={isLight ? logoLightModeImg : logoDarkModeImg}
                 alt="Yemini"
                 className="h-6 sm:h-7 w-auto object-contain"
               />
@@ -312,7 +312,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className="flex items-center gap-2 cursor-pointer"
               >
                 <img
-                  src={isLight ? headerDarkImg : headerLogoImg}
+                  src={isLight ? logoLightModeImg : logoDarkModeImg}
                   alt="Yemini"
                   className="h-6 w-auto object-contain"
                 />

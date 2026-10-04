@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { PageRoute } from '../types';
 import { useTheme } from '../context/ThemeContext';
-import headerLogoImg from '../assets/headerlogo.png';
-import headerDarkImg from '../assets/headerdark.png';
+import logoDarkModeImg from '../assets/yeminilogodark.png';
+import logoLightModeImg from '../assets/yeminilogolight.png';
 
 interface FooterProps {
   onNavigate: (route: PageRoute) => void;
@@ -43,7 +43,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               aria-label="Yemini Home"
             >
               <img
-                src={isLight ? headerDarkImg : headerLogoImg}
+                src={isLight ? logoLightModeImg : logoDarkModeImg}
                 alt="Yemini Logo"
                 className="h-7 sm:h-8 w-auto object-contain"
               />
