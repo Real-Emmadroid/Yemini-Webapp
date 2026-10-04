@@ -6,6 +6,7 @@ import mobileIcon from '../assets/apps/yemini-mobile.png';
 import notepadIcon from '../assets/apps/yemini-notepad.png';
 import converterIcon from '../assets/apps/yemini-converter.png';
 import dbmsIcon from '../assets/apps/yemini-dbms.png';
+import shareIcon from '../assets/apps/yemini-chevron.png';
 
 interface DownloadPageProps {
   onNavigate: (route: PageRoute) => void;
@@ -171,6 +172,7 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
       playStoreUrl: 'https://play.google.com/store/apps/details?id=io.yemini.share',
       webRoute: 'shareapp-privacy',
       platforms: ['android', 'web', 'apple', 'windows'],
+      iconImg: shareIcon,
       iconBg: isLight ? 'bg-[#580c14] text-white' : 'bg-[#ba1724] text-white',
       iconSvg: (
         <svg viewBox="0 0 24 24" className="w-6 h-6 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
