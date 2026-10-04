@@ -22,6 +22,9 @@ import { EditorAppPrivacyPage } from './pages/EditorAppPrivacyPage';
 import { NotepadAppPrivacyPage } from './pages/NotepadAppPrivacyPage';
 import { ConverterAppPrivacyPage } from './pages/ConverterAppPrivacyPage';
 import { ShareAppPrivacyPage } from './pages/ShareAppPrivacyPage';
+import { SellYourAppPage } from './pages/SellYourAppPage';
+import { CareersPage } from './pages/CareersPage';
+import { TechnologiesPage } from './pages/TechnologiesPage';
 import { ApiTesterAppPrivacyPage } from './pages/ApiTesterAppPrivacyPage';
 import { DbmsAppPrivacyPage } from './pages/DbmsAppPrivacyPage';
 import { ImageEditorAppPrivacyPage } from './pages/ImageEditorAppPrivacyPage';
@@ -42,7 +45,7 @@ function AppContent() {
       const validRoutes: PageRoute[] = [
         'home', 'mobile', 'desktop', 'ai', 
         'download', 'docs', 'resources', 'about', 'security', 
-        'contact', 'privacy', 'terms', 'cookies', 'acceptable-use', 'licenses',
+        'contact', 'sell-your-app', 'careers', 'technologies', 'privacy', 'terms', 'cookies', 'acceptable-use', 'licenses',
         'delete-account', 'account-deletion',
         'editorapp-privacy', 'notepadapp-privacy', 'converterapp-privacy', 'shareapp-privacy', 'apitesterapp-privacy', 'dbmsapp-privacy', 'imageeditorapp-privacy', 'app-privacy', 'mobile-privacy'
       ];
@@ -209,6 +212,18 @@ function AppContent() {
 
         {currentRoute === 'contact' && (
           <ContactPage onNavigate={navigateTo} />
+        )}
+
+        {currentRoute === 'sell-your-app' && (
+          <SellYourAppPage onNavigate={navigateTo} />
+        )}
+
+        {currentRoute === 'careers' && (
+          <CareersPage onNavigate={navigateTo} />
+        )}
+
+        {currentRoute === 'technologies' && (
+          <TechnologiesPage onNavigate={navigateTo} />
         )}
 
         {(currentRoute === 'delete-account' || currentRoute === 'account-deletion') && (

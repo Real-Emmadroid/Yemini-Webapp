@@ -459,6 +459,39 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 </button>
               </li>
               <li>
+                <button
+                  id="footer-link-technologies"
+                  onClick={() => onNavigate('technologies')}
+                  className={`text-left transition-colors cursor-pointer ${
+                    isLight ? 'hover:text-black' : 'hover:text-white'
+                  }`}
+                >
+                  Technologies
+                </button>
+              </li>
+              <li>
+                <button
+                  id="footer-link-careers"
+                  onClick={() => onNavigate('careers')}
+                  className={`text-left transition-colors cursor-pointer ${
+                    isLight ? 'hover:text-black' : 'hover:text-white'
+                  }`}
+                >
+                  Careers
+                </button>
+              </li>
+              <li>
+                <button
+                  id="footer-link-sell-your-app"
+                  onClick={() => onNavigate('sell-your-app')}
+                  className={`text-left transition-colors cursor-pointer ${
+                    isLight ? 'hover:text-black' : 'hover:text-white'
+                  }`}
+                >
+                  Sell Your App
+                </button>
+              </li>
+              <li>
                 <a
                   id="footer-link-stf-parent"
                   href="https://stfweb3ecosystem.com/"

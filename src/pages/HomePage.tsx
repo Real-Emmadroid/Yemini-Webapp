@@ -8,6 +8,7 @@ import { SectionKmjkSuite } from '../components/home/SectionKmjkSuite';
 import { SectionOjkWorkbench } from '../components/home/SectionOjkWorkbench';
 import { SectionLokokImpact } from '../components/home/SectionLokokImpact';
 import { SectionPartnerships } from '../components/home/SectionPartnerships';
+import { SectionGetStarted } from '../components/home/SectionGetStarted';
 
 interface HomePageProps {
   onNavigate: (route: PageRoute) => void;
@@ -189,133 +190,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         {/* SECTION 6: MOVING SLIDE OF PARTNERSHIP (Auto-moving partner logos, pauses on hover, no arrows/dots) */}
         <SectionPartnerships />
 
-        {/* SECTION 7: PLATFORM DOWNLOADS */}
-        <section className="px-4 sm:px-6 max-w-7xl mx-auto w-full pb-20 pt-4" id="downloads">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className={`text-3xl sm:text-5xl tracking-tighter font-semibold mb-4 ${
-              isLight ? 'text-black' : 'text-[#fadcd9]'
-            }`}>
-              Get started with Yemini.
-            </h2>
-            <p className={`text-lg sm:text-xl tracking-tight max-w-2xl mx-auto ${
-              isLight ? 'text-gray-600' : 'text-[#ab8986]'
-            }`}>
-              Download Yemini Mobile today or join the waitlist for our upcoming desktop releases.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Android - AVAILABLE NOW */}
-            <div className={`glass-card rounded-2xl p-6 flex flex-col items-center text-center transition-all ${
-              isLight 
-                ? 'bg-white/80 border-2 border-emerald-500/40 shadow-elevated' 
-                : 'bg-black/60 border-2 border-emerald-800/60 shadow-lg'
-            }`}>
-              <div className="flex items-center justify-between w-full mb-3">
-                <span className="material-symbols-outlined text-3xl font-light text-emerald-500">
-                  smartphone
-                </span>
-                <StatusBadge status="available" size="sm" />
-              </div>
-              <h4 className={`text-xl font-semibold mb-1 ${isLight ? 'text-black' : 'text-[#fadcd9]'}`}>Android</h4>
-              <p className={`text-xs mb-6 ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`}>Signed APK Release v1.2.0</p>
-              <button
-                onClick={() => onNavigate('download')}
-                className={`w-full py-2.5 rounded-full text-sm font-semibold transition-colors mt-auto shadow-md ${
-                  isLight 
-                    ? 'bg-[#580c14] text-white hover:bg-[#43080e]' 
-                    : 'bg-[#580c14] text-white hover:bg-[#43080e]'
-                }`}
-              >
-                Download APK
-              </button>
-            </div>
-
-            {/* macOS - IN DEVELOPMENT */}
-            <div className={`glass-card rounded-2xl p-6 flex flex-col items-center text-center transition-all ${
-              isLight 
-                ? 'bg-white/70 border border-gray-200' 
-                : 'bg-black/60 border border-[#43302f]/80'
-            }`}>
-              <div className="flex items-center justify-between w-full mb-3">
-                <span className={`material-symbols-outlined text-3xl font-light ${
-                  isLight ? 'text-gray-600' : 'text-[#fadcd9]'
-                }`}>
-                  desktop_mac
-                </span>
-                <StatusBadge status="in-development" size="sm" />
-              </div>
-              <h4 className={`text-xl font-semibold mb-1 ${isLight ? 'text-black' : 'text-[#fadcd9]'}`}>macOS</h4>
-              <p className={`text-xs mb-6 ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`}>Apple Silicon &amp; Intel</p>
-              <button
-                onClick={() => onNavigate('desktop')}
-                className={`w-full py-2.5 rounded-full text-sm font-medium transition-colors mt-auto ${
-                  isLight 
-                    ? 'bg-gray-100 text-black hover:bg-gray-200 border border-gray-300' 
-                    : 'bg-[#372624] text-[#fadcd9] hover:bg-[#43080e] border border-[#5b403e]'
-                }`}
-              >
-                Join Waitlist
-              </button>
-            </div>
-
-            {/* Windows - IN DEVELOPMENT */}
-            <div className={`glass-card rounded-2xl p-6 flex flex-col items-center text-center transition-all ${
-              isLight 
-                ? 'bg-white/70 border border-gray-200' 
-                : 'bg-black/60 border border-[#43302f]/80'
-            }`}>
-              <div className="flex items-center justify-between w-full mb-3">
-                <span className={`material-symbols-outlined text-3xl font-light ${
-                  isLight ? 'text-gray-600' : 'text-[#fadcd9]'
-                }`}>
-                  desktop_windows
-                </span>
-                <StatusBadge status="in-development" size="sm" />
-              </div>
-              <h4 className={`text-xl font-semibold mb-1 ${isLight ? 'text-black' : 'text-[#fadcd9]'}`}>Windows</h4>
-              <p className={`text-xs mb-6 ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`}>Windows 10 &amp; 11</p>
-              <button
-                onClick={() => onNavigate('desktop')}
-                className={`w-full py-2.5 rounded-full text-sm font-medium transition-colors mt-auto ${
-                  isLight 
-                    ? 'bg-gray-100 text-black hover:bg-gray-200 border border-gray-300' 
-                    : 'bg-[#372624] text-[#fadcd9] hover:bg-[#43080e] border border-[#5b403e]'
-                }`}
-              >
-                Join Waitlist
-              </button>
-            </div>
-
-            {/* Linux - IN DEVELOPMENT */}
-            <div className={`glass-card rounded-2xl p-6 flex flex-col items-center text-center transition-all ${
-              isLight 
-                ? 'bg-white/70 border border-gray-200' 
-                : 'bg-black/60 border border-[#43302f]/80'
-            }`}>
-              <div className="flex items-center justify-between w-full mb-3">
-                <span className={`material-symbols-outlined text-3xl font-light ${
-                  isLight ? 'text-gray-600' : 'text-[#fadcd9]'
-                }`}>
-                  terminal
-                </span>
-                <StatusBadge status="in-development" size="sm" />
-              </div>
-              <h4 className={`text-xl font-semibold mb-1 ${isLight ? 'text-black' : 'text-[#fadcd9]'}`}>Linux</h4>
-              <p className={`text-xs mb-6 ${isLight ? 'text-gray-500' : 'text-[#ab8986]'}`}>Debian, Ubuntu, Arch</p>
-              <button
-                onClick={() => onNavigate('desktop')}
-                className={`w-full py-2.5 rounded-full text-sm font-medium transition-colors mt-auto ${
-                  isLight 
-                    ? 'bg-gray-100 text-black hover:bg-gray-200 border border-gray-300' 
-                    : 'bg-[#372624] text-[#fadcd9] hover:bg-[#43080e] border border-[#5b403e]'
-                }`}
-              >
-                Join Waitlist
-              </button>
-            </div>
-          </div>
-        </section>
+        {/* SECTION 7: GET STARTED (Sell your app, Blog, Careers, Technologies) */}
+        <SectionGetStarted onNavigate={onNavigate} />
 
       </main>
     </div>

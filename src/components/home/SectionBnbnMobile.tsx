@@ -30,7 +30,7 @@ export const SectionBnbnMobile: React.FC<SectionBnbnMobileProps> = ({ onNavigate
       id: 'panel-mobile',
       tag: 'MOBILE',
       title: 'Code from anywhere, no laptop needed.',
-      targetId: 'downloads',
+      targetId: 'download-page',
       route: 'download',
     },
     {
