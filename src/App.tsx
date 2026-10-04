@@ -22,6 +22,9 @@ import { EditorAppPrivacyPage } from './pages/EditorAppPrivacyPage';
 import { NotepadAppPrivacyPage } from './pages/NotepadAppPrivacyPage';
 import { ConverterAppPrivacyPage } from './pages/ConverterAppPrivacyPage';
 import { ShareAppPrivacyPage } from './pages/ShareAppPrivacyPage';
+import { ApiTesterAppPrivacyPage } from './pages/ApiTesterAppPrivacyPage';
+import { DbmsAppPrivacyPage } from './pages/DbmsAppPrivacyPage';
+import { ImageEditorAppPrivacyPage } from './pages/ImageEditorAppPrivacyPage';
 
 function AppContent() {
   const { theme } = useTheme();
@@ -41,7 +44,7 @@ function AppContent() {
         'download', 'docs', 'resources', 'about', 'security', 
         'contact', 'privacy', 'terms', 'cookies', 'acceptable-use', 'licenses',
         'delete-account', 'account-deletion',
-        'editorapp-privacy', 'notepadapp-privacy', 'converterapp-privacy', 'shareapp-privacy', 'app-privacy', 'mobile-privacy'
+        'editorapp-privacy', 'notepadapp-privacy', 'converterapp-privacy', 'shareapp-privacy', 'apitesterapp-privacy', 'dbmsapp-privacy', 'imageeditorapp-privacy', 'app-privacy', 'mobile-privacy'
       ];
 
       // Handle common aliases for account deletion
@@ -87,6 +90,11 @@ function AppContent() {
   const isNotepadAppPrivacy = currentRoute === 'notepadapp-privacy';
   const isConverterAppPrivacy = currentRoute === 'converterapp-privacy';
   const isShareAppPrivacy = currentRoute === 'shareapp-privacy';
+  const NewAppPrivacyPage =
+    currentRoute === 'apitesterapp-privacy' ? ApiTesterAppPrivacyPage :
+    currentRoute === 'dbmsapp-privacy' ? DbmsAppPrivacyPage :
+    currentRoute === 'imageeditorapp-privacy' ? ImageEditorAppPrivacyPage :
+    null;
 
   if (isEditorAppPrivacy) {
     return (
@@ -132,6 +140,18 @@ function AppContent() {
           : 'bg-black text-[#fadcd9] selection:bg-[#580c14] selection:text-white'
       }`}>
         <ShareAppPrivacyPage />
+      </div>
+    );
+  }
+
+  if (NewAppPrivacyPage) {
+    return (
+      <div className={`min-h-screen font-sans ${
+        isLight
+          ? 'bg-[#f5f5f7] text-[#1d1d1f] selection:bg-[#580c14] selection:text-white'
+          : 'bg-black text-[#fadcd9] selection:bg-[#580c14] selection:text-white'
+      }`}>
+        <NewAppPrivacyPage />
       </div>
     );
   }

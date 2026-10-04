@@ -20,6 +20,9 @@ export type PageRoute =
   | 'notepadapp-privacy'
   | 'converterapp-privacy'
   | 'shareapp-privacy'
+  | 'apitesterapp-privacy'
+  | 'dbmsapp-privacy'
+  | 'imageeditorapp-privacy'
   | 'app-privacy'
   | 'mobile-privacy';
 
