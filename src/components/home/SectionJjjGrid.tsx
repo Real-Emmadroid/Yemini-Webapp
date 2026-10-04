@@ -1,6 +1,13 @@
 import React from 'react';
 import { PageRoute } from '../../types';
 import { useTheme } from '../../context/ThemeContext';
+import notepadIcon from '../../assets/apps/yemini-notepad.png';
+import shareIcon from '../../assets/apps/yemini-chevron.png';
+import converterIcon from '../../assets/apps/yemini-converter.png';
+import mobileIcon from '../../assets/apps/yemini-mobile.png';
+import dbmsIcon from '../../assets/apps/yemini-dbms.png';
+import apiTesterIcon from '../../assets/apps/yemini-api-tester.png';
+import imageEditorIcon from '../../assets/apps/yemini-image-editor.png';
 
 interface SectionJjjGridProps {
   onNavigate: (route: PageRoute) => void;
@@ -17,6 +24,8 @@ export interface MarqueeProduct {
    * If omitted or undefined, it automatically falls back to the clean SVG vector icon below.
    */
   logoImg?: string;
+  /** True when the logo artwork already fills its own rounded square (no white backing tile). */
+  logoFill?: boolean;
   svgIcon: React.ReactNode;
 }
 
@@ -32,6 +41,8 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
       name: 'Yemini Notepad',
       targetId: 'companion-suite',
       route: 'notepadapp-privacy',
+      logoImg: notepadIcon,
+      logoFill: true,
       svgIcon: (
         <svg
           className="w-7 h-7 shrink-0"
@@ -55,6 +66,7 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
       name: 'Yemini Share',
       targetId: 'companion-suite',
       route: 'shareapp-privacy',
+      logoImg: shareIcon,
       svgIcon: (
         <svg
           className="w-7 h-7 shrink-0"
@@ -79,6 +91,8 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
       name: 'Yemini Converter',
       targetId: 'companion-suite',
       route: 'converterapp-privacy',
+      logoImg: converterIcon,
+      logoFill: true,
       svgIcon: (
         <svg
           className="w-7 h-7 shrink-0"
@@ -145,6 +159,7 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
       name: 'Yemini Mobile',
       targetId: 'mobile-intelligence',
       route: 'mobile',
+      logoImg: mobileIcon,
       svgIcon: (
         <svg
           className="w-7 h-7 shrink-0"
@@ -181,6 +196,74 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
         >
           <polyline points="16 18 22 12 16 6" />
           <polyline points="8 6 2 12 8 18" />
+        </svg>
+      ),
+    },
+    {
+      id: 'yemini-api-tester',
+      name: 'Yemini API Tester',
+      targetId: 'companion-suite',
+      route: 'apitesterapp-privacy',
+      logoImg: apiTesterIcon,
+      svgIcon: (
+        <svg
+          className="w-7 h-7 shrink-0"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1" />
+          <path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1" />
+        </svg>
+      ),
+    },
+    {
+      id: 'yemini-dbms',
+      name: 'Yemini DBMS',
+      targetId: 'companion-suite',
+      route: 'dbmsapp-privacy',
+      logoImg: dbmsIcon,
+      svgIcon: (
+        <svg
+          className="w-7 h-7 shrink-0"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <ellipse cx="12" cy="5" rx="9" ry="3" />
+          <path d="M3 5v14a9 3 0 0 0 18 0V5" />
+          <path d="M3 12a9 3 0 0 0 18 0" />
+        </svg>
+      ),
+    },
+    {
+      id: 'yemini-image-editor',
+      name: 'Yemini Image Editor',
+      targetId: 'companion-suite',
+      route: 'imageeditorapp-privacy',
+      logoImg: imageEditorIcon,
+      svgIcon: (
+        <svg
+          className="w-7 h-7 shrink-0"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <rect width="18" height="18" x="3" y="3" rx="2" />
+          <circle cx="9" cy="9" r="2" />
+          <path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21" />
         </svg>
       ),
     },
@@ -378,14 +461,14 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
       aria-label={`View details for ${item.name}`}
     >
       {/* Icon/Logo container at ~28px on top */}
-      <div className={`w-7 h-7 flex items-center justify-center mb-2 transition-transform duration-200 group-hover:scale-110 shrink-0 ${
+      <div className={`${item.logoImg ? 'w-8 h-8' : 'w-7 h-7'} flex items-center justify-center mb-2 transition-transform duration-200 group-hover:scale-110 shrink-0 ${
         isLight ? 'text-[#580c14]' : 'text-[#ff7b72]'
       }`}>
         {item.logoImg ? (
           <img
             src={item.logoImg}
-            alt={item.name}
-            className="w-7 h-7 object-contain shrink-0"
+            alt=""
+            className={`w-8 h-8 shrink-0 rounded-lg ${item.logoFill ? 'object-cover' : 'object-contain bg-white p-0.5'}`}
             loading="lazy"
           />
         ) : (
@@ -427,7 +510,7 @@ export const SectionJjjGrid: React.FC<SectionJjjGridProps> = ({ onNavigate }) =>
         .yemini-marquee-row-1 {
           display: flex;
           width: max-content;
-          animation: yemini-loop-rtl 26s linear infinite;
+          animation: yemini-loop-rtl 38s linear infinite;
         }
 
         .yemini-marquee-row-2 {

@@ -6,6 +6,8 @@ import mobileIcon from '../assets/apps/yemini-mobile.png';
 import notepadIcon from '../assets/apps/yemini-notepad.png';
 import converterIcon from '../assets/apps/yemini-converter.png';
 import dbmsIcon from '../assets/apps/yemini-dbms.png';
+import apiTesterIcon from '../assets/apps/yemini-api-tester.png';
+import imageEditorIcon from '../assets/apps/yemini-image-editor.png';
 import shareIcon from '../assets/apps/yemini-chevron.png';
 
 interface DownloadPageProps {
@@ -197,6 +199,7 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
       playStoreUrl: 'https://play.google.com/store/apps/details?id=com.yemini.apitester',
       privacyRoute: 'apitesterapp-privacy',
       platforms: ['android'],
+      iconImg: apiTesterIcon,
       iconBg: isLight ? 'bg-[#580c14] text-white' : 'bg-[#ba1724] text-white',
       iconSvg: (
         <svg viewBox="0 0 24 24" className="w-6 h-6 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -241,6 +244,7 @@ export const DownloadPage: React.FC<DownloadPageProps> = ({ onNavigate }) => {
       playStoreUrl: 'https://play.google.com/store/apps/details?id=com.yemini.imageeditor',
       privacyRoute: 'imageeditorapp-privacy',
       platforms: ['android'],
+      iconImg: imageEditorIcon,
       iconBg: isLight ? 'bg-[#580c14] text-white' : 'bg-[#ba1724] text-white',
       iconSvg: (
         <svg viewBox="0 0 24 24" className="w-6 h-6 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
